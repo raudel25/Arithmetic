@@ -37,7 +37,7 @@ def eliminate_zeros_right(s: str) -> str:
 def equal_zeros_left(x: str, y: str) -> tuple:
     ind: int = max(len(x), len(y))
 
-    return ind, add_zeros_left(x, ind - len(x)), add_zeros_right(y, ind - len(y))
+    return ind, add_zeros_left(x, ind - len(x)), add_zeros_left(y, ind - len(y))
 
 
 def equal_zeros_right(x: str, y: str) -> tuple:

@@ -18,11 +18,19 @@ class Numbers:
             self.__part_number, self.__part_decimal, True, precision)
 
     @property
+    def positive(self) -> bool:
+        return self.__sign == "+"
+
+    @property
+    def presicion(self) -> int:
+        return self.__precision
+
+    @property
     def part_number(self) -> str:
         return self.__part_number
 
     @property
-    def part_number(self) -> str:
+    def part_decimal(self) -> str:
         return self.__part_decimal
 
     @property
@@ -86,17 +94,17 @@ class Numbers:
             return -1
 
         for i in range(len(m.part_number)):
-            x = m.__part_number[i] - 48
-            y = n.__part_number[i] - 48
+            x = ord(m.__part_number[i]) - 48
+            y = ord(n.__part_number[i]) - 48
 
             if x > y:
                 return 1
             if x < y:
                 return -1
 
-        for i in range(min(len(m.part_decimal), len(n.part_decimal))):
-            x = m.__part_decimal[i] - 48
-            y = n.__part_decimal[i] - 48
+        for i in range(min(len(m.__part_decimal), len(n.__part_decimal))):
+            x = ord(m.__part_decimal[i]) - 48
+            y = ord(n.__part_decimal[i]) - 48
 
             if x > y:
                 return 1
