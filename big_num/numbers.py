@@ -1,4 +1,3 @@
-from ast import Num
 from .aux_operations import eliminate_zeros_left, eliminate_zeros_right, equal_zeros_left, equal_zeros_right, add_zeros_left, add_zeros_right
 from .sum_operations import sum_str, sub_str
 
@@ -18,6 +17,10 @@ class Numbers:
         self.__sign = '+' if positive else '-'
         self.__abs = self if positive else Numbers(
             self.__part_number, self.__part_decimal, True, precision)
+
+    @property
+    def sign(self):
+        return self.__sign
 
     @staticmethod
     def real1():
@@ -146,7 +149,7 @@ class Numbers:
             return Numbers.sum_operation(x, y, True, x.positive)
         compare = x.abs.compare_to(y.abs)
         if compare == 0:
-            return 0
+            return Numbers.real0()
         if compare == 1:
             return Numbers.sum_operation(x.abs, y.abs, False, x.positive)
         return Numbers.sum_operation(y.abs, x.abs, False, y.positive)
@@ -195,7 +198,7 @@ class Numbers:
         result = Numbers.karatsuba_algorithm(m, n).part_number
 
         if result == "0":
-            return Numbers.real0
+            return Numbers.real0()
 
         if len(result) < cant_decimal:
             result = add_zeros_left(
@@ -242,3 +245,72 @@ class Numbers:
         z0 = Numbers(Numbers.karatsuba_algorithm(x0, y0).part_number, "0")
 
         return z2 + z1 + z0
+
+    def __truediv__(self, o: 'Numbers'):
+        x: 'Numbers' = self
+        y: 'Numbers' = o
+
+        positive = x.sign == y.sign
+
+        if y == Numbers.real0():
+            raise Exception("Operacion Invalida (division por 0)")
+        if y.abs == Numbers.real1():
+            return (Numbers(x.part_number, x.part_decimal, positive), Numbers.real0())
+
+        (x_part_decimal, y_part_decimal) = (x.part_decimal, y.part_decimal)
+        aux = equal_zeros_right(x_part_decimal, y_part_decimal)
+        (x_part_decimal, y_part_decimal) = (aux[1], aux[2])
+
+        m = Numbers(x.part_number + x_part_decimal, "0")
+        n = Numbers(y.part_number + y_part_decimal, "0")
+
+        cant_decimal = 0
+
+        (result, cant_decimal) = Numbers.division_algorithm(m, n)
+
+        if cant_decimal != 0:
+            return (Numbers(result[: len(result) - cant_decimal],
+                            result[len(result) - cant_decimal: len(result)], positive))
+        return (Numbers(result, "0", positive))
+
+    @staticmethod
+    def division_algorithm(x: 'Numbers', y: 'Numbers'):
+        cant_decimal = 0
+        precision = min(x.presicion, y.presicion)
+        result = ""
+        rest = Numbers.real0()
+        for t in x.part_number:
+            div = Numbers(rest.part_number + t, "0")
+            (rest, result) = Numbers.division_immediate(div, y, result)
+
+        while rest != Numbers.real0():
+            div = Numbers(rest.part_number + "0", "0")
+            (rest, result) = Numbers.division_immediate(div, y, result)
+            cant_decimal += 1
+            if cant_decimal == precision:
+                break
+        return result, cant_decimal
+
+    @staticmethod
+    def division_immediate(div: 'Numbers', divisor: 'Numbers', result: str):
+        for j in range(9, -1, -1):
+            aux = divisor * Numbers(str(j), "0")
+
+            if aux <= div:
+                result += str(j)
+                break
+
+        return div - aux, result
+
+    def __le__(self, o: 'Numbers'):
+        return self.compare_to(o) != 1
+
+    def __ge__(self, o: 'Numbers'):
+        return self.compare_to(o) != -1
+
+    def __lt__(self, o: 'Numbers'):
+        return self.compare_to(o) == -1
+
+    def __gt__(self, o: 'Numbers'):
+        print(o)
+        return self.compare_to(o) == 1
