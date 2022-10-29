@@ -1,4 +1,6 @@
-from .aux_operations import eliminate_zeros_left, eliminate_zeros_right
+from ast import Num
+from .aux_operations import eliminate_zeros_left, eliminate_zeros_right, equal_zeros_left, equal_zeros_right, add_zeros_left, add_zeros_right
+from .sum_operations import sum_str, sub_str
 
 
 class Numbers:
@@ -16,6 +18,14 @@ class Numbers:
         self.__sign = '+' if positive else '-'
         self.__abs = self if positive else Numbers(
             self.__part_number, self.__part_decimal, True, precision)
+
+    @staticmethod
+    def real1():
+        return Numbers("1", "0")
+
+    @staticmethod
+    def real0():
+        return Numbers("0", "0")
 
     @property
     def positive(self) -> bool:
@@ -123,3 +133,112 @@ class Numbers:
         part_decimal = f".{self.__part_decimal}" if self.__part_decimal != "0" else ""
 
         return f"{sign}{self.__part_number}{part_decimal}"
+
+    def __add__(self, o: 'Numbers') -> 'Numbers':
+        x: 'Numbers' = self
+        y: 'Numbers' = o
+
+        if x == 0:
+            return y
+        if y == 0:
+            return x
+        if x.sign == y.sign:
+            return Numbers.sum_operation(x, y, True, x.positive)
+        compare = x.abs.compare_to(y.abs)
+        if compare == 0:
+            return 0
+        if compare == 1:
+            return Numbers.sum_operation(x.abs, y.abs, False, x.positive)
+        return Numbers.sum_operation(y.abs, x.abs, False, y.positive)
+
+    @staticmethod
+    def sum_operation(x: str, y: str, sum_or_sub: bool, positive: bool):
+        x_sum_decimal, y_sum_decimal = x.part_decimal, y.part_decimal
+        x_sum_number, y_sum_number = x.part_number, y.part_number
+
+        mayor_decimal, x_sum_decimal, y_sum_decimal = equal_zeros_right(
+            x_sum_decimal, y_sum_decimal)
+        mayor_number, x_sum_number, y_sum_number = equal_zeros_left(
+            x_sum_number, y_sum_number)
+
+        result = sum_str(x_sum_number + x_sum_decimal, y_sum_number +
+                         y_sum_decimal) if sum_or_sub else sub_str(x_sum_number + x_sum_decimal, y_sum_number + y_sum_decimal)
+
+        partDecimal = result[mayor_number:len(result)] if len(
+            result) == mayor_decimal + mayor_number else result[mayor_decimal+1:len(result)]
+        partNumber = result[:mayor_number] if len(
+            result) == mayor_decimal + mayor_number else result[:mayor_number+1]
+
+        return Numbers(eliminate_zeros_left(partNumber), eliminate_zeros_right(partDecimal), positive, max(x.presicion, y.presicion))
+
+    def __sub__(self, o: 'Numbers') -> 'Numbers':
+        return self+(-o)
+
+    def __neg__(self) -> 'Numbers':
+        return Numbers(self.__part_number, self.__part_decimal, not self.positive, self.__precision)
+
+    def __mul__(self, o: 'Numbers'):
+        x: 'Numbers' = self
+        y: 'Numbers' = o
+
+        positive = x.sign == y.sign
+        cant_decimal = len(x.part_decimal) + len(y.part_decimal)
+
+        if x.abs == Numbers.real1():
+            return Numbers(y.part_number, y.part_decimal, positive)
+        if y.abs == Numbers.real1():
+            return Numbers(x.part_number, x.part_decimal, positive)
+
+        m = Numbers(x.part_number + x.part_decimal, "0")
+        n = Numbers(y.part_number + y.part_decimal, "0")
+
+        result = Numbers.karatsuba_algorithm(m, n).part_number
+
+        if result == "0":
+            return Numbers.real0
+
+        if len(result) < cant_decimal:
+            result = add_zeros_left(
+                result, cant_decimal - len(result))
+
+        return Numbers(result[:len(result) - cant_decimal],
+                       result[len(result) - cant_decimal:], positive)
+
+    @staticmethod
+    def karatsuba_algorithm(x: 'Numbers', y: 'Numbers') -> 'Numbers':
+        x_valor = x.part_number
+        y_valor = y.part_number
+
+        if x_valor == "0" or y_valor == "0":
+            return Numbers.real0()
+        if x_valor == "1":
+            return y
+        if y_valor == "1":
+            return x
+        if len(x_valor) == 1 and len(y_valor) == 1:
+            return Numbers(str(int(x_valor) * int(y_valor)), '0')
+
+        aux = equal_zeros_left(x_valor, y_valor)
+        (x_valor, y_valor) = (aux[1], aux[2])
+
+        # Algortimo de Karatsuba
+        # https: // es.wikipedia.org/wiki/Algoritmo_de_Karatsuba
+
+        n: int = len(x_valor) // 2
+        m: int = len(x_valor)
+
+        x1 = Numbers(x_valor[: n], "0")
+        x0 = Numbers(x_valor[n: len(x_valor)], "0")
+        y1 = Numbers(y_valor[:n], "0")
+        y0 = Numbers(y_valor[n: len(y_valor)], "0")
+
+        z2 = Numbers(add_zeros_right(Numbers.karatsuba_algorithm(
+            x1, y1).part_number, 2 * (m - n)), "0")
+        z11 = Numbers(add_zeros_right(
+            Numbers.karatsuba_algorithm(x1, y0).part_number, m - n), "0")
+        z12 = Numbers(add_zeros_right(
+            Numbers.karatsuba_algorithm(y1, x0).part_number, m - n), "0")
+        z1 = z11 + z12
+        z0 = Numbers(Numbers.karatsuba_algorithm(x0, y0).part_number, "0")
+
+        return z2 + z1 + z0
