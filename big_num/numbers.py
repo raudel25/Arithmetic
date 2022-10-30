@@ -107,7 +107,6 @@ class Numbers:
     def __add__(self, o: 'Numbers') -> 'Numbers':
         x: 'Numbers' = self
         y: 'Numbers' = o
-        # print(type(x), type(y))
 
         if x == 0:
             return y
@@ -223,7 +222,6 @@ class Numbers:
         return self.compare_to(o) == -1
 
     def __gt__(self, o: 'Numbers'):
-        print(o)
         return self.compare_to(o) == 1
 
 
