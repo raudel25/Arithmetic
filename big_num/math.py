@@ -1,6 +1,7 @@
 from .numbers import Numbers
 from .trigonometry import sin_cos, atan_method, asin_method, constant_pi
 from .constant_e import constant_e
+from .logarithm import ln_method, log_method
 
 
 def sin(x: 'Numbers', precision=40):
@@ -41,3 +42,11 @@ def pi(precision_decimal=20, precision: int = 100):
 
 def e(precision_decimal=20, precision: int = 30):
     return constant_e(precision, precision_decimal)
+
+
+def ln(x: 'Numbers', precision=100):
+    return ln_method(x, precision)
+
+
+def log(x: 'Numbers', y: 'Numbers', precision=100):
+    return log_method(x, y, precision)

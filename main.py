@@ -5,13 +5,14 @@ from big_num import sum_operations
 import time
 import math
 
-a = Numbers("1","0")
-b = Numbers("3", "0",True,100)
+a = Numbers("3","0")
+b = Numbers("2", "0")
 
 # print(math.asin(0.5))
 # print(big_num.math.asin(a))
-print((a*b).precision)
-print(big_num.math.e(100))
+# print(big_num.math,ln(a))
+print(big_num.math.log(a,b))
+print(math.log2(3))
 
 
 
