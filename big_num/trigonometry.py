@@ -1,7 +1,7 @@
 from .numbers import Numbers
 
 
-def sin_cos(x: 'Numbers', sin: bool, precision=40):
+def sin_cos(x: 'Numbers', sin: bool, precision):
     filter1 = (lambda a: (a & 1) == 0) if sin else (lambda a: (a & 1) != 0)
     filter2 = (lambda a: a % 4 == 1) if sin else (lambda a: a % 4 == 0)
 
@@ -28,11 +28,11 @@ def sin_cos(x: 'Numbers', sin: bool, precision=40):
     return result
 
 
-def atan_method(x: 'Numbers', precision: int = 500):
+def atan_method(x: 'Numbers', precision):
     # arctan(x)+arctan(1/x)=pi/2
     # arctan(1/x)=arccot(x)
     if x.abs > Numbers.real1():
-        return constant_pi() / Numbers("2", "0") - atan_method(Numbers.real1()/x)
+        return constant_pi(100,x.precision) / Numbers("2", "0") - atan_method(Numbers.real1()/x,precision)
 
     pow_value: 'Numbers' = x
     index: 'Numbers' = Numbers.real1()
@@ -40,14 +40,14 @@ def atan_method(x: 'Numbers', precision: int = 500):
     xx: 'Numbers' = x ** Numbers("2", "0")
 
     for i in range(1, 2 * precision, 2):
-        arctan = arctan + pow_value / index if i % 4 == 1 else arctan - pow_value / index;
+        arctan = arctan + pow_value / index if i % 4 == 1 else arctan - pow_value / index
         pow_value *= xx
         index += Numbers("2", "0")
 
     return arctan
 
 
-def asin_method(x: 'Numbers', precision: int = 100):
+def asin_method(x: 'Numbers', precision):
     if x.abs > Numbers.real1():
         raise Exception("Operacion Invalida (arcsin recive valores entre 1 y -1)")
 
@@ -72,5 +72,5 @@ def asin_method(x: 'Numbers', precision: int = 100):
     return arcsin
 
 
-def constant_pi():
-    return asin_method(Numbers("0", "5")) * Numbers("6", "0")
+def constant_pi(precision,precision_decimal):
+    return asin_method(Numbers("0", "5",True,precision_decimal),precision) * Numbers("6", "0")

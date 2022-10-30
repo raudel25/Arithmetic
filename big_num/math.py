@@ -1,13 +1,14 @@
 from .numbers import Numbers
 from .trigonometry import sin_cos, atan_method, asin_method, constant_pi
+from .constant_e import constant_e
 
 
-def sin(x: 'Numbers'):
-    return sin_cos(x, True)
+def sin(x: 'Numbers', precision=40):
+    return sin_cos(x, True, precision)
 
 
-def cos(x: 'Numbers'):
-    return sin_cos(x, False)
+def cos(x: 'Numbers', precision=40):
+    return sin_cos(x, False, precision)
 
 
 def tan(x: 'Numbers'):
@@ -18,21 +19,25 @@ def cot(x: 'Numbers'):
     return cos(x) / sin(x)
 
 
-def atan(x: 'Numbers'):
-    return atan_method(x)
+def atan(x: 'Numbers', precision: int = 500):
+    return atan_method(x, precision)
 
 
-def acot(x: 'Numbers'):
-    return constant_pi() / Numbers("2", "0") - atan_method(x)
+def acot(x: 'Numbers', precision: int = 500):
+    return constant_pi(precision, x.precision) / Numbers("2", "0") - atan_method(x, precision)
 
 
-def asin(x: 'Numbers'):
-    return asin_method(x)
+def asin(x: 'Numbers', precision: int = 100):
+    return asin_method(x, precision)
 
 
-def acos(x: 'Numbers'):
-    return constant_pi() / Numbers("2", "0") - atan_method(x)
+def acos(x: 'Numbers', precision: int = 100):
+    return constant_pi(precision, x.precision) / Numbers("2", "0") - atan_method(x, precision)
 
 
-def pi():
-    return constant_pi()
+def pi(precision_decimal=20, precision: int = 100):
+    return constant_pi(precision, precision_decimal)
+
+
+def e(precision_decimal=20, precision: int = 30):
+    return constant_e(precision, precision_decimal)

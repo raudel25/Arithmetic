@@ -152,7 +152,7 @@ class Numbers:
                 result, cant_decimal - len(result))
 
         return Numbers(result[:len(result) - cant_decimal],
-                       result[len(result) - cant_decimal:], positive)
+                       result[len(result) - cant_decimal:], positive,max(x.precision,y.precision))
 
     def __truediv__(self, o: 'Numbers'):
         x: 'Numbers' = self
@@ -172,11 +172,11 @@ class Numbers:
         m = Numbers(x.part_number + x_part_decimal, "0")
         n = Numbers(y.part_number + y_part_decimal, "0")
 
-        (result, cant_decimal) = division_algorithm(m, n)
+        (result, cant_decimal) = division_algorithm(m, n,max(x.precision,y.precision))
 
         if cant_decimal != 0:
             return (Numbers(result[: len(result) - cant_decimal],
-                            result[len(result) - cant_decimal: len(result)], positive))
+                            result[len(result) - cant_decimal: len(result)], positive,max(x.precision,y.precision)))
         return Numbers(result, "0", positive)
 
     @staticmethod
@@ -320,9 +320,8 @@ def karatsuba_algorithm(x: 'Numbers', y: 'Numbers') -> 'Numbers':
     return z2 + z1 + z0
 
 
-def division_algorithm(x: 'Numbers', y: 'Numbers'):
+def division_algorithm(x: 'Numbers', y: 'Numbers',precision):
     cant_decimal = 0
-    precision = min(x.precision, y.precision)
     result = ""
     rest = Numbers.real0()
     for t in x.part_number:
