@@ -24,36 +24,72 @@ class Numbers:
     def sign(self):
         return self.__sign
 
+    """
+    
+    """
     @staticmethod
     def real1():
+        """
+        Numero 1
+        :return: Numero 1
+        """
         return Numbers("1", "0")
 
     @staticmethod
     def real0():
+        """
+        Numero 0
+        :return: Numero 0
+        """
         return Numbers("0", "0")
 
     @property
     def positive(self) -> bool:
+        """
+        Determina si el numero es positivo
+        :return: si es numero es positivo
+        """
         return self.__sign == "+"
 
     @property
     def precision(self) -> int:
+        """
+        Determina la precision de decimales
+        :return: precision de decimales
+        """
         return self.__precision
 
     @property
     def part_number(self) -> str:
+        """
+        Determina la parte entera
+        :return: parte entera
+        """
         return self.__part_number
 
     @property
     def part_decimal(self) -> str:
+        """
+        Determina la parte decimal
+        :return: parte decimal
+        """
         return self.__part_decimal
 
     @property
     def abs(self) -> 'Numbers':
+        """
+        Determina el modulo de un numero
+        :return: modulo del numero
+        """
         return self.__abs
 
     @staticmethod
     def check(s: str) -> bool:
+        """
+        Determina si el string es correcto para un numero decimal
+        :param s: string
+        :return: si el string es correcto
+        """
         part: list = s.split('.')
 
         if len(part) > 2:
@@ -67,6 +103,11 @@ class Numbers:
 
     @staticmethod
     def check_number(number: str) -> bool:
+        """
+        Dado un string determina si es un numero
+        :param number: string
+        :return: si el string es un numero
+        """
         for i in number:
             if i < '0' or i > '9':
                 return False
@@ -74,12 +115,26 @@ class Numbers:
         return True
 
     def determinate_precision(self, s: str) -> str:
+        """
+        Segun la precision trunca el numero
+        :param s: numero con representacion de string
+        :return: numero aproximado
+        """
         return s[0:self.__precision] if len(s) >= self.__precision else s
 
     def check_zero(self) -> bool:
+        """
+        Determina si el string introducido es el 0
+        :return: si el string introducido es el 0
+        """
         return self.__part_number == '0' and self.__part_decimal == '0'
 
     def compare_to(self, n: 'Numbers') -> int:
+        """
+        Compara el actual numero con otro
+        :param n: numero para comparar
+        :return: 1 si el numero introducido es menor, 0 si es igual y -1 si es mayor
+        """
         if n is None:
             raise Exception("El valor introducido no es correcto")
 
@@ -105,6 +160,11 @@ class Numbers:
         return f"{sign_str}{self.__part_number}{part_decimal}"
 
     def __add__(self, o: 'Numbers') -> 'Numbers':
+        """
+        Determina la suma
+        :param o: sumando
+        :return: resultado
+        """
         x: 'Numbers' = self
         y: 'Numbers' = o
 
@@ -128,6 +188,11 @@ class Numbers:
         return Numbers(self.__part_number, self.__part_decimal, not self.positive, self.__precision)
 
     def __mul__(self, o: 'Numbers'):
+        """
+        Determina la multiplicacion
+        :param o: factor
+        :return: producto
+        """
         x: 'Numbers' = self
         y: 'Numbers' = o
 
@@ -152,9 +217,14 @@ class Numbers:
                 result, cant_decimal - len(result))
 
         return Numbers(result[:len(result) - cant_decimal],
-                       result[len(result) - cant_decimal:], positive,max(x.precision,y.precision))
+                       result[len(result) - cant_decimal:], positive, max(x.precision, y.precision))
 
     def __truediv__(self, o: 'Numbers'):
+        """
+        Determina la division
+        :param o: divison
+        :return: cociente
+        """
         x: 'Numbers' = self
         y: 'Numbers' = o
 
@@ -172,15 +242,22 @@ class Numbers:
         m = Numbers(x.part_number + x_part_decimal, "0")
         n = Numbers(y.part_number + y_part_decimal, "0")
 
-        (result, cant_decimal) = division_algorithm(m, n,max(x.precision,y.precision))
+        (result, cant_decimal) = division_algorithm(
+            m, n, max(x.precision, y.precision))
 
         if cant_decimal != 0:
             return (Numbers(result[: len(result) - cant_decimal],
-                            result[len(result) - cant_decimal: len(result)], positive,max(x.precision,y.precision)))
+                            result[len(result) - cant_decimal: len(result)], positive, max(x.precision, y.precision)))
         return Numbers(result, "0", positive)
 
     @staticmethod
     def sqrt(x: 'Numbers', z: 'Numbers'):
+        """
+        Determina la raiz n-esima de un numero
+        :param x: numero
+        :param z: indice
+        :return: resultado
+        """
         y = int(z.part_number)
 
         if y == 1:
@@ -200,11 +277,16 @@ class Numbers:
             result.part_number, result.part_decimal, positive)
 
     def __pow__(self, o: 'Numbers'):
+        """
+        Determina la potencia
+        :param o: indice
+        :return: potencia
+        """
         if o == Numbers.real0():
             return Numbers.real1()
 
         numerator: int = int(o.part_number + o.part_decimal)
-        denominator: int = int(add_zeros_right('1',len(o.part_decimal)))
+        denominator: int = int(add_zeros_right('1', len(o.part_decimal)))
         gcd: int = math.gcd(numerator, denominator)
 
         result = Numbers.sqrt(self, Numbers(str(denominator // gcd), '0'))
@@ -260,6 +342,14 @@ def compare_number(m: 'Numbers', n: 'Numbers') -> int:
 
 
 def sum_operation(x: 'Numbers', y: 'Numbers', sum_or_sub: bool, positive: bool):
+    """
+    Operacion para la suma
+    :param x: sumando
+    :param y: sumando
+    :param sum_or_sub: determina si se debe sumar o restar
+    :param positive: determina si el resultado es positivo
+    :return: resultado
+    """
     x_sum_decimal, y_sum_decimal = x.part_decimal, y.part_decimal
     x_sum_number, y_sum_number = x.part_number, y.part_number
 
@@ -282,6 +372,12 @@ def sum_operation(x: 'Numbers', y: 'Numbers', sum_or_sub: bool, positive: bool):
 
 
 def karatsuba_algorithm(x: 'Numbers', y: 'Numbers') -> 'Numbers':
+    """
+    Algoritmo de karatsuba
+    :param x: factor
+    :param y: factor
+    :return: producto
+    """
     x_valor = x.part_number
     y_valor = y.part_number
 
@@ -320,7 +416,14 @@ def karatsuba_algorithm(x: 'Numbers', y: 'Numbers') -> 'Numbers':
     return z2 + z1 + z0
 
 
-def division_algorithm(x: 'Numbers', y: 'Numbers',precision):
+def division_algorithm(x: 'Numbers', y: 'Numbers', precision:int):
+    """
+    Algoritmo para la division
+    :param x: dividendo
+    :param y: divisor
+    :param precision: precision de los decimales
+    :return: cociente
+    """
     cant_decimal = 0
     result = ""
     rest = Numbers.real0()
@@ -362,6 +465,13 @@ def pow_numbers(x: 'Numbers', y: int):
 
 
 def algorithm_sqrt(x: 'Numbers', y: int, precision: int = 40):
+    """
+    Algoritmo para calcular la raiz n-esima
+    :param x: numero
+    :param y: indice
+    :param precision: precision de los decimales
+    :return: resultado
+    """
     (value, find) = approximate_integer(x, y)
     if find:
         return value
