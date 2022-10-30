@@ -1,7 +1,7 @@
 from .aux_operations import eliminate_zeros_left, eliminate_zeros_right, equal_zeros_left, equal_zeros_right, \
     add_zeros_left, add_zeros_right
 from .sum_operations import sum_str, sub_str
-from fractions import Fraction
+import math
 
 
 class Numbers:
@@ -181,7 +181,9 @@ class Numbers:
         return Numbers(result, "0", positive)
 
     @staticmethod
-    def sqrt(x: 'Numbers', y: int):
+    def sqrt(x: 'Numbers', z: 'Numbers'):
+        y = int(z.part_number)
+
         if y == 1:
             return x
         if x == Numbers.real0():
@@ -198,16 +200,18 @@ class Numbers:
         return Numbers(result.part_number, result.part_decimal, positive) if y > 0 else Numbers.real1() / Numbers(
             result.part_number, result.part_decimal, positive)
 
-    def __pow__(self, y: float):
-        if y == 0:
+    def __pow__(self, o: 'Numbers'):
+        if o == Numbers.real0():
             return Numbers.real1()
 
-        fract: Fraction = Fraction(y)
+        numerator: int = int(o.part_number + o.part_decimal)
+        denominator: int = int(add_zeros_right('1',len(o.part_decimal)))
+        gcd: int = math.gcd(numerator, denominator)
 
-        result = Numbers.sqrt(self, fract.denominator)
-        result = pow_numbers(result, fract.numerator)
+        result = Numbers.sqrt(self, Numbers(str(denominator // gcd), '0'))
+        result = pow_numbers(result, numerator // gcd)
 
-        return result if y >= 0 else Numbers.real1() / result
+        return result if o.positive else Numbers.real1() / result
 
     def __le__(self, o: 'Numbers'):
         return self.compare_to(o) != 1
@@ -349,15 +353,15 @@ def division_immediate(div: 'Numbers', divisor: 'Numbers', result: str):
 
 
 def pow_numbers(x: 'Numbers', y: int):
-    result = Numbers.real1()
+    if y == 1:
+        return x
 
-    for _ in range(abs(y)):
-        result *= x
+    result: 'Numbers' = pow_numbers(x, y // 2)
 
-    if y < 0:
-        result = Numbers.real1() / result
+    if y & 1 == 1:
+        return result * result * x
 
-    return result
+    return result * result
 
 
 def algorithm_sqrt(x: 'Numbers', y: int, precision: int = 40):
