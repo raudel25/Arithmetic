@@ -84,7 +84,7 @@ def acos(x: 'Numbers', precision: int = 100):
     return constant_pi(precision, x.precision) / Numbers("2", "0") - atan_method(x, precision)
 
 
-def pi(precision_decimal=20, precision: int = 100):
+def pi(precision_decimal: int = 20, precision: int = 100):
     """
     Numero pi
     :param precision_decimal: presicion de decimales
@@ -94,7 +94,7 @@ def pi(precision_decimal=20, precision: int = 100):
     return constant_pi(precision, precision_decimal)
 
 
-def e(precision_decimal=20, precision: int = 30):
+def e(precision_decimal: int = 20, precision: int = 30):
     """
     Numero e
     :param precision_decimal: presicion de decimales

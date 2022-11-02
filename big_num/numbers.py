@@ -453,15 +453,11 @@ def division_immediate(div: 'Numbers', divisor: 'Numbers', result: str):
 
 
 def pow_numbers(x: 'Numbers', y: int):
-    if y == 1:
-        return x
+    result:'Numbers'=Numbers.real1()
+    for _ in range(y):
+        result*=x
 
-    result: 'Numbers' = pow_numbers(x, y // 2)
-
-    if y & 1 == 1:
-        return result * result * x
-
-    return result * result
+    return result
 
 
 def algorithm_sqrt(x: 'Numbers', y: int, precision: int = 40):
