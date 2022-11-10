@@ -11,7 +11,7 @@ def sin(x: 'Numbers', precision=40):
     :param precision: presicion de decimales
     :return: resultado
     """
-    return sin_cos(x, True, precision,Numbers.real1(),Numbers.real0())
+    return sin_cos(x, True, precision, Numbers.real1(), Numbers.real0())
 
 
 def cos(x: 'Numbers', precision=40):
@@ -21,7 +21,7 @@ def cos(x: 'Numbers', precision=40):
     :param precision: presicion de decimales
     :return: resultado
     """
-    return sin_cos(x, False, precision,Numbers.real1(),Numbers.real0())
+    return sin_cos(x, False, precision, Numbers.real1(), Numbers.real0())
 
 
 def tan(x: 'Numbers', precision: int = 40):
@@ -51,7 +51,7 @@ def atan(x: 'Numbers', precision: int = 500):
     :param precision: presicion de decimales
     :return: resultado
     """
-    return atan_method(x, precision,Numbers.real1(),Numbers.real0())
+    return atan_method(x, precision, Numbers.real1(), Numbers.real0())
 
 
 def acot(x: 'Numbers', precision: int = 500):
@@ -61,7 +61,8 @@ def acot(x: 'Numbers', precision: int = 500):
     :param precision: presicion de decimales
     :return: resultado
     """
-    return constant_pi(precision, x.precision,Numbers.real1(),Numbers.real0()) / Numbers("2", "0") - atan_method(x, precision,Numbers.real1(),Numbers.real0())
+    return constant_pi(precision, x.precision, Numbers('6'), Numbers.real1(), Numbers.real0()) / Numbers("2", "0") - \
+           atan_method(x, precision, Numbers.real1(), Numbers.real0())
 
 
 def asin(x: 'Numbers', precision: int = 100):
@@ -71,7 +72,7 @@ def asin(x: 'Numbers', precision: int = 100):
     :param precision: presicion de decimales
     :return: resultado
     """
-    return asin_method(x, precision,Numbers.real1(),Numbers.real0())
+    return asin_method(x, precision, Numbers.real1(), Numbers.real0())
 
 
 def acos(x: 'Numbers', precision: int = 100):
@@ -81,7 +82,9 @@ def acos(x: 'Numbers', precision: int = 100):
     :param precision: presicion de decimales
     :return: resultado
     """
-    return constant_pi(precision, x.precision,Numbers.real1(),Numbers.real0()) / Numbers("2", "0") - atan_method(x, precision,Numbers.real1(),Numbers.real0())
+    return constant_pi(precision, x.precision, Numbers('6'), Numbers.real1(),
+                       Numbers.real0()) / Numbers("2", "0") - \
+           atan_method(x, precision, Numbers.real1(), Numbers.real0())
 
 
 def pi(precision_decimal: int = 20, precision: int = 100):
@@ -91,7 +94,7 @@ def pi(precision_decimal: int = 20, precision: int = 100):
     :param precision:  precision
     :return: resultado
     """
-    return constant_pi(precision, precision_decimal,Numbers.real1(),Numbers.real0())
+    return constant_pi(precision, precision_decimal, Numbers('6'), Numbers.real1(), Numbers.real0())
 
 
 def e(precision_decimal: int = 20, precision: int = 30):
@@ -101,7 +104,7 @@ def e(precision_decimal: int = 20, precision: int = 30):
     :param precision:  precision
     :return: resultado
     """
-    return constant_e(precision, precision_decimal,Numbers.real1(),Numbers('0', '0', True, precision_decimal))
+    return constant_e(precision, precision_decimal, Numbers.real1(), Numbers('0', '0', True, precision_decimal))
 
 
 def ln(x: 'Numbers', precision=100):
@@ -111,7 +114,7 @@ def ln(x: 'Numbers', precision=100):
     :param precision: presicion de decimales
     :return: resultado
     """
-    return ln_method(x, precision,Numbers.real1(),Numbers.real0())
+    return ln_method(x, precision, Numbers.real1(), Numbers.real0())
 
 
 def log(x: 'Numbers', y: 'Numbers', precision=100):
@@ -122,4 +125,4 @@ def log(x: 'Numbers', y: 'Numbers', precision=100):
     :param precision: presicion de decimales
     :return: resultado
     """
-    return log_method(x, y, precision,Numbers.real1(),Numbers.real0())
+    return log_method(x, y, precision, Numbers.real1(), Numbers.real0())

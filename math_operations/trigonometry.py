@@ -75,6 +75,5 @@ def asin_method(x: 'Numbers', precision, number1, number0):
     return arcsin
 
 
-def constant_pi(precision, precision_decimal, number1, number0):
-    number6 = number1 + number1 + number1 + number1 + number1 + number1
+def constant_pi(precision, precision_decimal,number6, number1, number0):
     return asin_method(Numbers("0", "5", True, precision_decimal), precision, number1, number0) * number6

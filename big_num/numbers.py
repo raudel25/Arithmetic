@@ -2,6 +2,7 @@ from .aux_operations import eliminate_zeros_left, eliminate_zeros_right, equal_z
     add_zeros_left, add_zeros_right
 from .sum_operations import sum_str, sub_str
 import math
+from math_operations.pow_sqrt import algorithm_sqrt, pow_numbers
 
 
 class Numbers:
@@ -272,7 +273,7 @@ class Numbers:
         if parity and not x.positive:
             raise Exception("Operacion Invalida (el resultado no es real)")
 
-        result = algorithm_sqrt(x.abs, abs(y))
+        result = algorithm_sqrt(x.abs, abs(y), Numbers(str(abs(y))), 40, Numbers('10'), Numbers.real1())
 
         return Numbers(result.part_number, result.part_decimal, positive) if y > 0 else Numbers.real1() / Numbers(
             result.part_number, result.part_decimal, positive)
@@ -291,7 +292,7 @@ class Numbers:
         gcd: int = math.gcd(numerator, denominator)
 
         result = Numbers.sqrt(self, Numbers(str(denominator // gcd), '0'))
-        result = pow_numbers(result, numerator // gcd)
+        result = pow_numbers(result, numerator // gcd, Numbers.real1())
 
         return result if o.positive else Numbers.real1() / result
 
@@ -451,51 +452,3 @@ def division_immediate(div: 'Numbers', divisor: 'Numbers', result: str):
             break
 
     return div - aux, result
-
-
-def pow_numbers(x: 'Numbers', y: int):
-    result: 'Numbers' = Numbers.real1()
-    for _ in range(y):
-        result *= x
-
-    return result
-
-
-def algorithm_sqrt(x: 'Numbers', y: int, precision: int = 40):
-    """
-    Algoritmo para calcular la raiz n-esima
-    :param x: numero
-    :param y: indice
-    :param precision: precision de los decimales
-    :return: resultado
-    """
-    (value, find) = approximate_integer(x, y)
-    if find:
-        return value
-
-    value_y = Numbers(str(y), '0')
-    value_y_1 = value_y - Numbers.real1()
-
-    #  https: // es.frwiki.wiki/wiki/Algorithme_de_calcul_de_la_racine_n-i % C3 % A8me
-    for i in range(precision):
-        aux = x / pow_numbers(value, y - 1)
-        value = Numbers.real1() / value_y * (value_y_1 * value + aux)
-
-    return value
-
-
-def approximate_integer(x: 'Numbers', y: int):
-    sqrt: int = y
-    cant: int = len(x.part_number) - 1
-
-    s: str = "1"
-    s = add_zeros_right(s, cant // sqrt)
-    value = Numbers(s, "0")
-
-    pow_value = pow_numbers(value, y)
-
-    while pow_value < x:
-        value += Numbers.real1()
-        pow_value = pow_numbers(value, y)
-
-    return (value, True) if pow_value == x else (value - Numbers.real1(), False)

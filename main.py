@@ -5,5 +5,5 @@ import fixedpoint
 import fractions
 a=Numbers('2')
 
-print(math.sin(2))
-print(big_num.math.sin(a))
+print(2**0.5)
+print(Numbers.sqrt(a,a))
