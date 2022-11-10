@@ -6,4 +6,4 @@ import fractions
 a=Numbers('2')
 
 print(2**0.5)
-print(Numbers.sqrt(a,a))
+print(big_num.math.pow_value(a,Numbers('5')))

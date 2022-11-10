@@ -1,8 +1,7 @@
 from .aux_operations import eliminate_zeros_left, eliminate_zeros_right, equal_zeros_left, equal_zeros_right, \
     add_zeros_left, add_zeros_right
 from .sum_operations import sum_str, sub_str
-import math
-from math_operations.pow_sqrt import algorithm_sqrt, pow_numbers
+from math_operations.pow_sqrt import pow_numbers
 
 
 class Numbers:
@@ -252,49 +251,13 @@ class Numbers:
                             result[len(result) - cant_decimal: len(result)], positive, max(x.precision, y.precision)))
         return Numbers(result, "0", positive)
 
-    @staticmethod
-    def sqrt(x: 'Numbers', z: 'Numbers'):
-        """
-        Determina la raiz n-esima de un numero
-        :param x: numero
-        :param z: indice
-        :return: resultado
-        """
-        y = int(z.part_number)
-
-        if y == 1:
-            return x
-        if x == Numbers.real0():
-            return Numbers.real0()
-
-        parity: bool = y & 1 == 0
-        positive: bool = parity or x.positive
-
-        if parity and not x.positive:
-            raise Exception("Operacion Invalida (el resultado no es real)")
-
-        result = algorithm_sqrt(x.abs, abs(y), Numbers(str(abs(y))), 40, Numbers('10'), Numbers.real1())
-
-        return Numbers(result.part_number, result.part_decimal, positive) if y > 0 else Numbers.real1() / Numbers(
-            result.part_number, result.part_decimal, positive)
-
-    def __pow__(self, o: 'Numbers'):
+    def __pow__(self, o: int):
         """
         Determina la potencia
         :param o: indice
         :return: potencia
         """
-        if o == Numbers.real0():
-            return Numbers.real1()
-
-        numerator: int = int(o.part_number + o.part_decimal)
-        denominator: int = int(add_zeros_right('1', len(o.part_decimal)))
-        gcd: int = math.gcd(numerator, denominator)
-
-        result = Numbers.sqrt(self, Numbers(str(denominator // gcd), '0'))
-        result = pow_numbers(result, numerator // gcd, Numbers.real1())
-
-        return result if o.positive else Numbers.real1() / result
+        return pow_numbers(self, o, Numbers.real1())
 
     def __le__(self, o: 'Numbers'):
         return self.compare_to(o) != 1

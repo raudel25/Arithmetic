@@ -2,6 +2,14 @@ from big_num.numbers import Numbers
 
 
 def ln_method(x, precision, number1,number0):
+    """
+    Aproximacion del logaritmo natular
+    :param x: arugumento
+    :param precision: cantidad de iteraciones
+    :param number1: numero 1 en el formato especifico
+    :param number0: numero 0 en el formato especifico
+    :return: resultado
+    """
     # ln(1/x)=-ln(x)
     positive: bool = x.abs > Numbers.real1()
     x = number1 / x if positive else x

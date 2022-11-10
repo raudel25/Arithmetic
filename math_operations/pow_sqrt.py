@@ -35,6 +35,14 @@ def algorithm_sqrt(x, y: int, number_y, precision, number10, number1):
 
 
 def approximate_integer(x, y: int, number10, number1):
+    """
+    Aproximar una raiz
+    :param x: numero
+    :param y: indice
+    :param number10: numero 10 en el formato especificado
+    :param number1: numero 1 en el formato especificado
+    :return: resultado
+    """
     value = number10
     while value < x:
         value *= number10

@@ -1,8 +1,15 @@
 from big_num.numbers import Numbers
 
 
-def constant_e(precision: int , precision_decimal: int,number1,number0_precision):
-    e=number0_precision
+def constant_e(precision: int, number1, number0_precision):
+    """
+    Aproximacion de e
+    :param precision: cantidad de iteraciones
+    :param number1: numero 1 en el formato especifico
+    :param number0_precision: numero 0 en el formato especifico con la cantidad de decimales especificada
+    :return: resultado
+    """
+    e = number0_precision
     fact: 'Numbers' = number1
     index = number0_precision
 
