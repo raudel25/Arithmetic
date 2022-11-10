@@ -1,14 +1,14 @@
-from .numbers import Numbers
+from big_num.numbers import Numbers
 
 
-def sin_cos(x: 'Numbers', sin: bool, precision):
+def sin_cos(x, sin: bool, precision, number1, number0):
     filter1 = (lambda a: (a & 1) == 0) if sin else (lambda a: (a & 1) != 0)
     filter2 = (lambda a: a % 4 == 1) if sin else (lambda a: a % 4 == 0)
 
-    result: 'Numbers' = Numbers.real0()
-    pow_value: 'Numbers' = Numbers.real1()
-    fact: 'Numbers' = Numbers.real1()
-    index: 'Numbers' = Numbers.real0()
+    result = number0
+    pow_value = number1
+    fact = number1
+    index = number0
 
     # Serie de taylor sen x cos x
     # https: // es.wikipedia.org / wiki / Serie_de_Taylor
@@ -28,34 +28,37 @@ def sin_cos(x: 'Numbers', sin: bool, precision):
     return result
 
 
-def atan_method(x: 'Numbers', precision):
+def atan_method(x, precision, number1, number0):
     # arctan(x)+arctan(1/x)=pi/2
     # arctan(1/x)=arccot(x)
-    if x.abs > Numbers.real1():
-        return constant_pi(100,x.precision) / Numbers("2", "0") - atan_method(Numbers.real1()/x,precision)
+
+    number2 = number1 + number1
+
+    if x.abs > number1:
+        return constant_pi(100, x.precision) / number2 - atan_method(Numbers.real1() / x, precision, number1, number0)
 
     pow_value: 'Numbers' = x
-    index: 'Numbers' = Numbers.real1()
-    arctan: 'Numbers' = Numbers.real0()
-    xx: 'Numbers' = x ** Numbers("2", "0")
+    index = number1
+    arctan = number0
+    xx: 'Numbers' = x ** number2
 
     for i in range(1, 2 * precision, 2):
         arctan = arctan + pow_value / index if i % 4 == 1 else arctan - pow_value / index
         pow_value *= xx
-        index += Numbers("2", "0")
+        index += number2
 
     return arctan
 
 
-def asin_method(x: 'Numbers', precision):
-    if x.abs > Numbers.real1():
+def asin_method(x: 'Numbers', precision, number1, number0):
+    if x.abs > number1:
         raise Exception("Operacion Invalida (arcsin recive valores entre 1 y -1)")
 
-    index = Numbers.real1()
-    even = Numbers.real1()
-    odd = Numbers.real1()
-    pow_value = Numbers.real1()
-    arcsin = Numbers.real0()
+    index = number1
+    even = number1
+    odd = number1
+    pow_value = number1
+    arcsin = number0
 
     for i in range(1, precision):
         pow_value *= x
@@ -72,5 +75,6 @@ def asin_method(x: 'Numbers', precision):
     return arcsin
 
 
-def constant_pi(precision,precision_decimal):
-    return asin_method(Numbers("0", "5",True,precision_decimal),precision) * Numbers("6", "0")
+def constant_pi(precision, precision_decimal, number1, number0):
+    number6 = number1 + number1 + number1 + number1 + number1 + number1
+    return asin_method(Numbers("0", "5", True, precision_decimal), precision, number1, number0) * number6

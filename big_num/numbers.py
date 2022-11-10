@@ -5,7 +5,7 @@ import math
 
 
 class Numbers:
-    def __init__(self, part_number: str, part_decimal: str, positive: bool = True, precision: int = 20):
+    def __init__(self, part_number: str, part_decimal: str = '0', positive: bool = True, precision: int = 20):
         (part_number, part_decimal) = (eliminate_zeros_left(
             part_number), eliminate_zeros_right(part_decimal))
 
@@ -27,6 +27,7 @@ class Numbers:
     """
     
     """
+
     @staticmethod
     def real1():
         """
@@ -416,7 +417,7 @@ def karatsuba_algorithm(x: 'Numbers', y: 'Numbers') -> 'Numbers':
     return z2 + z1 + z0
 
 
-def division_algorithm(x: 'Numbers', y: 'Numbers', precision:int):
+def division_algorithm(x: 'Numbers', y: 'Numbers', precision: int):
     """
     Algoritmo para la division
     :param x: dividendo
@@ -453,9 +454,9 @@ def division_immediate(div: 'Numbers', divisor: 'Numbers', result: str):
 
 
 def pow_numbers(x: 'Numbers', y: int):
-    result:'Numbers'=Numbers.real1()
+    result: 'Numbers' = Numbers.real1()
     for _ in range(y):
-        result*=x
+        result *= x
 
     return result
 
