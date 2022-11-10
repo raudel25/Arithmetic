@@ -1,6 +1,3 @@
-from big_num.numbers import Numbers
-
-
 def sin_cos(x, sin: bool, precision, number1, number0):
     """
     Calcular seno o coseno
@@ -27,7 +24,7 @@ def sin_cos(x, sin: bool, precision, number1, number0):
         if i != 0:
             pow_value *= x
 
-        index += Numbers.real1()
+        index += number1
 
         if filter1(i):
             continue
@@ -37,11 +34,12 @@ def sin_cos(x, sin: bool, precision, number1, number0):
     return result
 
 
-def atan_method(x, precision, number1, number0):
+def atan_method(x, precision, pi, number1, number0):
     """
     Calcular el arcotangente
     :param x: numero
     :param precision: cantidad de iteraciones
+    :param pi:numero pi en el formato establecido
     :param number1: numero 1 en el formato especifico
     :param number0: numero 0 en el formato especifico
     :return: resultado
@@ -51,14 +49,15 @@ def atan_method(x, precision, number1, number0):
 
     number2 = number1 + number1
 
-    if x.abs > number1:
-        return constant_pi(100, x.precision, number1, number0) / number2 - atan_method(Numbers.real1() / x, precision,
-                                                                                       number1, number0)
+    x_abs = x if x >= number0 else number0 - x
 
-    pow_value: 'Numbers' = x
+    if x_abs > number1:
+        return pi - atan_method(number1 / x, precision, pi, number1, number0)
+
+    pow_value = x
     index = number1
     arctan = number0
-    xx: 'Numbers' = x ** number2
+    xx = x * x
 
     for i in range(1, 2 * precision, 2):
         arctan = arctan + pow_value / index if i % 4 == 1 else arctan - pow_value / index
@@ -68,7 +67,7 @@ def atan_method(x, precision, number1, number0):
     return arctan
 
 
-def asin_method(x: 'Numbers', precision, number1, number0):
+def asin_method(x, precision, number1, number0):
     """
     Calcular el arcoseno
     :param x: numero
@@ -77,7 +76,8 @@ def asin_method(x: 'Numbers', precision, number1, number0):
     :param number0: numero 0 en el formato especifico
     :return: resultado
     """
-    if x.abs > number1:
+    x_abs = x if x >= number0 else number0 - x
+    if x_abs > number1:
         raise Exception("Operacion Invalida (arcsin recive valores entre 1 y -1)")
 
     index = number1
@@ -96,11 +96,11 @@ def asin_method(x: 'Numbers', precision, number1, number0):
             arcsin += (odd * pow_value) / (even * index)
             odd *= index
 
-        index += Numbers.real1()
+        index += number1
 
     return arcsin
 
 
-def constant_pi(precision, precision_decimal, number1, number0):
+def constant_pi(precision, number05_precision, number1, number0):
     number6 = number1 + number1 + number1 + number1 + number1 + number1
-    return asin_method(Numbers("0", "5", True, precision_decimal), precision, number1, number0) * number6
+    return asin_method(number05_precision, precision, number1, number0) * number6

@@ -54,7 +54,7 @@ def atan(x: 'Numbers', precision: int = 500):
     :param precision: presicion de decimales
     :return: resultado
     """
-    return atan_method(x, precision, Numbers.real1(), Numbers.real0())
+    return atan_method(x, precision, pi(), Numbers.real1(), Numbers.real0())
 
 
 def acot(x: 'Numbers', precision: int = 500):
@@ -64,8 +64,8 @@ def acot(x: 'Numbers', precision: int = 500):
     :param precision: presicion de decimales
     :return: resultado
     """
-    return constant_pi(precision, x.precision, Numbers.real1(), Numbers.real0()) / Numbers("2", "0") - \
-           atan_method(x, precision, Numbers.real1(), Numbers.real0())
+    number_pi = pi()
+    return number_pi / Numbers("2", "0") - atan_method(x, precision, number_pi, Numbers.real1(), Numbers.real0())
 
 
 def asin(x: 'Numbers', precision: int = 100):
@@ -85,8 +85,7 @@ def acos(x: 'Numbers', precision: int = 100):
     :param precision: presicion de decimales
     :return: resultado
     """
-    return constant_pi(precision, x.precision, Numbers.real1(), Numbers.real0()) / Numbers("2", "0") - \
-           atan_method(x, precision, Numbers.real1(), Numbers.real0())
+    return pi() / Numbers("2", "0") - asin_method(x, precision, Numbers.real1(), Numbers.real0())
 
 
 def pi(precision_decimal: int = 20, precision: int = 100):
@@ -96,7 +95,7 @@ def pi(precision_decimal: int = 20, precision: int = 100):
     :param precision:  precision
     :return: resultado
     """
-    return constant_pi(precision, precision_decimal, Numbers.real1(), Numbers.real0())
+    return constant_pi(precision, Numbers('0', '5', True, precision_decimal), Numbers.real1(), Numbers.real0())
 
 
 def e(precision_decimal: int = 20, precision: int = 30):

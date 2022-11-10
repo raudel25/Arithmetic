@@ -1,7 +1,7 @@
 from big_num.numbers import Numbers
 
 
-def ln_method(x, precision, number1,number0):
+def ln_method(x, precision, number1, number0):
     """
     Aproximacion del logaritmo natular
     :param x: arugumento
@@ -11,7 +11,8 @@ def ln_method(x, precision, number1,number0):
     :return: resultado
     """
     # ln(1/x)=-ln(x)
-    positive: bool = x.abs > Numbers.real1()
+    x_abs = x if x >= number0 else number0 - x
+    positive: bool = x_abs > number1
     x = number1 / x if positive else x
     x = number1 - x
 
@@ -24,12 +25,12 @@ def ln_method(x, precision, number1,number0):
     for i in range(1, precision):
         ln += pow_value / index
         pow_value *= x
-        index += Numbers.real1()
+        index += number1
 
     return ln if positive else -ln
 
 
-def log_method(x, y, precision: int,number1,number0):
+def log_method(x, y, precision: int, number1, number0):
     pow_value = number1
     index: int = 0
 
@@ -39,4 +40,4 @@ def log_method(x, y, precision: int,number1,number0):
         pow_value *= x
         index += 1
 
-    return ln_method(x, precision,number1,number0) / ln_method(y, precision,number1,number0)
+    return ln_method(x, precision, number1, number0) / ln_method(y, precision, number1, number0)

@@ -19,6 +19,6 @@ def constant_e(precision: int, number1, number0_precision):
         if i != 0:
             fact *= index
         e += number1 / fact
-        index += Numbers.real1()
+        index += number1
 
     return e
