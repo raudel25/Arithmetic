@@ -44,3 +44,36 @@ def equal_zeros_right(x: str, y: str) -> tuple:
     ind: int = max(len(x), len(y))
 
     return ind, add_zeros_right(x, ind - len(x)), add_zeros_right(y, ind - len(y))
+
+
+def eliminate_zeros_left_value(numer_value: list, precision: int) -> list:
+    l: list = []
+
+    for i in range(len(numer_value)):
+        if i > precision and numer_value[i] == 0:
+            break
+        l.append(numer_value[i])
+
+    return l
+
+
+def add_zeros_left_value(numer_value: list, cant: int) -> list:
+    l: list = [x for x in numer_value]
+
+    for _ in range(cant):
+        l.append(0)
+
+    return l
+
+
+def add_zeros_right_value(numer_value: list, cant: int) -> list:
+    l: list = [0 for _ in range(cant)]
+
+    return l + numer_value
+
+
+def equal_zeros_left_value(x: list, y: list) -> tuple:
+    lx: list = add_zeros_left_value(x, max(len(x), len(y)) - len(x))
+    ly: list = add_zeros_left_value(y, max(len(x), len(y)) - len(y))
+
+    return lx,ly

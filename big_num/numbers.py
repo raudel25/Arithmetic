@@ -1,48 +1,64 @@
 from .aux_operations import eliminate_zeros_left, eliminate_zeros_right, equal_zeros_left, equal_zeros_right, \
-    add_zeros_left, add_zeros_right
-from .sum_operations import sum_str, sub_str
+    add_zeros_left, add_zeros_right, eliminate_zeros_left_value, equal_zeros_left_value
+from .basic_operations import sum_number, sub_number, karatsuba_algorithm, compare_list
 from math_operations.pow_sqrt import pow_numbers
 
 
-class Numbers:
-    def __init__(self, part_number: str, part_decimal: str = '0', positive: bool = True, precision: int = 20):
-        (part_number, part_decimal) = (eliminate_zeros_left(
-            part_number), eliminate_zeros_right(part_decimal))
-
+class BigNum:
+    def __init__(self, base10: int = 10, precision=20):
+        self.__base10 = base10
         self.__precision = precision
-        self.__part_number = part_number
-        self.__part_decimal = self.determinate_precision(part_decimal)
 
-        if self.check_zero():
+    def __call__(self, number: str | float | list, positive: bool = True):
+        return Numbers(number, positive, self.__base10, self.__precision)
+
+    def base10(self):
+        return self.__base10
+
+    def precision(self):
+        return self.__precision
+
+    def number1(self):
+        return
+
+
+class Numbers:
+    def __init__(self, number: str | float | list, positive: bool, base10: int, precision: int):
+        self.__precision: int = precision
+        self.__base10: int = base10
+        self.__number_value: list = []
+
+        if type(number) is not list:
+            str_number: str = str(number)
+            (part_int, part_decimal) = Numbers.__int_and_decimal(str_number)
+            (part_int, part_decimal) = (eliminate_zeros_left(part_int), eliminate_zeros_right(part_decimal))
+            self.__number_value = self.__create_value_number(part_int, part_decimal)
+        else:
+            self.__number_value = eliminate_zeros_left_value(number, precision)
+
+        if self.__check_zero():
             positive = True
 
         self.__sign = '+' if positive else '-'
-        self.__abs = self if positive else Numbers(
-            self.__part_number, self.__part_decimal, True, precision)
+        self.__abs = self if positive else Numbers(number, True, base10, precision)
 
     @property
     def sign(self):
         return self.__sign
 
-    """
-    
-    """
-
-    @staticmethod
-    def real1():
+    def real1(self):
         """
         Numero 1
         :return: Numero 1
         """
-        return Numbers("1", "0")
+        return Numbers('1', True, self.__base10, self.__precision)
 
-    @staticmethod
-    def real0():
+    def real0(self):
         """
         Numero 0
         :return: Numero 0
         """
-        return Numbers("0", "0")
+        return Numbers('0', True, self.__base10, self.__precision)
 
     @property
     def positive(self) -> bool:
@@ -61,12 +77,12 @@ class Numbers:
         return self.__precision
 
     @property
-    def part_number(self) -> str:
+    def part_int(self) -> str:
         """
         Determina la parte entera
         :return: parte entera
         """
-        return self.__part_number
+        return self.__part_int
 
     @property
     def part_decimal(self) -> str:
@@ -85,7 +101,7 @@ class Numbers:
         return self.__abs
 
     @staticmethod
-    def check(s: str) -> bool:
+    def __int_and_decimal(s: str) -> tuple:
         """
         Determina si el string es correcto para un numero decimal
         :param s: string
@@ -93,42 +109,37 @@ class Numbers:
         """
         part: list = s.split('.')
 
-        if len(part) > 2:
-            return False
+        return part[0], part[1] if len(part) == 2 else '0'
 
-        for number in part:
-            if not Numbers.check_zero(number):
+    def __create_value_number(self, part_int: str, part_decimal: str):
+        """
+        Representacion del numero
+        :param part_int: parte entera
+        :param part_decimal: parte decimal
+        """
+        number_value: list = [0 for _ in range(self.__precision + 1)]
+
+        part_int = add_zeros_left(part_int, self.__base10 - len(part_int) % self.__base10)
+        part_decimal = add_zeros_right(part_decimal, self.__base10 - len(part_decimal) % self.__base10)
+
+        for i in range(len(part_decimal) // self.__base10):
+            number_value[-i - 2] = int(part_decimal[i * self.__base10:(i + 1) * self.__base10])
+            if i + 2 == self.precision:
+                break
+
+        number_value[-1] = int(part_int[-self.__base10:])
+
+        for i in range(1, len(part_int) // self.__base10):
+            number_value.append(int(part_int[-self.__base10 * (i + 1):-self.__base10 * i]))
+
+        return number_value
+
+    def __check_zero(self) -> bool:
+        for i in self.__number_value:
+            if i != 0:
                 return False
 
         return True
-
-    @staticmethod
-    def check_number(number: str) -> bool:
-        """
-        Dado un string determina si es un numero
-        :param number: string
-        :return: si el string es un numero
-        """
-        for i in number:
-            if i < '0' or i > '9':
-                return False
-
-        return True
-
-    def determinate_precision(self, s: str) -> str:
-        """
-        Segun la precision trunca el numero
-        :param s: numero con representacion de string
-        :return: numero aproximado
-        """
-        return s[0:self.__precision] if len(s) >= self.__precision else s
-
-    def check_zero(self) -> bool:
-        """
-        Determina si el string introducido es el 0
-        :return: si el string introducido es el 0
-        """
-        return self.__part_number == '0' and self.__part_decimal == '0'
 
     def compare_to(self, n: 'Numbers') -> int:
         """
@@ -141,8 +152,8 @@ class Numbers:
 
         if self.__sign == n.__sign:
             if self.__sign == '+':
-                return compare_number(self, n)
-            return compare_number(n, self)
+                return compare_list(self.__number_value, n.__number_value)
+            return compare_list(n.__number_value, self.__number_value)
 
         if self.__sign == '+':
             return 1
@@ -152,13 +163,22 @@ class Numbers:
         if type(obj) is not Numbers:
             return False
 
-        return obj.__part_number == self.__part_number and obj.__part_decimal == self.__part_decimal and obj.__sign == self.__sign
+        return obj.__number_value == self.__number_value and obj.__sign == self.__sign
 
     def __str__(self) -> str:
-        sign_str = "-" if self.__sign == "-" else ""
-        part_decimal = f".{self.__part_decimal}" if self.__part_decimal != "0" else ""
+        sign_str: str = "-" if self.__sign == "-" else ""
 
-        return f"{sign_str}{self.__part_number}{part_decimal}"
+        part_decimal: str = ''
+        part_int: str = ''
+
+        for i in range(self.__precision):
+            part_decimal = f'{str(self.__number_value[i])}{part_decimal}'
+        for i in range(self.__precision, len(self.__number_value)):
+            part_int = f'{str(self.__number_value[i])}{part_int}'
+
+        part_decimal = eliminate_zeros_right(part_decimal)
+
+        return f"{sign_str}{part_int}.{part_decimal}"
 
     def __add__(self, o: 'Numbers') -> 'Numbers':
         """
@@ -173,20 +193,26 @@ class Numbers:
             return y
         if y == 0:
             return x
+
+        (lx, ly) = (x.__number_value, y.__number_value)
+
         if x.sign == y.sign:
-            return sum_operation(x, y, True, x.positive)
+            return Numbers(sum_number(lx, ly, self.__base10), x.positive, self.__base10,
+                           self.__precision)
         compare = x.abs.compare_to(y.abs)
         if compare == 0:
-            return Numbers.real0()
+            return self.real0()
         if compare == 1:
-            return sum_operation(x.abs, y.abs, False, x.positive)
-        return sum_operation(y.abs, x.abs, False, y.positive)
+            return Numbers(sub_number(lx, ly, self.__base10), x.positive, self.__base10,
+                           self.__precision)
+        return Numbers(sub_number(ly, lx, self.__base10), y.positive, self.__base10,
+                       self.__precision)
 
     def __sub__(self, o: 'Numbers') -> 'Numbers':
         return self + (-o)
 
     def __neg__(self) -> 'Numbers':
-        return Numbers(self.__part_number, self.__part_decimal, not self.positive, self.__precision)
+        return Numbers(self.__number_value, not self.positive, self.__base10, self.__precision)
 
     def __mul__(self, o: 'Numbers'):
         """
@@ -198,27 +224,15 @@ class Numbers:
         y: 'Numbers' = o
 
         positive = x.sign == y.sign
-        cant_decimal = len(x.part_decimal) + len(y.part_decimal)
 
-        if x.abs == Numbers.real1():
-            return Numbers(y.part_number, y.part_decimal, positive)
-        if y.abs == Numbers.real1():
-            return Numbers(x.part_number, x.part_decimal, positive)
+        if x.abs == self.real1():
+            return Numbers(y.__number_value, positive, y.__base10, y.__precision)
+        if y.abs == self.real1():
+            return Numbers(x.__number_value, positive, x.__base10, x.__precision)
 
-        m = Numbers(x.part_number + x.part_decimal, "0")
-        n = Numbers(y.part_number + y.part_decimal, "0")
+        (lx, ly) = equal_zeros_left_value(x.__number_value, y.__number_value)
 
-        result = karatsuba_algorithm(m, n).part_number
-
-        if result == "0":
-            return Numbers.real0()
-
-        if len(result) < cant_decimal:
-            result = add_zeros_left(
-                result, cant_decimal - len(result))
-
-        return Numbers(result[:len(result) - cant_decimal],
-                       result[len(result) - cant_decimal:], positive, max(x.precision, y.precision))
+        return Numbers(karatsuba_algorithm(lx, ly, self.__base10), positive, self.__base10, self.__precision)
 
     def __truediv__(self, o: 'Numbers'):
         """
@@ -240,11 +254,10 @@ class Numbers:
         aux = equal_zeros_right(x_part_decimal, y_part_decimal)
         (x_part_decimal, y_part_decimal) = (aux[1], aux[2])
 
-        m = Numbers(x.part_number + x_part_decimal, "0")
-        n = Numbers(y.part_number + y_part_decimal, "0")
+        m = Numbers(x.part_number + x_part_decimal, "0", True, max(x.precision, y.precision))
+        n = Numbers(y.part_number + y_part_decimal, "0", True, max(x.precision, y.precision))
 
-        (result, cant_decimal) = division_algorithm(
-            m, n, max(x.precision, y.precision))
+        (result, cant_decimal) = division_algorithm(m, n, max(x.precision, y.precision))
 
         if cant_decimal != 0:
             return (Numbers(result[: len(result) - cant_decimal],
@@ -271,147 +284,4 @@ class Numbers:
     def __gt__(self, o: 'Numbers'):
         return self.compare_to(o) == 1
 
-
 # Metodos auxiliares
-
-def compare_number(m: 'Numbers', n: 'Numbers') -> int:
-    if len(m.part_number) > len(n.part_number):
-        return 1
-    if len(m.part_number) < len(n.part_number):
-        return -1
-
-    for i in range(len(m.part_number)):
-        x = ord(m.part_number[i]) - 48
-        y = ord(n.part_number[i]) - 48
-
-        if x > y:
-            return 1
-        if x < y:
-            return -1
-
-    for i in range(min(len(m.part_decimal), len(n.part_decimal))):
-        x = ord(m.part_decimal[i]) - 48
-        y = ord(n.part_decimal[i]) - 48
-
-        if x > y:
-            return 1
-        if x < y:
-            return -1
-
-    if len(m.part_decimal) > len(n.part_decimal):
-        return -1
-    if len(m.part_decimal) < len(n.part_decimal):
-        return 1
-
-    return 0
-
-
-def sum_operation(x: 'Numbers', y: 'Numbers', sum_or_sub: bool, positive: bool):
-    """
-    Operacion para la suma
-    :param x: sumando
-    :param y: sumando
-    :param sum_or_sub: determina si se debe sumar o restar
-    :param positive: determina si el resultado es positivo
-    :return: resultado
-    """
-    x_sum_decimal, y_sum_decimal = x.part_decimal, y.part_decimal
-    x_sum_number, y_sum_number = x.part_number, y.part_number
-
-    mayor_decimal, x_sum_decimal, y_sum_decimal = equal_zeros_right(
-        x_sum_decimal, y_sum_decimal)
-    mayor_number, x_sum_number, y_sum_number = equal_zeros_left(
-        x_sum_number, y_sum_number)
-
-    result = sum_str(x_sum_number + x_sum_decimal, y_sum_number +
-                     y_sum_decimal) if sum_or_sub else sub_str(x_sum_number + x_sum_decimal,
-                                                               y_sum_number + y_sum_decimal)
-
-    part_decimal = result[mayor_number:len(result)] if len(
-        result) == mayor_decimal + mayor_number else result[mayor_decimal + 1:len(result)]
-    part_number = result[:mayor_number] if len(
-        result) == mayor_decimal + mayor_number else result[:mayor_number + 1]
-
-    return Numbers(eliminate_zeros_left(part_number), eliminate_zeros_right(part_decimal), positive,
-                   max(x.precision, y.precision))
-
-
-def karatsuba_algorithm(x: 'Numbers', y: 'Numbers') -> 'Numbers':
-    """
-    Algoritmo de karatsuba
-    :param x: factor
-    :param y: factor
-    :return: producto
-    """
-    x_valor = x.part_number
-    y_valor = y.part_number
-
-    if x_valor == "0" or y_valor == "0":
-        return Numbers.real0()
-    if x_valor == "1":
-        return y
-    if y_valor == "1":
-        return x
-    if len(x_valor) == 1 and len(y_valor) == 1:
-        return Numbers(str(int(x_valor) * int(y_valor)), '0')
-
-    aux = equal_zeros_left(x_valor, y_valor)
-    (x_valor, y_valor) = (aux[1], aux[2])
-
-    # Algortimo de Karatsuba
-    # https: // es.wikipedia.org/wiki/Algoritmo_de_Karatsuba
-
-    n: int = len(x_valor) // 2
-    m: int = len(x_valor)
-
-    x1 = Numbers(x_valor[: n], "0")
-    x0 = Numbers(x_valor[n: len(x_valor)], "0")
-    y1 = Numbers(y_valor[:n], "0")
-    y0 = Numbers(y_valor[n: len(y_valor)], "0")
-
-    z2 = Numbers(add_zeros_right(karatsuba_algorithm(
-        x1, y1).part_number, 2 * (m - n)), "0")
-    z11 = Numbers(add_zeros_right(
-        karatsuba_algorithm(x1, y0).part_number, m - n), "0")
-    z12 = Numbers(add_zeros_right(
-        karatsuba_algorithm(y1, x0).part_number, m - n), "0")
-    z1 = z11 + z12
-    z0 = Numbers(karatsuba_algorithm(x0, y0).part_number, "0")
-
-    return z2 + z1 + z0
-
-
-def division_algorithm(x: 'Numbers', y: 'Numbers', precision: int):
-    """
-    Algoritmo para la division
-    :param x: dividendo
-    :param y: divisor
-    :param precision: precision de los decimales
-    :return: cociente
-    """
-    cant_decimal = 0
-    result = ""
-    rest = Numbers.real0()
-    for t in x.part_number:
-        div = Numbers(rest.part_number + t, "0")
-        (rest, result) = division_immediate(div, y, result)
-
-    while rest != Numbers.real0():
-        div = Numbers(rest.part_number + "0", "0")
-        (rest, result) = division_immediate(div, y, result)
-        cant_decimal += 1
-        if cant_decimal == precision:
-            break
-    return result, cant_decimal
-
-
-def division_immediate(div: 'Numbers', divisor: 'Numbers', result: str):
-    aux: 'Numbers' = Numbers.real0()
-    for j in range(9, -1, -1):
-        aux = divisor * Numbers(str(j), "0")
-
-        if aux <= div:
-            result += str(j)
-            break
-
-    return div - aux, result
