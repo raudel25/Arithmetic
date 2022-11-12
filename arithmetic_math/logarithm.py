@@ -1,6 +1,3 @@
-from big_num.numbers import Numbers
-
-
 def ln_method(x, precision, number1, number0):
     """
     Aproximacion del logaritmo natular
@@ -32,12 +29,12 @@ def ln_method(x, precision, number1, number0):
 
 def log_method(x, y, precision: int, number1, number0):
     pow_value = number1
-    index: int = 0
+    index = number1
 
     while pow_value <= y:
         if pow_value == y:
-            return Numbers(str(index), '0')
+            return index
         pow_value *= x
-        index += 1
+        index += number1
 
     return ln_method(x, precision, number1, number0) / ln_method(y, precision, number1, number0)

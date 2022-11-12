@@ -1,9 +1,11 @@
-from .aux_operations import eliminate_zeros_left, eliminate_zeros_right, eliminate_zeros_left_value, equal_zeros_left_value
+from .aux_operations import eliminate_zeros_left, eliminate_zeros_right, eliminate_zeros_left_value, \
+    equal_zeros_left_value
 from .basic_operations import sum_number, sub_number, karatsuba_algorithm, compare_list, division_algorithm
-from math_operations.pow_sqrt import pow_numbers
+from arithmetic_math.pow_sqrt import pow_numbers
+from arithmetic_math.arithmetic_math import ArithmeticMath
 
 
-class BigNum:
+class BigNum(ArithmeticMath):
     def __init__(self, base10: int = 10, precision=20):
         self.__base10 = base10
         self.__precision = precision
@@ -11,14 +13,23 @@ class BigNum:
     def __call__(self, number: str | float | list, positive: bool = True):
         return Numbers(number, positive, self.__precision)
 
-    def base10(self):
-        return self.__base10
-
     def precision(self):
         return self.__precision
 
     def number1(self):
-        return
+        return Numbers('1', True, self.__precision)
+
+    def number0(self):
+        return Numbers('0', True, self.__precision)
+
+    def number2(self):
+        return Numbers('2', True, self.__precision)
+
+    def number05(self):
+        return Numbers('0.5', True, self.__precision)
+
+    def number6(self):
+        return Numbers('6', True, self.__precision)
 
 
 class Numbers:
@@ -73,22 +84,6 @@ class Numbers:
         :return: precision de decimales
         """
         return self.__precision
-
-    # @property
-    # def part_int(self) -> str:
-    #     """
-    #     Determina la parte entera
-    #     :return: parte entera
-    #     """
-    #     return self.__part_int
-    #
-    # @property
-    # def part_decimal(self) -> str:
-    #     """
-    #     Determina la parte decimal
-    #     :return: parte decimal
-    #     """
-    #     return self.__part_decimal
 
     @property
     def abs(self) -> 'Numbers':
@@ -245,21 +240,26 @@ class Numbers:
         if y == self.real0():
             raise Exception("Operacion Invalida (division por 0)")
         if y.abs == self.real1():
-            return Numbers(x.__number_value, positive,self.__precision)
+            return Numbers(x.__number_value, positive, self.__precision)
 
-        # (x_part_decimal, y_part_decimal) = (x.part_decimal, y.part_decimal)
-        # aux = equal_zeros_right(x_part_decimal, y_part_decimal)
-        # (x_part_decimal, y_part_decimal) = (aux[1], aux[2])
-        #
-        # m = Numbers(x.part_number + x_part_decimal, "0", True, max(x.precision, y.precision))
-        # n = Numbers(y.part_number + y_part_decimal, "0", True, max(x.precision, y.precision))
-        #
-        # (result, cant_decimal) = division_algorithm(m, n, max(x.precision, y.precision))
-        #
-        # if cant_decimal != 0:
-        #     return (Numbers(result[: len(result) - cant_decimal],
-        #                     result[len(result) - cant_decimal: len(result)], positive, max(x.precision, y.precision)))
-        return Numbers(division_algorithm(x.__number_value, y.__number_value,self.__precision), positive, self.__precision)
+        return Numbers(division_algorithm(x.__number_value, y.__number_value, self.__precision), positive,
+                       self.__precision)
+        # return Numbers(Numbers.newton_ralphson(x, y).__number_value, positive, self.__precision)
+
+    @staticmethod
+    def newton_ralphson(x: 'Numbers', y: 'Numbers'):
+        (lx, ly) = equal_zeros_left_value(x.__number_value, y.__number_value)
+        (x, y) = (Numbers(lx[-x.__precision:] + [0], True, x.__precision),
+                  Numbers(ly[-y.__precision:] + [0], True, y.__precision))
+        # print(x,y)
+
+        a = Numbers(48 / 17, True, x.__precision) - Numbers(32 / 17, True, x.__precision) * y
+
+        # print(int(math.log2((x.__precision+1)/math.log2(17))))
+        for _ in range(20):
+            a = a + a * (x.real1() - y * a)
+
+        return x * a
 
     def __pow__(self, o: int):
         """

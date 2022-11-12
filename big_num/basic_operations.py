@@ -55,7 +55,6 @@ def karatsuba_algorithm(x: list, y: list) -> list:
     # https: // es.wikipedia.org/wiki/Algoritmo_de_Karatsuba
 
     n: int = len(x) // 2
-    m: int = len(x)
 
     x0 = x[:n]
     x1 = x[n: len(x)]
@@ -79,10 +78,9 @@ def division_algorithm(x: list, y: list, precision):
     :param precision: precision de los decimales
     :return: cociente
     """
-    cant_decimal = 0
     result = []
     rest = []
-    x=x.copy()
+    x = x.copy()
     x.reverse()
     for t in x:
         (aux, rest) = division_immediate([t] + rest, y)
@@ -99,16 +97,13 @@ def division_algorithm(x: list, y: list, precision):
 def division_immediate(div: list, divisor: list) -> tuple:
     aux: list = []
     result = 0
-    # print(div)
+
     for j in range(9, -1, -1):
         aux = karatsuba_algorithm([j], divisor)
-        # print(div,aux)
-        # print(compare_list(div, aux))
 
         if compare_list(div, aux) != -1:
             result = j
             break
-
 
     return result, sub_number(div, aux)
 
