@@ -95,7 +95,7 @@ def pi(precision_decimal: int = 20, precision: int = 100):
     :param precision:  precision
     :return: resultado
     """
-    return constant_pi(precision, Numbers('0', '5', True, precision_decimal), Numbers.real1(), Numbers.real0())
+    return constant_pi(precision, Numbers('0.5', True, precision_decimal), Numbers('1', True, precision_decimal), Numbers('0', True, precision_decimal))
 
 
 def e(precision_decimal: int = 20, precision: int = 30):
@@ -105,7 +105,7 @@ def e(precision_decimal: int = 20, precision: int = 30):
     :param precision:  precision
     :return: resultado
     """
-    return constant_e(precision, Numbers.real1(), Numbers('0', '0', True, precision_decimal))
+    return constant_e(precision, Numbers('1', True, precision_decimal), Numbers('0', True, precision_decimal))
 
 
 def ln(x: 'Numbers', precision=100):
