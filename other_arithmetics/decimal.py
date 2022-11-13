@@ -3,6 +3,9 @@ from arithmetic_math.arithmetic_math import ArithmeticMath
 
 
 class DecimalNum(ArithmeticMath):
+    def __call__(self, number: str | float):
+        return Decimal(number)
+
     def number1(self):
         return Decimal(1)
 

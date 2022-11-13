@@ -48,11 +48,11 @@ def equal_zeros_right(x: str, y: str) -> tuple:
 
 def eliminate_zeros_left_value(numer_value: list, precision: int) -> list:
     l: list = []
-    act:bool=False
+    act: bool = False
 
-    for i in range(len(numer_value)-1,-1,-1):
-        if numer_value[i]!=0 or i==precision:
-            act=True
+    for i in range(len(numer_value) - 1, -1, -1):
+        if numer_value[i] != 0 or i == precision:
+            act = True
 
         if act:
             l.append(numer_value[i])
@@ -80,4 +80,4 @@ def equal_zeros_left_value(x: list, y: list) -> tuple:
     lx: list = add_zeros_left_value(x, max(len(x), len(y)) - len(x))
     ly: list = add_zeros_left_value(y, max(len(x), len(y)) - len(y))
 
-    return lx,ly
+    return lx, ly

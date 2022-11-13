@@ -2,19 +2,22 @@ import math
 from mpmath import mp
 import time
 from other_arithmetics.fraction import FractionNum
-from big_num.numbers import  BigNum
+from other_arithmetics.decimal import DecimalNum
+from decimal import Decimal
+from big_num.numbers import BigNum
 import numpy
 import decimal
 from fixedpoint import FixedPoint
 import fractions
 import other_arithmetics.fraction
 from decimal import *
-from big_num.basic_operations import karatsuba_algorithm,sub_number
+from big_num.basic_operations import karatsuba_algorithm, sub_number
 
 # print(extendended754_num.math.sin(b,base2))
 # print(math.sin(2))
-big = BigNum(precision=20)
-frac=FractionNum()
+big = BigNum(precision=20, base10=10)
+frac = FractionNum()
+dec=DecimalNum()
 
 #
 # a = big('720')
@@ -25,16 +28,16 @@ frac=FractionNum()
 # # for i in range(10):
 # #     print(b)
 # #     b+=a
-x=time.time()
-m=frac.pi()
-print(m.numerator/m.denominator)
-print(math.pi)
-print(big.pi())
-y=time.time()
-print(y-x)
+
 # x=big(48/17)-big(32/17)*big(0.458)
 #
 # for _ in range(10):
 #     x=x+x*(big(1)-big(0.458)*x)
-
-print(big('1')/big('3'))
+getcontext().prec=200
+print(dec.sin(dec(10)))
+a = time.time()
+big.sin(big(10))
+b = time.time()
+print(b - a)
+print(big('1') / big('3'))
+print()

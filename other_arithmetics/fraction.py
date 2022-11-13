@@ -3,6 +3,9 @@ from arithmetic_math.arithmetic_math import ArithmeticMath
 
 
 class FractionNum(ArithmeticMath):
+    def __call__(self, number: str | float):
+        return Fraction(number)
+
     def number1(self):
         return Fraction(1)
 
