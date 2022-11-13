@@ -29,9 +29,10 @@ class BigNum(ArithmeticMath):
         return int(str(number).split('.')[0])
 
     def number_to_fraction(self, number):
-        s=str(number).split('.')
+        s = str(number).split('.')
 
-        return int(s[0]+s[1]),int(add_zeros_right('1',len(s[1])))
+        return int(s[0] + s[1]), int(add_zeros_right('1', len(s[1])))
+
 
 class Numbers:
     def __init__(self, number: str | float | list, positive: bool, precision: int, base10: int):

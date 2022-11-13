@@ -5,24 +5,24 @@ from arithmetic_math.pow_sqrt import pow_numbers
 from arithmetic_math.arithmetic_math import ArithmeticMath
 
 
-class BigNumTrueDivision(ArithmeticMath):
+class BigNumDecimal(ArithmeticMath):
     def __init__(self, precision=20):
         self.__precision = precision
 
     def __call__(self, number: str | float | list, positive: bool = True):
-        return NumbersTrueDivision(number, positive, self.__precision)
+        return NumbersDecimal(number, positive, self.__precision)
 
     def precision(self):
         return self.__precision
 
     def number1(self):
-        return NumbersTrueDivision('1', True, self.__precision)
+        return NumbersDecimal('1', True, self.__precision)
 
     def number0(self):
-        return NumbersTrueDivision('0', True, self.__precision)
+        return NumbersDecimal('0', True, self.__precision)
 
     def float_to_number(self, number: float):
-        return NumbersTrueDivision(abs(number), number >= 0, self.__precision)
+        return NumbersDecimal(abs(number), number >= 0, self.__precision)
 
     def number_to_int(self, number):
         return int(str(number).split('.')[0])
@@ -33,14 +33,14 @@ class BigNumTrueDivision(ArithmeticMath):
         return int(s[0] + s[1]), int(add_zeros_right('1', len(s[1])))
 
 
-class NumbersTrueDivision:
+class NumbersDecimal:
     def __init__(self, number: str | float | list, positive: bool, precision: int):
         self.__precision: int = precision
         self.__number_value: list = []
 
         if type(number) is not list:
             str_number: str = str(number)
-            (part_int, part_decimal) = NumbersTrueDivision.__int_and_decimal(str_number)
+            (part_int, part_decimal) = NumbersDecimal.__int_and_decimal(str_number)
             (part_int, part_decimal) = (eliminate_zeros_left(part_int), eliminate_zeros_right(part_decimal))
             self.__number_value = self.__create_value_number(part_int, part_decimal)
         else:
@@ -50,7 +50,7 @@ class NumbersTrueDivision:
             positive = True
 
         self.__sign = '+' if positive else '-'
-        self.__abs = self if positive else NumbersTrueDivision(number, True, precision)
+        self.__abs = self if positive else NumbersDecimal(number, True, precision)
 
     @property
     def sign(self):
@@ -61,14 +61,14 @@ class NumbersTrueDivision:
         Numero 1
         :return: Numero 1
         """
-        return NumbersTrueDivision('1', True, self.__precision)
+        return NumbersDecimal('1', True, self.__precision)
 
     def real0(self):
         """
         Numero 0
         :return: Numero 0
         """
-        return NumbersTrueDivision('0', True, self.__precision)
+        return NumbersDecimal('0', True, self.__precision)
 
     @property
     def positive(self) -> bool:
@@ -87,7 +87,7 @@ class NumbersTrueDivision:
         return self.__precision
 
     @property
-    def abs(self) -> 'NumbersTrueDivision':
+    def abs(self) -> 'NumbersDecimal':
         """
         Determina el modulo de un numero
         :return: modulo del numero
@@ -113,9 +113,6 @@ class NumbersTrueDivision:
         """
         number_value: list = [0 for _ in range(self.__precision + 1)]
 
-        # part_int = add_zeros_left(part_int, self.__base10 - len(part_int) % self.__base10)
-        # part_decimal = add_zeros_right(part_decimal, self.__base10 - len(part_decimal) % self.__base10)
-
         for i in range(len(part_decimal)):
             number_value[-i - 2] = int(part_decimal[i])
 
@@ -136,7 +133,7 @@ class NumbersTrueDivision:
 
         return True
 
-    def compare_to(self, n: 'NumbersTrueDivision') -> int:
+    def compare_to(self, n: 'NumbersDecimal') -> int:
         """
         Compara el actual numero con otro
         :param n: numero para comparar
@@ -155,7 +152,7 @@ class NumbersTrueDivision:
         return -1
 
     def __eq__(self, obj):
-        if type(obj) is not NumbersTrueDivision:
+        if type(obj) is not NumbersDecimal:
             return False
 
         return obj.__number_value == self.__number_value and obj.__sign == self.__sign
@@ -175,14 +172,14 @@ class NumbersTrueDivision:
 
         return f"{sign_str}{part_int}.{part_decimal}"
 
-    def __add__(self, o: 'NumbersTrueDivision') -> 'NumbersTrueDivision':
+    def __add__(self, o: 'NumbersDecimal') -> 'NumbersDecimal':
         """
         Determina la suma
         :param o: sumando
         :return: resultado
         """
-        x: 'NumbersTrueDivision' = self
-        y: 'NumbersTrueDivision' = o
+        x: 'NumbersDecimal' = self
+        y: 'NumbersDecimal' = o
 
         if x == 0:
             return y
@@ -192,58 +189,58 @@ class NumbersTrueDivision:
         (lx, ly) = (x.__number_value, y.__number_value)
 
         if x.sign == y.sign:
-            return NumbersTrueDivision(sum_number(lx, ly), x.positive, self.__precision)
+            return NumbersDecimal(sum_number(lx, ly), x.positive, self.__precision)
         compare = x.abs.compare_to(y.abs)
         if compare == 0:
             return self.real0()
         if compare == 1:
-            return NumbersTrueDivision(sub_number(lx, ly), x.positive, self.__precision)
+            return NumbersDecimal(sub_number(lx, ly), x.positive, self.__precision)
 
-        return NumbersTrueDivision(sub_number(ly, lx), y.positive, self.__precision)
+        return NumbersDecimal(sub_number(ly, lx), y.positive, self.__precision)
 
-    def __sub__(self, o: 'NumbersTrueDivision') -> 'NumbersTrueDivision':
+    def __sub__(self, o: 'NumbersDecimal') -> 'NumbersDecimal':
         return self + (-o)
 
-    def __neg__(self) -> 'NumbersTrueDivision':
-        return NumbersTrueDivision(self.__number_value, not self.positive, self.__precision)
+    def __neg__(self) -> 'NumbersDecimal':
+        return NumbersDecimal(self.__number_value, not self.positive, self.__precision)
 
-    def __mul__(self, o: 'NumbersTrueDivision'):
+    def __mul__(self, o: 'NumbersDecimal'):
         """
         Determina la multiplicacion
         :param o: factor
         :return: producto
         """
-        x: 'NumbersTrueDivision' = self
-        y: 'NumbersTrueDivision' = o
+        x: 'NumbersDecimal' = self
+        y: 'NumbersDecimal' = o
 
         positive = x.sign == y.sign
 
         if x.abs == self.real1():
-            return NumbersTrueDivision(y.__number_value, positive, y.__precision)
+            return NumbersDecimal(y.__number_value, positive, y.__precision)
         if y.abs == self.real1():
-            return NumbersTrueDivision(x.__number_value, positive, x.__precision)
+            return NumbersDecimal(x.__number_value, positive, x.__precision)
 
         (lx, ly) = equal_zeros_left_value(x.__number_value, y.__number_value)
 
-        return NumbersTrueDivision(karatsuba_algorithm(lx, ly)[self.__precision:], positive, self.__precision)
+        return NumbersDecimal(karatsuba_algorithm(lx, ly)[self.__precision:], positive, self.__precision)
 
-    def __truediv__(self, o: 'NumbersTrueDivision'):
+    def __truediv__(self, o: 'NumbersDecimal'):
         """
         Determina la division
         :param o: divison
         :return: cociente
         """
-        x: 'NumbersTrueDivision' = self
-        y: 'NumbersTrueDivision' = o
+        x: 'NumbersDecimal' = self
+        y: 'NumbersDecimal' = o
 
         positive = x.sign == y.sign
 
         if y == self.real0():
             raise Exception("Operacion Invalida (division por 0)")
         if y.abs == self.real1():
-            return NumbersTrueDivision(x.__number_value, positive, self.__precision)
+            return NumbersDecimal(x.__number_value, positive, self.__precision)
 
-        return NumbersTrueDivision(division_algorithm(x.__number_value, y.__number_value, self.__precision), positive,
+        return NumbersDecimal(division_algorithm(x.__number_value, y.__number_value, self.__precision), positive,
                                    self.__precision)
 
     def __pow__(self, o: int):
@@ -254,14 +251,14 @@ class NumbersTrueDivision:
         """
         return pow_numbers(self, o, self.real1())
 
-    def __le__(self, o: 'NumbersTrueDivision'):
+    def __le__(self, o: 'NumbersDecimal'):
         return self.compare_to(o) != 1
 
-    def __ge__(self, o: 'NumbersTrueDivision'):
+    def __ge__(self, o: 'NumbersDecimal'):
         return self.compare_to(o) != -1
 
-    def __lt__(self, o: 'NumbersTrueDivision'):
+    def __lt__(self, o: 'NumbersDecimal'):
         return self.compare_to(o) == -1
 
-    def __gt__(self, o: 'NumbersTrueDivision'):
+    def __gt__(self, o: 'NumbersDecimal'):
         return self.compare_to(o) == 1

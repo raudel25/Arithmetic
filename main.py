@@ -5,39 +5,23 @@ from other_arithmetics.fraction import FractionNum
 from other_arithmetics.decimal import DecimalNum
 from decimal import Decimal
 from big_num.numbers import BigNum
-from big_num.numbers_true_division import BigNumTrueDivision
+from big_num.numbers_decimal import BigNumDecimal
 import numpy
 import decimal
 from fixedpoint import FixedPoint
 import fractions
 import other_arithmetics.fraction
 from decimal import *
+from other_arithmetics.extended754_num import Extended754Num
 from big_num.basic_operations import karatsuba_algorithm, sub_number
 
-# print(extendended754_num.math.sin(b,base2))
-# print(math.sin(2))
-big = BigNum(precision=4, base10=10)
-bigg = BigNumTrueDivision()
+big = BigNum()
+bigg = BigNumDecimal()
 frac = FractionNum()
 dec = DecimalNum()
-
-#
-# a = big('720')
-# b = big('7')
-# c=big('0')
-#
-# print(a*b)
-# # for i in range(10):
-# #     print(b)
-# #     b+=a
-
-# x=big(48/17)-big(32/17)*big(0.458)
-#
-# for _ in range(10):
-#     x=x+x*(big(1)-big(0.458)*x)
+extend=Extended754Num(3,12,53)
 getcontext().prec = 200
-print(dec.sin(dec(10)))
 a = time.time()
-print(big.pow_value(big(2),big(0.5)))
+print(extend(2)+extend(1))
 b = time.time()
 print(b - a)
