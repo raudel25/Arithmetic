@@ -5,6 +5,7 @@ from other_arithmetics.fraction import FractionNum
 from other_arithmetics.decimal import DecimalNum
 from decimal import Decimal
 from big_num.numbers import BigNum
+from big_num.numbers_true_division import BigNumTrueDivision
 import numpy
 import decimal
 from fixedpoint import FixedPoint
@@ -16,8 +17,9 @@ from big_num.basic_operations import karatsuba_algorithm, sub_number
 # print(extendended754_num.math.sin(b,base2))
 # print(math.sin(2))
 big = BigNum(precision=20, base10=10)
+bigg = BigNumTrueDivision()
 frac = FractionNum()
-dec=DecimalNum()
+dec = DecimalNum()
 
 #
 # a = big('720')
@@ -33,11 +35,12 @@ dec=DecimalNum()
 #
 # for _ in range(10):
 #     x=x+x*(big(1)-big(0.458)*x)
-getcontext().prec=200
+getcontext().prec = 200
 print(dec.sin(dec(10)))
 a = time.time()
-big.sin(big(10))
+print(big.sin(big(10)))
 b = time.time()
 print(b - a)
-print(big('1') / big('3'))
+print(bigg.pi())
+print(bigg('6') / bigg('3'))
 print()
