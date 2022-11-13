@@ -1,14 +1,9 @@
-from .aux_operations import add_zeros_right_value, equal_zeros_left_value
+import math
+
+from .aux_operations import add_zeros_right_value, equal_zeros_left_value, eliminate_zeros_left_value
 
 
 def sum_number(x: list, y: list, base10: int) -> list:
-    """
-    Sumar dos listas
-    :param x: numero
-    :param y: numero
-    :param base10: indice de la base 10
-    :return:
-    """
     (x, y) = equal_zeros_left_value(x, y)
     result = []
     drag = 0
@@ -17,22 +12,16 @@ def sum_number(x: list, y: list, base10: int) -> list:
         n = x[i] + y[i]
 
         n = n + drag
-        drag = n // (10 ** base10)
-        result.append(n % (10 ** base10))
+        drag = n // base10
+        result.append(n % base10)
 
-    result.append(drag)
+    if drag != 0:
+        result.append(drag)
 
     return result
 
 
 def sub_number(x: list, y: list, base10: int) -> list:
-    """
-    Sustraer dos listas
-    :param x: numero
-    :param y: numero
-    :param base10: indice de la base 10
-    :return:
-    """
     (x, y) = equal_zeros_left_value(x, y)
     sub = []
     drag = 0
@@ -43,10 +32,26 @@ def sub_number(x: list, y: list, base10: int) -> list:
 
         n = n - drag
         drag = 1 if n < 0 else 0
-        n = n + 10 ** base10 if n < 0 else n
+        n = n + base10 if n < 0 else n
         sub.append(n)
 
     return sub
+
+
+def simple_multiplication(x: list, y: int, base10: int):
+    drag = 0
+    result = []
+
+    for i in x:
+        n = i * y + drag
+
+        drag = n // base10
+        result.append(n % base10)
+
+    if drag != 0:
+        result.append(drag)
+
+    return result
 
 
 def karatsuba_algorithm(x: list, y: list, base10: int) -> list:
@@ -64,7 +69,7 @@ def karatsuba_algorithm(x: list, y: list, base10: int) -> list:
         return zeros
 
     if len(x) == 1:
-        return [x[0] * y[0] % (10 ** base10), x[0] * y[0] // (10 ** base10)]
+        return [x[0] * y[0] % base10, x[0] * y[0] // base10]
 
     # Algortimo de Karatsuba
     # https: // es.wikipedia.org/wiki/Algoritmo_de_Karatsuba
@@ -85,43 +90,73 @@ def karatsuba_algorithm(x: list, y: list, base10: int) -> list:
     return sum_number(z2, sum_number(z1, z0, base10), base10)
 
 
-def division_algorithm(x: list, y: list, precision: int, base10: int):
+def division_algorithm_d(x: list, y: list, precision: int, base10: int):
     """
     Algoritmo para la division
+    :param base10:base
     :param x: dividendo
     :param y: divisor
     :param precision: precision de los decimales
-    :param base10:indice de la base
     :return: cociente
     """
+    (x, y) = normalize(x, y, base10)
+
     result = []
-    rest = []
-    x = x.copy()
-    x.reverse()
-    for t in x:
-        (aux, rest) = division_immediate([t] + rest, y, base10)
+    rest = x[-len(y) + 1:len(x)]
+
+    for t in range(len(x) - len(y), -1, -1):
+        (aux, rest) = division_immediate([x[t]] + rest, y, base10, precision)
         result.append(aux)
 
     for _ in range(precision):
-        (aux, rest) = division_immediate([0] + rest, y, base10)
+        (aux, rest) = division_immediate([0] + rest, y, base10, precision)
         result.append(aux)
 
     result.reverse()
     return result
 
 
-def division_immediate(div: list, divisor: list, base10: int) -> tuple:
-    aux: list = []
-    result = 0
+def normalize(x: list, y: list, base10: int):
+    if y[-1] < base10 // 2:
+        mult: int = 1
+        aux = y[-1] // (base10 // 10)
 
-    for j in range(10 ** base10 - 1, -1, -1):
-        aux = karatsuba_algorithm([j], divisor, base10)
+        if aux == 0:
+            mult = base10 // (10 ** int(math.log10(y[-1]))) // 10
+            aux = y[-1] * mult // (base10 // 10)
+
+        if aux == 1:
+            mult *= 5
+        elif aux == 2:
+            mult *= 3
+        elif aux == 3:
+            mult *= 2
+        elif aux == 4:
+            mult *= 2
+
+        return simple_multiplication(x, mult, base10), simple_multiplication(y, mult, base10)
+
+    return x, y
+
+
+def division_immediate(div: list, divisor: list, base10: int, precision: int) -> tuple:
+    if len(div) < len(divisor):
+        return 0, div
+
+    if len(div) == len(divisor):
+        result = div[-1] // divisor[-1]
+    else:
+        result = (div[-1] * base10 + div[-2]) // divisor[-1]
+
+    while True:
+        aux = simple_multiplication(divisor, result, base10)
 
         if compare_list(div, aux) != -1:
-            result = j
             break
 
-    return result, sub_number(div, aux, base10)
+        result -= 1
+
+    return result, eliminate_zeros_left_value(sub_number(div, aux, base10), precision)
 
 
 def compare_list(x: list, y: list) -> int:
