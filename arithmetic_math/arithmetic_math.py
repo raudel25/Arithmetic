@@ -3,6 +3,7 @@ from .trigonometry import sin_cos, atan_method, asin_method, constant_pi
 from .constant_e import constant_e
 from .logarithm import ln_method, log_method
 from .pow_sqrt import algorithm_sqrt
+import math
 
 
 class ArithmeticMath(ABC):
@@ -15,18 +16,18 @@ class ArithmeticMath(ABC):
         pass
 
     @abstractmethod
-    def number2(self):
+    def float_to_number(self, number: float):
         pass
 
     @abstractmethod
-    def number05(self):
+    def number_to_int(self, number):
         pass
 
     @abstractmethod
-    def number6(self):
+    def number_to_fraction(self, number):
         pass
 
-    def sin(self, x: 'ArithmeticMath', precision=40):
+    def sin(self, x, precision=40):
         """
         Seno
         :param x: numero
@@ -35,7 +36,7 @@ class ArithmeticMath(ABC):
         """
         return sin_cos(x, True, precision, self.number1(), self.number0())
 
-    def cos(self, x: 'ArithmeticMath', precision=40):
+    def cos(self, x, precision=40):
         """
         Coseno
         :param x: numero
@@ -44,7 +45,7 @@ class ArithmeticMath(ABC):
         """
         return sin_cos(x, False, precision, self.number1(), self.number0())
 
-    def tan(self, x: 'ArithmeticMath', precision: int = 40):
+    def tan(self, x, precision: int = 40):
         """
         Tangente
         :param x: numero
@@ -53,7 +54,7 @@ class ArithmeticMath(ABC):
         """
         return self.sin(x, precision) / self.cos(x, precision)
 
-    def cot(self, x: 'ArithmeticMath', precision: int):
+    def cot(self, x, precision: int):
         """
         Cotangente
         :param x: numero
@@ -62,7 +63,7 @@ class ArithmeticMath(ABC):
         """
         return self.cos(x, precision) / self.sin(x, precision)
 
-    def atan(self, x: 'ArithmeticMath', precision: int = 500):
+    def atan(self, x, precision: int = 500):
         """
         Arctan
         :param x: numero
@@ -72,7 +73,7 @@ class ArithmeticMath(ABC):
         number_pi = self.pi()
         return atan_method(x, precision, number_pi, self.number1(), self.number0())
 
-    def acot(self, x: 'ArithmeticMath', precision: int = 500):
+    def acot(self, x, precision: int = 500):
         """
         Arcotangente
         :param x: numero
@@ -82,7 +83,7 @@ class ArithmeticMath(ABC):
         number_pi = self.pi()
         return self.pi() - atan_method(x, precision, number_pi, self.number1(), self.number0())
 
-    def asin(self, x: 'ArithmeticMath', precision: int = 100):
+    def asin(self, x, precision: int = 100):
         """
         Arcoseno
         :param x: numero
@@ -91,14 +92,14 @@ class ArithmeticMath(ABC):
         """
         return asin_method(x, precision, self.number1(), self.number0())
 
-    def acos(self, x: 'ArithmeticMath', precision: int = 100):
+    def acos(self, x, precision: int = 100):
         """
         Arcocoseno
         :param x: numero
         :param precision: presicion de decimales
         :return: resultado
         """
-        return self.pi() / self.number2() - asin_method(x, precision, self.number1(), self.number0())
+        return self.pi() / self.float_to_number(2) - asin_method(x, precision, self.number1(), self.number0())
 
     def pi(self, precision: int = 100):
         """
@@ -106,7 +107,8 @@ class ArithmeticMath(ABC):
         :param precision:  precision
         :return: resultado
         """
-        return constant_pi(precision, self.number6(), self.number05(), self.number1(), self.number0())
+        return constant_pi(precision, self.float_to_number(6), self.float_to_number(0.5), self.number1(),
+                           self.number0())
 
     def e(self, precision: int = 30):
         """
@@ -116,7 +118,7 @@ class ArithmeticMath(ABC):
         """
         return constant_e(precision, self.number1(), self.number0())
 
-    def ln(self, x: 'ArithmeticMath', precision=100):
+    def ln(self, x, precision=100):
         """
         Logaritmo en base e
         :param x: numero
@@ -125,7 +127,7 @@ class ArithmeticMath(ABC):
         """
         return ln_method(x, precision, self.number1(), self.number0())
 
-    def log(self, x: 'ArithmeticMath', y: 'ArithmeticMath', precision=100):
+    def log(self, x, y, precision=100):
         """
         Logaritmo
         :param x: numero
@@ -135,49 +137,50 @@ class ArithmeticMath(ABC):
         """
         return log_method(x, y, precision, self.number1(), self.number0())
 
-    # def pow_value(x: 'ArithmeticMath', y: 'ArithmeticMath'):
-    #     """
-    #     Potencia
-    #     :param x: base
-    #     :param y: exponente
-    #     :return: resultado
-    #     """
-    #     if y == ArithmeticMath(0):
-    #         return ArithmeticMath(1)
-    # 
-    #     numerator: int = y.numerator
-    #     denominator: int = y.denominator
-    #     gcd: int = math.gcd(numerator, denominator)
-    # 
-    #     result = sqrt(x, ArithmeticMath(denominator // gcd))
-    #     result = result ** (numerator // gcd)
-    # 
-    #     return result if y >= ArithmeticMath(0) else ArithmeticMath(1) / result
-    # 
-    # def sqrt(x: 'ArithmeticMath', z: 'ArithmeticMath'):
-    #     """
-    #     Determina la raiz n-esima de un numero
-    #     :param x: numero
-    #     :param z: indice
-    #     :return: resultado
-    #     """
-    #     y: int = z.numerator
-    #     print(y)
-    # 
-    #     if y == 1:
-    #         return x
-    #     if x == ArithmeticMath(0):
-    #         return ArithmeticMath(0)
-    # 
-    #     parity: bool = y & 1 == 0
-    #     positive: bool = parity or x >= ArithmeticMath(0)
-    # 
-    #     if parity and not x >= ArithmeticMath(0):
-    #         raise Exception("Operacion Invalida (el resultado no es real)")
-    # 
-    #     result = algorithm_sqrt(abs(x), abs(y), ArithmeticMath(abs(y)), 40, ArithmeticMath(10), ArithmeticMath(1))
-    # 
-    #     if not positive:
-    #         result = ArithmeticMath(0) - result
-    # 
-    #     return result if y > 0 else ArithmeticMath(1) / result
+    def pow_value(self, x, y):
+        """
+        Potencia
+        :param x: base
+        :param y: exponente
+        :return: resultado
+        """
+        if y == self.number0():
+            return self.number1()
+
+        (numerator, denominator) = self.number_to_fraction(y)
+
+        gcd: int = math.gcd(numerator, denominator)
+
+        result = self.sqrt(x, self.float_to_number(denominator // gcd))
+        result = result ** (numerator // gcd)
+
+        return result if y >= self.number0() else self.number1() / result
+
+    def sqrt(self, x, y):
+        """
+        Determina la raiz n-esima de un numero
+        :param x: numero
+        :param y: indice
+        :return: resultado
+        """
+        y_int: int = self.number_to_int(y)
+
+        if y_int == 1:
+            return x
+        if x == self.number0():
+            return self.number0()
+
+        parity: bool = y_int & 1 == 0
+        positive: bool = parity or x >= self.number0()
+
+        x = x if x >= self.number0() else -x
+
+        if parity and not x >= self.number0():
+            raise Exception("Operacion Invalida (el resultado no es real)")
+
+        result = algorithm_sqrt(x, y_int, y, 40, self.float_to_number(10), self.number1())
+
+        if not positive:
+            result = -result
+
+        return result if y_int > 0 else self.number1() / result

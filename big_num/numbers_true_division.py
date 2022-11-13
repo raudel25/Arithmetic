@@ -1,5 +1,5 @@
 from .aux_operations import eliminate_zeros_left, eliminate_zeros_right, eliminate_zeros_left_value, \
-    equal_zeros_left_value
+    equal_zeros_left_value,add_zeros_right
 from .basic_operations_true_divsion import sum_number, sub_number, karatsuba_algorithm, compare_list, division_algorithm
 from arithmetic_math.pow_sqrt import pow_numbers
 from arithmetic_math.arithmetic_math import ArithmeticMath
@@ -21,14 +21,16 @@ class BigNumTrueDivision(ArithmeticMath):
     def number0(self):
         return NumbersTrueDivision('0', True, self.__precision)
 
-    def number2(self):
-        return NumbersTrueDivision('2', True, self.__precision)
+    def float_to_number(self, number: float):
+        return NumbersTrueDivision(abs(number), number >= 0, self.__precision)
 
-    def number05(self):
-        return NumbersTrueDivision('0.5', True, self.__precision)
+    def number_to_int(self, number):
+        return int(str(number).split('.')[0])
 
-    def number6(self):
-        return NumbersTrueDivision('6', True, self.__precision)
+    def number_to_fraction(self, number):
+        s = str(number).split('.')
+
+        return int(s[0] + s[1]), int(add_zeros_right('1', len(s[1])))
 
 
 class NumbersTrueDivision:
@@ -243,22 +245,6 @@ class NumbersTrueDivision:
 
         return NumbersTrueDivision(division_algorithm(x.__number_value, y.__number_value, self.__precision), positive,
                                    self.__precision)
-        # return NumbersTrueDivision(NumbersTrueDivision.newton_ralphson(x, y).__number_value, positive, self.__precision)
-
-    @staticmethod
-    def newton_ralphson(x: 'NumbersTrueDivision', y: 'NumbersTrueDivision'):
-        (lx, ly) = equal_zeros_left_value(x.__number_value, y.__number_value)
-        (x, y) = (NumbersTrueDivision(lx[-x.__precision:] + [0], True, x.__precision),
-                  NumbersTrueDivision(ly[-y.__precision:] + [0], True, y.__precision))
-        # print(x,y)
-
-        a = NumbersTrueDivision(48 / 17, True, x.__precision) - NumbersTrueDivision(32 / 17, True, x.__precision) * y
-
-        # print(int(math.log2((x.__precision+1)/math.log2(17))))
-        for _ in range(20):
-            a = a + a * (x.real1() - y * a)
-
-        return x * a
 
     def __pow__(self, o: int):
         """

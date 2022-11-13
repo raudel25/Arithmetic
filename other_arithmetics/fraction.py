@@ -12,11 +12,11 @@ class FractionNum(ArithmeticMath):
     def number0(self):
         return Fraction(0)
 
-    def number2(self):
-        return Fraction(2)
+    def float_to_number(self, number: float):
+        return Fraction(number)
 
-    def number05(self):
-        return Fraction(1,2)
+    def number_to_int(self, number):
+        return number.numerator
 
-    def number6(self):
-        return Fraction(6)
+    def number_to_fraction(self, number):
+        return number.numerator,number.denominator

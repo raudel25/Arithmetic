@@ -2,6 +2,13 @@ from .aux_operations import add_zeros_right_value, equal_zeros_left_value
 
 
 def sum_number(x: list, y: list, base10: int) -> list:
+    """
+    Sumar dos listas
+    :param x: numero
+    :param y: numero
+    :param base10: indice de la base 10
+    :return:
+    """
     (x, y) = equal_zeros_left_value(x, y)
     result = []
     drag = 0
@@ -19,6 +26,13 @@ def sum_number(x: list, y: list, base10: int) -> list:
 
 
 def sub_number(x: list, y: list, base10: int) -> list:
+    """
+    Sustraer dos listas
+    :param x: numero
+    :param y: numero
+    :param base10: indice de la base 10
+    :return:
+    """
     (x, y) = equal_zeros_left_value(x, y)
     sub = []
     drag = 0
@@ -77,6 +91,7 @@ def division_algorithm(x: list, y: list, precision: int, base10: int):
     :param x: dividendo
     :param y: divisor
     :param precision: precision de los decimales
+    :param base10:indice de la base
     :return: cociente
     """
     result = []

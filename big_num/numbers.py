@@ -10,7 +10,7 @@ class BigNum(ArithmeticMath):
         self.__precision = precision
         self.__base10 = base10
 
-    def __call__(self, number: str | float | list, positive: bool = True):
+    def __call__(self, number: str | float | list, positive: bool = True) -> 'Numbers':
         return Numbers(number, positive, self.__precision, self.__base10)
 
     def precision(self):
@@ -22,15 +22,16 @@ class BigNum(ArithmeticMath):
     def number0(self):
         return Numbers('0', True, self.__precision, self.__base10)
 
-    def number2(self):
-        return Numbers('2', True, self.__precision, self.__base10)
+    def float_to_number(self, number: float):
+        return Numbers(abs(number), number >= 0, self.__precision, self.__base10)
 
-    def number05(self):
-        return Numbers('0.5', True, self.__precision, self.__base10)
+    def number_to_int(self, number):
+        return int(str(number).split('.')[0])
 
-    def number6(self):
-        return Numbers('6', True, self.__precision, self.__base10)
+    def number_to_fraction(self, number):
+        s=str(number).split('.')
 
+        return int(s[0]+s[1]),int(add_zeros_right('1',len(s[1])))
 
 class Numbers:
     def __init__(self, number: str | float | list, positive: bool, precision: int, base10: int):
@@ -137,7 +138,7 @@ class Numbers:
 
         return True
 
-    def compare_to(self, n: 'Numbers') -> int:
+    def compare_to(self, n) -> int:
         """
         Compara el actual numero con otro
         :param n: numero para comparar
