@@ -6,7 +6,7 @@ from arithmetic_math.arithmetic_math import ArithmeticMath
 
 
 class BigNum(ArithmeticMath):
-    def __init__(self, precision=20, ind_base10: int = 1):
+    def __init__(self, precision=5, ind_base10: int = 10):
         self.__precision = precision
         self.__base10 = 10 ** ind_base10
         self.__ind_base10 = ind_base10

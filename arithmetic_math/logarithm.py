@@ -31,10 +31,14 @@ def log_method(x, y, precision: int, number1, number0):
     pow_value = number1
     index = number1
 
+    if y==number1:
+        return number0
+
     while pow_value <= y:
+        pow_value *= x
         if pow_value == y:
             return index
-        pow_value *= x
+
         index += number1
 
     return ln_method(x, precision, number1, number0) / ln_method(y, precision, number1, number0)

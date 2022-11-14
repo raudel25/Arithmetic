@@ -27,7 +27,7 @@ class ArithmeticMath(ABC):
     def number_to_fraction(self, number):
         pass
 
-    def sin(self, x, precision=40):
+    def sin(self, x, precision=50):
         """
         Seno
         :param x: numero
@@ -36,7 +36,7 @@ class ArithmeticMath(ABC):
         """
         return sin_cos(x, True, precision, self.number1(), self.number0())
 
-    def cos(self, x, precision=40):
+    def cos(self, x, precision=50):
         """
         Coseno
         :param x: numero
@@ -63,7 +63,7 @@ class ArithmeticMath(ABC):
         """
         return self.cos(x, precision) / self.sin(x, precision)
 
-    def atan(self, x, precision: int = 500):
+    def atan(self, x, precision: int = 1000):
         """
         Arctan
         :param x: numero
@@ -73,7 +73,7 @@ class ArithmeticMath(ABC):
         number_pi = self.pi()
         return atan_method(x, precision, number_pi, self.number1(), self.number0())
 
-    def acot(self, x, precision: int = 500):
+    def acot(self, x, precision: int = 1000):
         """
         Arcotangente
         :param x: numero
@@ -83,7 +83,7 @@ class ArithmeticMath(ABC):
         number_pi = self.pi()
         return self.pi() - atan_method(x, precision, number_pi, self.number1(), self.number0())
 
-    def asin(self, x, precision: int = 100):
+    def asin(self, x, precision: int = 200):
         """
         Arcoseno
         :param x: numero
@@ -92,7 +92,7 @@ class ArithmeticMath(ABC):
         """
         return asin_method(x, precision, self.number1(), self.number0())
 
-    def acos(self, x, precision: int = 100):
+    def acos(self, x, precision: int = 200):
         """
         Arcocoseno
         :param x: numero
@@ -101,7 +101,7 @@ class ArithmeticMath(ABC):
         """
         return self.pi() / self.float_to_number(2) - asin_method(x, precision, self.number1(), self.number0())
 
-    def pi(self, precision: int = 100):
+    def pi(self, precision: int = 200):
         """
         Numero pi
         :param precision:  precision
@@ -110,7 +110,7 @@ class ArithmeticMath(ABC):
         return constant_pi(precision, self.float_to_number(6), self.float_to_number(0.5), self.number1(),
                            self.number0())
 
-    def e(self, precision: int = 30):
+    def e(self, precision: int = 40):
         """
         Numero e
         :param precision:  precision
@@ -118,7 +118,7 @@ class ArithmeticMath(ABC):
         """
         return constant_e(precision, self.number1(), self.number0())
 
-    def ln(self, x, precision=100):
+    def ln(self, x, precision=150):
         """
         Logaritmo en base e
         :param x: numero
@@ -127,7 +127,7 @@ class ArithmeticMath(ABC):
         """
         return ln_method(x, precision, self.number1(), self.number0())
 
-    def log(self, x, y, precision=100):
+    def log(self, x, y, precision=150):
         """
         Logaritmo
         :param x: numero
@@ -151,26 +151,26 @@ class ArithmeticMath(ABC):
 
         gcd: int = math.gcd(numerator, denominator)
 
-        result = self.sqrt(x, self.float_to_number(denominator // gcd))
+        result = self.sqrt(x, denominator // gcd)
         result = result ** (numerator // gcd)
 
         return result if y >= self.number0() else self.number1() / result
 
-    def sqrt(self, x, y):
+    def sqrt(self, x, y: int, precision: int = 50):
         """
         Determina la raiz n-esima de un numero
         :param x: numero
         :param y: indice
+        :param precision: presicion de decimales
         :return: resultado
         """
-        y_int: int = self.number_to_int(y)
 
-        if y_int == 1:
+        if y == 1:
             return x
         if x == self.number0():
             return self.number0()
 
-        parity: bool = y_int & 1 == 0
+        parity: bool = y & 1 == 0
         positive: bool = parity or x >= self.number0()
 
         x = x if x >= self.number0() else -x
@@ -178,9 +178,9 @@ class ArithmeticMath(ABC):
         if parity and not x >= self.number0():
             raise Exception("Operacion Invalida (el resultado no es real)")
 
-        result = algorithm_sqrt(x, y_int, y, 40, self.float_to_number(10), self.number1())
+        result = algorithm_sqrt(x, y, self.float_to_number(y), precision, self.float_to_number(10), self.number1())
 
         if not positive:
             result = -result
 
-        return result if y_int > 0 else self.number1() / result
+        return result if y > 0 else self.number1() / result
