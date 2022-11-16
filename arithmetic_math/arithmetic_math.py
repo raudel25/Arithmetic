@@ -3,6 +3,7 @@ from .trigonometry import sin_cos, atan_method, asin_method, constant_pi
 from .constant_e import constant_e
 from .logarithm import ln_method, log_method
 from .pow_sqrt import algorithm_sqrt
+from .aux import scalate_one
 import math
 
 
@@ -175,10 +176,16 @@ class ArithmeticMath(ABC):
 
         x = x if x >= self.number0() else -x
 
+        number10 = self.float_to_number(10)
+        (aux, ind) = scalate_one(x, number10, self.number1())
+        aux *= number10 ** (y - ind % y)
+
         if parity and not x >= self.number0():
             raise Exception("Operacion Invalida (el resultado no es real)")
 
-        result = algorithm_sqrt(x, y, self.float_to_number(y), precision, self.float_to_number(10), self.number1())
+        result = algorithm_sqrt(aux, y, self.float_to_number(y), precision, self.float_to_number(10), self.number1())
+
+        result /= (number10 ** ((ind + y - ind % y) // y))
 
         if not positive:
             result = -result
