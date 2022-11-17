@@ -131,7 +131,6 @@ class efloat:
         # convert the numbers to python int
         max_n = get_number(max_exp.mantissa, self.arithm_ref.base) * max_exp.sign
         min_n = get_number(shifted_mantissa, self.arithm_ref.base) * min_exp.sign
-
         # perform the operation
         result = max_n + min_n
         # convert back to mantissa representation
@@ -426,7 +425,7 @@ class Extended754:
         self.pZero: "efloat" = efloat(self, 1, 0, [0] * self.mantissa_len)
         self.nZero: "efloat" = efloat(self, -1, 0, [0] * self.mantissa_len)
 
-    def __call__(self, number: Union[str, float], input_base: int = 0):
+    def __call__(self, number: Union[str, float], input_base: int = 10):
         """
         :param number: fractional number in input_base supporting . and , as decimal separator
         :param input_base: input base num of fractional number , if not supplied or eq 0 the base of arithmetic will be used
@@ -488,6 +487,9 @@ class Extended754:
 
         Normalizes the mantissa adjusting the exponent
         """
+        if mantissa==[0 for _ in mantissa]:
+            return 1,mantissa
+
         while len(mantissa) and mantissa[0] == 0:
             mantissa.pop()
             exponent += 1

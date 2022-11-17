@@ -16,7 +16,7 @@ class Extended754Num(ArithmeticMath):
         return self.__extended(1)
 
     def number0(self):
-        return self.__extended(1)
+        return self.__extended(0)
 
     def float_to_number(self, number: float):
         return self.__extended(number)
