@@ -1,6 +1,5 @@
 from .extended754 import Extended754
 from arithmetic_math.arithmetic_math import ArithmeticMath
-from big_num.aux_operations import add_zeros_right
 from typing import Union
 
 
@@ -23,11 +22,3 @@ class Extended754Num(ArithmeticMath):
 
     def number_to_int(self, number):
         return int(str(number).split('.')[0])
-
-    def number_to_fraction(self, number):
-        s = str(number).split('.')
-
-        if len(s) == 1:
-            return int(s[0]), 1
-
-        return int(s[0] + s[1]), int(add_zeros_right('1', len(s[1])))

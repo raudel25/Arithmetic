@@ -1,10 +1,12 @@
+import math
+
 from abc import ABC, abstractmethod
 from .trigonometry import sin_cos, atan_method, asin_method, constant_pi
 from .constant_e import constant_e
 from .logarithm import ln_method, log_method
 from .pow_sqrt import algorithm_sqrt
 from .aux import scalate_one
-import math
+from big_num.aux_operations import add_zeros_right
 
 
 class ArithmeticMath(ABC):
@@ -18,15 +20,34 @@ class ArithmeticMath(ABC):
 
     @abstractmethod
     def float_to_number(self, number: float):
+        """
+        Conbertir de float al formato de la aritmetica
+        :param number: float
+        :return: numero en formato de la aritmetica
+        """
         pass
 
     @abstractmethod
     def number_to_int(self, number):
+        """
+        Convertir a entero
+        :param number: numero en forrmato de la aritmetica
+        :return: numero entero
+        """
         pass
 
-    @abstractmethod
     def number_to_fraction(self, number):
-        pass
+        """
+        Convertir del formato de la aritmetica a fraccion
+        :param number: numero en forrmato de la aritmetica
+        :return: fraccion
+        """
+        s = str(number).split('.')
+
+        if len(s) == 1:
+            return int(s[0]), 1
+
+        return int(s[0] + s[1]), int(add_zeros_right('1', len(s[1])))
 
     def sin(self, x, precision=50):
         """

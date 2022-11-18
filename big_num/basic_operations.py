@@ -90,7 +90,7 @@ def karatsuba_algorithm(x: list, y: list, base10: int) -> list:
     return sum_number(z2, sum_number(z1, z0, base10), base10)
 
 
-def division_algorithm_d(x: list, y: list, precision: int, base10: int):
+def division_algorithm_d(x: list, y: list, precision: int, base10: int) -> list:
     """
     Algoritmo para la division
     :param base10:base
@@ -116,7 +116,7 @@ def division_algorithm_d(x: list, y: list, precision: int, base10: int):
     return result
 
 
-def normalize(x: list, y: list, base10: int):
+def normalize(x: list, y: list, base10: int) -> tuple:
     if y[-1] < base10 // 2:
         mult: int = 1
         aux = y[-1] // (base10 // 10)

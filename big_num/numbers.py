@@ -29,11 +29,6 @@ class BigNum(ArithmeticMath):
     def number_to_int(self, number):
         return int(str(number).split('.')[0])
 
-    def number_to_fraction(self, number):
-        s = str(number).split('.')
-
-        return int(s[0] + s[1]), int(add_zeros_right('1', len(s[1])))
-
 
 class Numbers:
     def __init__(self, number: str | float | list, positive: bool, precision: int, ind_base10: int, base10: int):
@@ -261,19 +256,6 @@ class Numbers:
                        positive,
                        self.__precision, self.__ind_base10, self.__base10)
 
-    @staticmethod
-    def newton_raphson(x: 'Numbers', y: 'Numbers'):
-        cant: int = y.cant_int
-        (x, y) = (x.ship_by_10(-cant), y.ship_by_10(-cant))
-
-        a = Numbers(48 / 17, True, x.__precision, x.__ind_base10, x.__base10) - Numbers(32 / 17, True, x.__precision,
-                                                                                        x.__ind_base10, x.__base10) * y
-
-        for _ in range(50):
-            a = a + a * (x.real1() - y * a)
-
-        return x * a
-
     def __pow__(self, o: int):
         """
         Determina la potencia
@@ -296,19 +278,8 @@ class Numbers:
 
     @property
     def cant_int(self):
+        """
+        Cantidad de cifras enteras
+        :return: cantidad de cifras enteras
+        """
         return len(str(self.__number_value[-1])) + (len(self.__number_value) - 1 - self.__precision) * self.__ind_base10
-
-    def ship_by_10(self, cant: int):
-        if cant == 0:
-            return
-
-        number: str = add_zeros_left(str(self), abs(cant)) if cant < 0 else add_zeros_right(str(self), abs(cant))
-
-        s = number.split('.')
-
-        if cant < 0:
-            return Numbers(f'{s[0][:len(s[0]) - abs(cant)]}.{s[0][len(s[0]) - abs(cant):]}{s[1]}', self.positive,
-                           self.precision, self.__ind_base10, self.__base10)
-
-        return Numbers(f'{s[0]}{s[1][:abs(cant)]}.{s[1][abs(cant):]}', self.positive, self.precision, self.__ind_base10,
-                       self.__base10)
