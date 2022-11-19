@@ -176,7 +176,7 @@ Lic. Tutor Dos, \emph{Centro}}
 %===================================================================================
 % Desarrollo
 %-----------------------------------------------------------------------------------
-\section{Biblioteca BigNum}\label{sec:dev}
+\section{Biblioteca BigNum}\label{sec:big_num}
 %-----------------------------------------------------------------------------------  
 	BigNum es una aritmética basada en las aritméticas de punto fijo, ya que cuenta con una cantidad fija de lugares decimales, la cual se puede cambiar dinámicamente desde el código una vez que se instancia. Utilizaremos como base las potencias de 10 (siempre y cuando dicha base sea representable en la aritmética de enteros con que cuenta nuestra computadora), para no cometer en los errores que se producen durante el intercambio de bases los cuales ilustraremos posteriormente.
 
@@ -203,7 +203,7 @@ Lic. Tutor Dos, \emph{Centro}}
   
 	
 %-----------------------------------------------------------------------------------
-\subsection{Representación de los Números}\label{sub:result}
+\subsection{Representación de los Números}\label{sub:representation}
 %-----------------------------------------------------------------------------------
 	Modelaremos los número de nuestra aritmetica mediante la clase \textbf{Numbers}:
 	\lstset{keywordstyle=\color{blue}, basicstyle=\small}
@@ -227,7 +227,7 @@ Lic. Tutor Dos, \emph{Centro}}
   
   
 %-----------------------------------------------------------------------------------
-\subsection{Operaciones Básicas}\label{sub:result}
+\subsection{Operaciones Básicas}\label{sub:basic operations}
 %-----------------------------------------------------------------------------------
 
 	Las operaciones básicas que podemos realizar con los números de la clase \textbf{Numbers} son la adición, substracción, multiplicación y división en el formato del sistema numérico posicional con que actualmente trabajamos. Como dichas operaciones se producen bit a bit y dado que nuestros bits son números enteros y conocemos que la aritmética de la computadora es exacta, aprovecharemos dicha ventaja y modificaremos la base de nuestra aritmética a potencias de 10 (que soporte la aritmética entera) para acelerar el computo con respecto a un sistema de numeración de base 10, ya que entonces para computar las operaciones entre números de igual cantidad de decimales en base 10 necesitaremos menos iteraciones bit a bit.
@@ -236,7 +236,7 @@ Lic. Tutor Dos, \emph{Centro}}
 
 
 %-----------------------------------------------------------------------------------
-\subsubsection{Multiplicación algortimo de Karatsuba}\label{sub:result}
+\subsubsection{Multiplicación algortimo de Karatsuba}\label{sub:multiplication}
 %-----------------------------------------------------------------------------------
 	El algoritmo de Karatsuba consiste en reducir la multilicación de dos números de $n$ digítos a como máximo 
 	$3n^{\log_2 3}\approx 3n^{1.585}$ multiplicaciones de números de un solo dígito, lo cual mejora el algoritmo clásico de multiplicación que consta de $n^2$ operaciones de un solo dígito. Este algoritmo se simienta en las bases de los algoritmos de \emph{Divide y Vencerás} utilizando el caso particular de la partición binaria.
@@ -257,7 +257,7 @@ Lic. Tutor Dos, \emph{Centro}}
 	
 	
 %-----------------------------------------------------------------------------------
-\subsubsection{División algortimo D}\label{sub:result}
+\subsubsection{División algortimo D}\label{sub:division}
 %-----------------------------------------------------------------------------------
 	Ahora nos enfrentaremos a un problema más complejo que es la división de dos números. El algoritmo básico para la división consiste en mecanismo de prueba y error mediante el sistema de numeración posicional y el mismo tiene una complejidad de $d\cdot m\cdot n$, donde $d$ es una contante en la aritmética que viene dada por la base y $m$ y $n$ son la cantidad de dígitos del numerador y el denominador. Por tanto como anteriormente planteamos la idea de aumentar el tamaño de la base para que las operaciones fueran más eficientes aquí nos hemos encontrado con un problema que se agrava con dicha propuesta.
 	
@@ -301,7 +301,7 @@ Lic. Tutor Dos, \emph{Centro}}
 	De esta manera comprobamos que al realizar la estimación de nuestro cociente cometemos a lo sumo un error de 3 unidades, por lo que tendremos que hacer a lo sumo 3 comprobaciones para asegurarnos de que el resultado es correcto. Luego nuestro algoritmo realizará $3mn$ iteraciones en el caso peor al realizar la división de un número de $m$ dígitos entre otro de $n$ dígitos. 
 	
 %-----------------------------------------------------------------------------------
-\section{Biblioteca ArihmeticMath}\label{sub:result}
+\section{Biblioteca ArihmeticMath}\label{suc:arithmetic_math}
 %-----------------------------------------------------------------------------------
 	Para proceder a la comparación de los desempeños de las aritméticas vamos a establecer una biblioteca con implementaciones de las principales funciones matemáticas. Como plantilla base para las aritméticas definiremos la clase \textbf{ArithmeticMath} que cuenta de los siguientes métodos:
 	
@@ -350,7 +350,7 @@ Lic. Tutor Dos, \emph{Centro}}
 	Adicionalmente se encuentra predefinido el método de la figura 4, el cual se encarga de convertir un número de la aritmética en una fracción racional, retornando 2 entero el numerador y el denominador en ese orden.
 	
 %-----------------------------------------------------------------------------------
-\subsection{Funciones de ArihmeticMath}\label{sub:result}
+\subsection{Funciones de ArihmeticMath}\label{sub:functions}
 %-----------------------------------------------------------------------------------
 
 	
@@ -407,8 +407,51 @@ Lic. Tutor Dos, \emph{Centro}}
   				e^{x}=\sum _{n=0}^{\infty }{\frac {x^{n}}{n!}}
   			\end{equation}
 	\end{enumerate}
-	
 
+%-----------------------------------------------------------------------------------
+\section{Comparando las Aritméticas}\label{sub:comp_aritmetics}
+%-----------------------------------------------------------------------------------
+	En esta sección contaremos con 5 aritméticas, cada una basadas en \textbf{ArithmeticMath}:
+	\begin{enumerate}
+		\item BigNum: Nuestra biblioteca con las especificaciones mencionadas anteriormente.
+		
+		\item DecimalNum: Apoyada en el módulo \textbf{Decimal} de \textbf{Python}, para realizar las operaciones básicas.
+		
+		\item FractionNum: Apoyada en el módulo \textbf{Fraction} de \textbf{Python}, para realizar las operaciones básicas.
+		
+		\item Extended754Num: Apoyada para realizar las operaciones básicas en \textbf{Extended174}, aritmética de base variable bajo el estándar IEEE-174, desarrollada en la
+		Facultad. 
+		
+		\item Aritmética estándar: Utilización del módulo \textbf{Math} y los números \textbf{float} de \textbf{Python}.
+	\end{enumerate}
+
+
+%-----------------------------------------------------------------------------------
+\subsection{Problemas y Limitaciones del Punto Flotante}\label{sub:problems_limitations}
+%-----------------------------------------------------------------------------------
+	Como mencionamos anteriormente en la introducción el sistema de coma flotante que se implementa en los microprocesadores de nuestra computadora es en base 2, el número $0.25={2\over 10}+{5\over 100}={25\over 100}={1\over 4}$ de ahí que se 0.25 en binario se exprese como 0.01. 
+	
+	Un problema aparente que podemos observar a simple vista es que en muchas ocasiones la fracción decimal no se pueda expresar mediante un número finito de decimales, por ejemplo ${1\over 3}=0.333333\ldots$, ahora podemos observar que lo mismo ocurre en base 2, por ejemplo $0.4={4\over 10}={2\over 5}$ que en binario seria ${10\over 101}=0.0110011001100110\ldots$. Con el ejemplo analizado anteriormente se nos presenta el siguiente problema $0.4={4\over 10}$, sin embargo ${10\over 101}=0.0110011001100110\ldots$, es decir para la misma fracción racional nos encontramos con que 0.4 es perfectamente representable en base 10 con un número finito de decimales pero en base 2 obtenemos $0.0110011001100110\ldots$ que es un número infinito periódico. Esto supone un importante problema ya que en la vida cotidiana fuera del mundo de la computación se trabaja en base 10, sin embargo las computadoras y los sistemas computo están hechos en su mayoría para el procesamiento de datos de la vida real, lo cual trae consigo que verdaderamente se trabaje con una aproximación de estos datos y no con los números introducidos originalmente (Figura 5).
+	
+	\begin{figure}
+		\begin{center}
+			\includegraphics[scale=1]{recourses/repre04.png}
+			\caption{Representación de 0.4 como float.\label{fig:code}}
+		\end{center}
+	\end{figure}
+	
+	\begin{figure}
+		\begin{center}
+			\includegraphics[scale=1]{recourses/comp04mult3.png}
+			\caption{Comparación de números flotantes.\label{fig:code}}
+		\end{center}
+	\end{figure}
+	
+	Otro problema que debemos de tener en cuenta a la hora de trabajar con estas aproximaciones es la comparación de los números obtenidos, por ejemplo ilustremos la comparación mostrada en la Figura 6 donde podemos apreciar que en el sistema de coma flotante $0.4\cdot 3$ es ligeramente superior a 1.2.
+
+	
+		
+		
 	
 	
 
@@ -521,17 +564,30 @@ Lic. Tutor Dos, \emph{Centro}}
 %-----------------------------------------------------------------------------------
 \begin{thebibliography}{99}
 %-----------------------------------------------------------------------------------
-	\bibitem{knuth} Donald E. Knuth. \emph{The Art of Computer Programming}.
-		Volume 1: Fundamental Algorithms (3rd~edition), 1997.
-		Addison-Wesley Professional.
-
-	\bibitem{goedel} Kurt Göedel. \emph{Über formal unentscheidbare Sätze der
-		Principia Mathematica und verwandter Systeme, I}.
-		Monatshefte für Mathematik und Physik 38.
-
-	\bibitem{wiki} Wikipedia. URL: \href{http://en.wikipedia.org}
-	  {http://en.wikipedia.org}.
-		Consultado en \today.
+	\bibitem{wiki} Algorithm D. URL: \href{https://ridiculousfish.com/blog/posts/labor-of-division-episode-iv.html}
+	  {https://ridiculousfish.com/blog/posts/labor-of-division-episode-iv.html}.
+		Consultado en 19 de noviembre de 2022.
+		
+	\bibitem{wiki} Algoritmo para calcular la raíz n. URL: \href{https://es.frwiki.wiki/wiki/Algorithme_de_calcul_de_la_racine_n-i\%C3\%A8me}
+	  {https://es.frwiki.wiki/wiki/Algorithme\_de\_calcul\_de\_la\_racine\_n-i\%C3\%A8me}.
+		Consultado en 19 de noviembre de 2022.
+	
+	\bibitem{wiki} IEEE-174-1985. Wikipedia. URL: \href{https://en.wikipedia.org/wiki/IEEE_754-1985}
+	  {https://en.wikipedia.org/wiki/IEEE\_754-1985}.
+		Consultado en 19 de noviembre de 2022.
+		
+	\bibitem{wiki} Karatsuba algorithm. Wikipedia. URL: \href{https://en.wikipedia.org/wiki/Karatsuba_algorithm}
+	  {https://en.wikipedia.org/wiki/Karatsuba\_algorithm}.
+		Consultado en 19 de noviembre de 2022.	
+		
+	\bibitem{wiki} Taylor Series. Wikipedia. URL: \href{https://en.wikipedia.org/wiki/Taylor_series}
+	  {https://en.wikipedia.org/wiki/Taylor\_series}.
+		Consultado en 19 de noviembre de 2022.
+		
+	
+	
+	
+	
 
 %-----------------------------------------------------------------------------------
 \end{thebibliography}
