@@ -1,0 +1,436 @@
+%===================================================================================
+% JORNADA CIENTÍFICA ESTUDIANTIL - MATCOM, UH
+%===================================================================================
+% Esta plantilla ha sido diseñada para ser usada en los artículos de la
+% Jornada Científica Estudiantil de MatCom.
+%
+% Por favor, siga las instrucciones de esta plantilla y rellene en las secciones
+% correspondientes.
+%
+% NOTA: Necesitará el archivo 'jcematcom.sty' en la misma carpeta donde esté este
+%       archivo para poder utilizar esta plantila.
+%===================================================================================
+
+
+
+%===================================================================================
+% PREÁMBULO
+%-----------------------------------------------------------------------------------
+\documentclass[a4paper,10pt,twocolumn]{article}
+
+%===================================================================================
+% Paquetes
+%-----------------------------------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{jcematcom}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage[pdftex]{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+%-----------------------------------------------------------------------------------
+% Configuración
+%-----------------------------------------------------------------------------------
+\hypersetup{colorlinks,%
+	    citecolor=black,%
+	    filecolor=black,%
+	    linkcolor=black,%
+	    urlcolor=blue}
+
+%===================================================================================
+
+
+
+%===================================================================================
+% Presentacion
+%-----------------------------------------------------------------------------------
+% Título
+%-----------------------------------------------------------------------------------
+\title{Documento de Ejemplo para la Jornada Científica Estudiantil}
+
+%-----------------------------------------------------------------------------------
+% Autores
+%-----------------------------------------------------------------------------------
+\author{\\
+\name Raudel Alejandro Gómez Molina \email \href{mailto:raudela.gomez@estudiantes.matcom.uh.cu}{raudela.gomez@estudiantes.matcom.uh.cu}
+	\\ \addr Grupo C211}
+
+%-----------------------------------------------------------------------------------
+% Tutores
+%-----------------------------------------------------------------------------------
+\tutors{\\
+Dr. Tutor Uno, \emph{Centro} \\
+Lic. Tutor Dos, \emph{Centro}}
+
+%-----------------------------------------------------------------------------------
+% Headings
+%-----------------------------------------------------------------------------------
+\jcematcomheading{\the\year}{1-\pageref{end}}{Raudel Alejandro Gómez Molina}
+
+%-----------------------------------------------------------------------------------
+\ShortHeadings{Ejemplo JCE}{Autores}
+%===================================================================================
+
+
+
+%===================================================================================
+% DOCUMENTO
+%-----------------------------------------------------------------------------------
+\begin{document}
+
+%-----------------------------------------------------------------------------------
+% NO BORRAR ESTA LINEA!
+%-----------------------------------------------------------------------------------
+\twocolumn[
+%-----------------------------------------------------------------------------------
+
+\maketitle
+
+%===================================================================================
+% Resumen y Abstract
+%-----------------------------------------------------------------------------------
+\selectlanguage{spanish} % Para producir el documento en Español
+
+%-----------------------------------------------------------------------------------
+% Resumen en Español
+%-----------------------------------------------------------------------------------
+\begin{abstract}
+
+	Este trabajo tiene como objetivo proponer una implementación de una aritmética basada en las aritméticas de punto fijo que toma como base a las potencias de 10 (siempre y cuando dicha base sea soportada por la aritmética de enteros con que cuenta nuestra computadora). Además compararemos su desempeño en distintos escenarios comparándola con los resultados de otras aritméticas de coma flotante, punto fijo y fracciones racionales.
+	
+\end{abstract}
+
+%-----------------------------------------------------------------------------------
+% English Abstract
+%-----------------------------------------------------------------------------------
+\vspace{0.5cm}
+
+\begin{enabstract}
+
+	This paper aims to propose an implementation of an arithmetic based on fixed-point arithmetic that takes the powers of 10 as a base (as long as said base is supported by the integer arithmetic available to our computer). We will also compare its performance in different scenarios comparing it with the results of other floating point, fixed point and rational fractions arithmetic.
+
+\end{enabstract}
+
+%-----------------------------------------------------------------------------------
+% Palabras clave
+%-----------------------------------------------------------------------------------
+\begin{keywords}
+	Separadas,
+	Por,
+	Comas.
+\end{keywords}
+
+%-----------------------------------------------------------------------------------
+% Temas
+%-----------------------------------------------------------------------------------
+\begin{topics}
+	Tema, Subtema.
+\end{topics}
+
+
+%-----------------------------------------------------------------------------------
+% NO BORRAR ESTAS LINEAS!
+%-----------------------------------------------------------------------------------
+\vspace{0.8cm}
+]
+%-----------------------------------------------------------------------------------
+
+
+%===================================================================================
+
+%===================================================================================
+% Introducción
+%-----------------------------------------------------------------------------------
+\section{Introducción}\label{sec:intro}
+%-----------------------------------------------------------------------------------
+	El sistema de coma flotante es una notación científica que usan las computadoras para representar números reales muy pequeños y a la vez muy grandes con relativa rapidez y eficiencia.
+  
+	El modelo por el cual se basan estas aritméticas es el estándar IEEE 754, este formato comprende:
+	\begin{enumerate}
+  
+  		\item[-] Representación de números finitos: cada número finito se caracteriza por una base $b$, un bit de signo $s$, una mantisa $c$ y un exponente $q$. Entonces un número $v$ se define como: $v=(-1)^s\cdot c\cdot b^q$. 
+  	
+  		\item[-] Los números infinitos: $\pm\infty$.
+  	
+  		\item[-] Un valor no numérico: $NaN$ el cual indica que en algún proceso de cálculo realizado se efectuó una operación que no resultó en un número correctamente definido, por ejemplo una división por 0.
+	\end{enumerate}
+  
+	El IEEE 754 también establece las reglas básicas para operar con los números de la aritmética tal es el caso de las de la representación en memoria de los números, los formatos de precisión y los formatos de intercambio y redondeo.
+  
+	Las aritméticas de punto fijo son un método para representar números reales, guardando solamente un número fijo de sus decimales. Esta representación se basa en la utilización de potencias negativas de una misma base para representar la parte fraccionaria de un número. Esta aritmética contrasta con la aritmética de punto flotante anteriormente descrita, ya que es mucho menos compleja de implementar, pero también menos efectiva. Dado que las antiguas calculadoras mecánicas contaban con este sistema, actualmente se utiliza el sistema de coma flotante en los modernos microprocesadores.
+  
+	Las aritméticas abordadas anteriormente en muchas ocasiones no pueden representar exactamente los números que les proporcionamos ya que solo pueden guardar una parte finita del número, por lo que realmente operaremos con aproximaciones de estos números, lo que conlleva a la consideración de los errores de truncamiento y redondeo que se cometen durante este proceso.
+  
+	Las aritméticas de fracciones racionales se basan en la representación de números racionales mediante una fracción racional que consta de un numerador y un denominador enteros. Dicha aritmética puede minimizar los errores de redondeo y truncamiento que se cometen en las aritméticas anteriormente descritas, pero en varias ocasiones su computo suele ser bastante más complejo que en las anteriores.
+  
+	Otro de los puntos a considerar en los sistemas descritos anteriormente es que la mayoría de ellos trabajan en base 2, lo cual se debe a la implementación de los microprocesadores, entonces otro error que nos podemos plantear en este análisis es el intercambio entre bases, ya que comúnmente trabajamos en base 10 y nuestra computadora en base 2, este problema es el que trataremos de resolver con la aritmética propuesta en este trabajo.
+
+  
+  
+%===================================================================================
+
+
+
+%===================================================================================
+% Desarrollo
+%-----------------------------------------------------------------------------------
+\section{Biblioteca BigNum}\label{sec:dev}
+%-----------------------------------------------------------------------------------  
+	BigNum es una aritmética basada en las aritméticas de punto fijo, ya que cuenta con una cantidad fija de lugares decimales, la cual se puede cambiar dinámicamente desde el código una vez que se instancia. Utilizaremos como base las potencias de 10 (siempre y cuando dicha base sea representable en la aritmética de enteros con que cuenta nuestra computadora), para no cometer en los errores que se producen durante el intercambio de bases los cuales ilustraremos posteriormente.
+
+  
+  \lstset{keywordstyle=\color{blue}, basicstyle=\small}
+
+		\begin{figure}[htb]%
+			\begin{lstlisting}[language=python]%
+
+    def __init__(self, precision=6,
+                 ind_base10: int = 9):
+                 
+        self.__precision = precision
+        self.__base10 = 10 ** ind_base10
+        self.__ind_base10 = ind_base10
+
+
+			\end{lstlisting}
+		\caption{Constructor de BigNum.\label{fig:code}}
+		\end{figure}
+	
+	Para instanciar BigNum necesitaremos los parámetros \textbf{precision} el número de lugares decimales con respecto a nuestra base y \textbf{ind\_base10} el exponente de la base 10 que tendrá la base de la aritmética. Notemos que la cantidad total de lugares decimales que puede representar nuestra aritmética es la multiplicación de
+\textbf{precision} y  \textbf{ind\_base10}, para los parámetros por defecto tenemos 54 lugares decimales.
+  
+	
+%-----------------------------------------------------------------------------------
+\subsection{Representación de los Números}\label{sub:result}
+%-----------------------------------------------------------------------------------
+	Modelaremos los número de nuestra aritmetica mediante la clase \textbf{Numbers}:
+  \lstset{keywordstyle=\color{blue}, basicstyle=\small}
+
+		\begin{figure}[htb]%
+			\begin{lstlisting}[language=python]%
+
+    def __init__(self, 
+                 number: str|float|list,         
+                 positive: bool, 
+                 precision: int, 
+                 ind_base10: int, 
+                 base10: int):
+
+			\end{lstlisting}
+		\caption{Constructor de Numbers.\label{fig:code}}
+		\end{figure}
+	
+	Los parámetros \textbf{number}, \textbf{positive}, \textbf{precision}, \textbf{ind\_base10} y \textbf{base10} 
+  reciben la representación del número, el signo del número, la precisión, exponete de la base 10 y la base respectivamente. Notemos que la representación de los números puede estar dada por una variable del tipo \textbf{list}, \textbf{float} o \textbf{str}, en los dos últimos casos transformamos el dicho formato a  una lista de enteros que finalmente será la representación en memoria del número. Cada posición de la lista representa el bit correspondiente a esa posición y almacena un número entero $x$ tal que $0\leq x <base$.  
+  
+  
+%-----------------------------------------------------------------------------------
+\subsection{Operaciones Básicas}\label{sub:result}
+%-----------------------------------------------------------------------------------
+
+	Las operaciones básicas que podemos realizar con los números de la clase \textbf{Numbers} son la adición, substracción, multiplicación y división en el formato del sistema numérico posicional con que actualmente trabajamos. Como dichas operaciones se producen bit a bit y dado que nuestros bits son números enteros y conocemos que la aritmética de la computadora es exacta, aprovecharemos dicha ventaja y modificaremos la base de nuestra aritmética a potencias de 10 (que soporte la aritmética entera) para acelerar el computo con respecto a un sistema de numeración de base 10, ya que entonces para computar las operaciones entre números de igual cantidad de decimales en base 10 necesitaremos menos iteraciones bit a bit.
+  
+	Para la adición y substracción utilizaremos el algoritmo clásico de suma y resta bit a bit llevando los respectivos acarreos.
+
+
+%-----------------------------------------------------------------------------------
+\subsubsection{Multiplicación algortimo de Karatsuba}\label{sub:result}
+%-----------------------------------------------------------------------------------
+	El algoritmo de Karatsuba consiste en reducir la multilicación de dos números de $n$ digítos a como máximo 
+	$3n^{\log_2 3}\approx 3n^{1.585}$ multiplicaciones de números de un solo dígito, lo cual mejora el algoritmo clásico de multiplicación que consta de $n^2$ operaciones de un solo dígito. Este algoritmo se simienta en las bases de los algoritmos de \emph{Divide y Vencerás} utilizando el caso particular de la partición binaria.
+	
+	A continuación presentamos una descripsión del algoritmo:
+	
+	Sean $a$ y $b$ dos numeros de $n$ dígitos tal que:
+		\begin{equation}
+			\begin{split}
+				&a=a_1 10^{\lfloor {n\over 2}\rfloor} + a_2 \wedge b=b_1 10^{\lfloor {n\over 2}\rfloor} + b_2	\\	
+				&\Rightarrow ab=a_1 b_1\cdot 10^{2\cdot\lfloor {n\over 2}\rfloor}+(a_1 b_2+b_1 a_2 )10^{\lfloor {n\over 2}\rfloor}+a_2 b_2
+			\end{split}
+		\end{equation}			
+			
+	 Entonces tenemos que $a_1$ y $b_1$ poseen a lo sumo $\lceil {n\over 2}\rceil$ dígitos y $a_2$ y $b_2$ tienen $\lfloor {n\over 2}\rfloor$ dígitos, por lo que para realizar el computo de $ab$ necesitamos calcuar 4 multiplicaciones y una suma de a lo sumo $\lceil {n\over 2}\rceil$ dígitos.
+	 
+	 Este algoritmo es particularmente muy eficiente en multuplicaciones de enteros grandes, por ejemplo para $n=1024$, el costo del algoritmo sería $3^{10}=59049$ comparado con el clásico que sería de $2^20=1049756$ operaciones. 
+	
+	
+%-----------------------------------------------------------------------------------
+\subsubsection{División algortimo D}\label{sub:result}
+%-----------------------------------------------------------------------------------
+	Ahora nos enfrentaremos a un problema más complejo que es la división de dos números. El algoritmo básico para la división consiste en mecanismo de prueba y error mediante el sistema de numeración posicional y el mismo tiene una complejidad de $d\cdot m\cdot n$, donde $d$ es una contante en la aritmética que viene dada por la base y $m$ y $n$ son la cantidad de dígitos del numerador y el denominador. Por tanto como anteriormente planteamos la idea de aumentar el tamaño de la base para que las operaciones fueran más eficientes aquí nos hemos encontrado con un problema que se agrava con dicha propuesta.
+	
+	Para solucionar el problema descrito anteriormente plantearemos dos algoritmos como alternativa al algoritmo clásico el primero es el \emph{Algoritmo de Newtón-Raphlson} y el segundo es el \emph{Algoritmo D}.
+	
+	Newtón-Raphlson es un algoritmo de división que pertenece a los algoritmos de división rápidos y que actualmente se usa en los métodos de división de los microprocesadores modernos. Este algoritmo consiste en la aproximación del inverso del divisor mediante una serie de iteraciones.
+	
+	Sean $x_0$, $x_1$, $\ldots$, $x_s$ aproximaciones del recíproco del divisor($d$) y $f(x)=dx-1$:
+	\begin{equation}
+		x_{i+1}=x_i-{f(x_i)\over f'(x_i)}=x_i+{{1\over x_i}-d\over{1\over x^2_i}} =x_i(2-dx_i)
+	\end{equation}
+	
+	Como nuestro objetivo es brindar una aritmética lo más exacta posible no consideraremos este algoritmo para su implementación, pero a continuación abordamos un algoritmo menos eficiente pero en el que no cometemos errores de aproximación fuera de los errores de truncamiento y redondeo.
+	
+	El Algoritmo D se basa en la estimación del cociente que resulta de dividir un número de $n+1$ dígitos entre otro de $n$ dígitos. Esta estimación se realiza mediante la división de el número formado por los dos primeros dígitos del dividendo entre el número formado por el primer dígito del divisor, a continuación mostraremos como acotar dicha estimación:
+	
+	Sea $a$ un número de $n+1$ dígitos y $b$ un número de $n$ dígitos y $d$ la base de nuestra aritmética tales que:
+		$$a=\overline{a_{n+1}a_n\ldots a_1} \wedge b=\overline{b_n\ldots b_1}$$	 
+	
+	Primero como $a-\overline{a_{n+1}a_n} d^{n-1}= a_{n-1}\ldots a_1\leq b_n d^{n-1}$ tenemos que:
+	\begin{equation}
+		\Bigg\lfloor{a \over b_nd^{n-1}}\Bigg\rfloor = \Bigg\lfloor{\overline{a_{n+1}a_n} d^{n-1} \over b_n d^{n-1}}\Bigg\rfloor
+	\end{equation}
+	
+	Ahora sea $q=\lfloor{a \over b}\rfloor$ y $q'=\lfloor{\overline{a_{n+1}a_n} \over b_n}\rfloor$, sabemos que $q\geq q'$ por lo demostrado anteriormente, por lo tanto trataremos de acotar el error que se comete en la estimación de $q'$:
+	\begin{equation}
+		\begin{split}
+			&q-q'=\Bigg\lfloor{a \over b_n d^{n-1}}\Bigg\rfloor-\Bigg\lfloor{a \over b_n d^{n-1}+d^n-1}\Bigg\rfloor\\ 
+			&q-q'<{a \over b_n d^{n-1}}-{a \over b_n d^{n-1}+d^n-1}+1\\
+			&q-q'<{a(b_n d^{n-1}+d^{n-1}-1-b_n d^{n-1})\over b_n d^{n-1}(b_n d^{n-1}+d^{n-1}-1)}+1\\
+			&q-q'<{d^{n-1}-1\over b_n d^{n-1}}\cdot {a
+\over b_n d^{n-1}+d^{n-1}-1}+1\\
+			&q-q'<{1\over b_n}\cdot d+1={d\over b_n}+1
+		\end{split}
+	\end{equation}
+	
+	Luego solo nos queda acotar ${d\over b_n}$, mostremos que simpre podemos hacer transformaciones para que ${d\over b_n}\leq 2$, para ello apoyémonos en el sistema decimal que es el que utilizamos en nuestra aritmética. 
+	
+	Por ejemplo si $b_n$ es 2 podemos multiplicar el numerador y el denominador por 3, al cual llamaremos factor de normalización, en el caso peor que el denominador sea $\overline{299\ldots} \cdot 3= \overline{6\ldots }$, de la misma manera podemos encontrar un factor de normalización. Para extender este ejemplo para la base $10^k$ simplemente multiplicamos por $10^x$ de tal manera que $b_n$ tenga exactamente $k$ dígitos y luego aplicamos el proceso descrito anteriormente.
+	
+	De esta manera comprobamos que al realizar la estimación de nuestro cociente cometemos a lo sumo un error de 3 unidades, por lo que tendremos que hacer a lo sumo 3 comprobaciones para asegurarnos de que el resultado es correcto. Luego nuestro algoritmo realizará $3mn$ iteraciones en el caso peor al realizar la división de un número de $m$ dígitos entre otro de $n$ dígitos. 
+
+
+	
+
+%-----------------------------------------------------------------------------------
+	\subsection{Listas y Descripciones}\label{sub:lists}
+%-----------------------------------------------------------------------------------
+		Para producir listas enumeradas, utilice el siguiente estilo:
+		\begin{enumerate}
+			\item Primer Elemento
+			\item Segundo Elemento
+			%
+			\begin {enumerate}
+				\item {Segundo Elemento - Subítem Uno}
+				\item {Segundo Elemento - Subítem Dos}
+			\end {enumerate}
+			%
+		\end{enumerate}
+
+%-----------------------------------------------------------------------------------
+		Para producir descripciones, use el siguiente estilo:
+
+%-----------------------------------------------------------------------------------
+		\begin{description}
+			\item [Primer Elemento] con su respectiva descripción.
+			\item [Segundo Elemento] también con su respectiva descripción.
+		\end{description}
+
+%-----------------------------------------------------------------------------------
+	\subsection{Figuras}\label{sub:figures}
+%-----------------------------------------------------------------------------------
+		Para producir cuerpos flotantes (figuras o tablas), asegúrese de numerar
+		y etiquetar correctamente cada figura. Las referencias a las figuras deben
+		estar correctamente etiquetadas. Por ejemplo, véase la Fig. \ref{fig:ex}\ldots
+
+		\begin{figure}[h!]%
+		\begin{center}
+			\begin{tabular}{|c|c|c|} \hline
+			 			& Método 1 	& Método 2 	\\ \hline
+			A 			&  			&  			\\ \hline
+			B			& 			& 			\\ \hline
+			C 			& 			&  			\\ \hline
+			\end{tabular}
+		\caption{Figura de ejemplo. Recuerde especificar el origen de los datos que se muestran. \label{fig:ex}}
+		\end{center}
+		\end{figure}
+
+%-----------------------------------------------------------------------------------
+	\subsection{Código Fuente}\label{sub:listings}
+%-----------------------------------------------------------------------------------
+		Para producir código fuente, envuélvalo en una figura flotante y
+		etiquételo correctamente. Por ejemplo, en la Fig. \ref{fig:code}
+		se muestra un código bastante conocido\ldots
+
+		% Configuración de Listings
+		\lstset{keywordstyle=\color{blue}, basicstyle=\small}
+
+		\begin{figure}[htb]%
+			\begin{lstlisting}[language=c]%
+
+    int main(int argc, char** argv)
+    {
+        // Imprimiendo "Hola Mundo".
+        printf("Hello, World");
+    }
+
+			\end{lstlisting}
+		\caption{Código fuente de ejemplo.\label{fig:code}}
+		\end{figure}
+
+%-----------------------------------------------------------------------------------
+	\subsection{Referencias}
+%-----------------------------------------------------------------------------------
+  	Las referencias deben estar agrupadas en una sección al final del artículo,
+  	y las citas numeradas correctamente, por ejemplo \cite{knuth} o \cite{goedel}.
+  	Incluya toda la información importante de cada referencia, incluídos autor,
+  	título, y notas de la edición. En caso de citar sitios web, además
+  	de la URL, incluya la fecha en que fue consultado, como en \cite{wiki}. Numere 
+  	las referencias según el orden en que se les cita.
+
+%===================================================================================
+
+
+
+%===================================================================================
+% Conclusiones
+%-----------------------------------------------------------------------------------
+\section{Conclusiones}\label{sec:conc}
+
+  En esta sección puede incluir las conclusiones de su investigación y las ideas
+  sobre la continuidad del trabajo, en el caso que aplique.
+
+%===================================================================================
+
+
+
+%===================================================================================
+% Recomendaciones
+%-----------------------------------------------------------------------------------
+\section{Recomendaciones}\label{sec:rec}
+
+  En esta sección puede incluir recomendaciones sobre posibles formas de continuar
+  la investigación u otros temas relacionados.
+
+%===================================================================================
+
+
+
+%===================================================================================
+% Bibliografía
+%-----------------------------------------------------------------------------------
+\begin{thebibliography}{99}
+%-----------------------------------------------------------------------------------
+	\bibitem{knuth} Donald E. Knuth. \emph{The Art of Computer Programming}.
+		Volume 1: Fundamental Algorithms (3rd~edition), 1997.
+		Addison-Wesley Professional.
+
+	\bibitem{goedel} Kurt Göedel. \emph{Über formal unentscheidbare Sätze der
+		Principia Mathematica und verwandter Systeme, I}.
+		Monatshefte für Mathematik und Physik 38.
+
+	\bibitem{wiki} Wikipedia. URL: \href{http://en.wikipedia.org}
+	  {http://en.wikipedia.org}.
+		Consultado en \today.
+
+%-----------------------------------------------------------------------------------
+\end{thebibliography}
+
+%-----------------------------------------------------------------------------------
+
+\label{end}
+
+\end{document}
+
+%===================================================================================
