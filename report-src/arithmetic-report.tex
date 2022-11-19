@@ -150,11 +150,11 @@ Lic. Tutor Dos, \emph{Centro}}
 	El modelo por el cual se basan estas aritméticas es el estándar IEEE 754, este formato comprende:
 	\begin{enumerate}
   
-  		\item[-] Representación de números finitos: cada número finito se caracteriza por una base $b$, un bit de signo $s$, una mantisa $c$ y un exponente $q$. Entonces un número $v$ se define como: $v=(-1)^s\cdot c\cdot b^q$. 
+  		\item Representación de números finitos: cada número finito se caracteriza por una base $b$, un bit de signo $s$, una mantisa $c$ y un exponente $q$. Entonces un número $v$ se define como: $v=(-1)^s\cdot c\cdot b^q$. 
   	
-  		\item[-] Los números infinitos: $\pm\infty$.
+  		\item Los números infinitos: $\pm\infty$.
   	
-  		\item[-] Un valor no numérico: $NaN$ el cual indica que en algún proceso de cálculo realizado se efectuó una operación que no resultó en un número correctamente definido, por ejemplo una división por 0.
+  		\item Un valor no numérico: $NaN$ el cual indica que en algún proceso de cálculo realizado se efectuó una operación que no resultó en un número correctamente definido, por ejemplo una división por 0.
 	\end{enumerate}
   
 	El IEEE 754 también establece las reglas básicas para operar con los números de la aritmética tal es el caso de las de la representación en memoria de los números, los formatos de precisión y los formatos de intercambio y redondeo.
@@ -206,7 +206,7 @@ Lic. Tutor Dos, \emph{Centro}}
 \subsection{Representación de los Números}\label{sub:result}
 %-----------------------------------------------------------------------------------
 	Modelaremos los número de nuestra aritmetica mediante la clase \textbf{Numbers}:
-  \lstset{keywordstyle=\color{blue}, basicstyle=\small}
+	\lstset{keywordstyle=\color{blue}, basicstyle=\small}
 
 		\begin{figure}[htb]%
 			\begin{lstlisting}[language=python]%
@@ -299,8 +299,117 @@ Lic. Tutor Dos, \emph{Centro}}
 	Por ejemplo si $b_n$ es 2 podemos multiplicar el numerador y el denominador por 3, al cual llamaremos factor de normalización, en el caso peor que el denominador sea $\overline{299\ldots} \cdot 3= \overline{6\ldots }$, de la misma manera podemos encontrar un factor de normalización. Para extender este ejemplo para la base $10^k$ simplemente multiplicamos por $10^x$ de tal manera que $b_n$ tenga exactamente $k$ dígitos y luego aplicamos el proceso descrito anteriormente.
 	
 	De esta manera comprobamos que al realizar la estimación de nuestro cociente cometemos a lo sumo un error de 3 unidades, por lo que tendremos que hacer a lo sumo 3 comprobaciones para asegurarnos de que el resultado es correcto. Luego nuestro algoritmo realizará $3mn$ iteraciones en el caso peor al realizar la división de un número de $m$ dígitos entre otro de $n$ dígitos. 
+	
+%-----------------------------------------------------------------------------------
+\section{Biblioteca ArihmeticMath}\label{sub:result}
+%-----------------------------------------------------------------------------------
+	Para proceder a la comparación de los desempeños de las aritméticas vamos a establecer una biblioteca con implementaciones de las principales funciones matemáticas. Como plantilla base para las aritméticas definiremos la clase \textbf{ArithmeticMath} que cuenta de los siguientes métodos:
+	
+	\lstset{keywordstyle=\color{blue}, basicstyle=\small}
 
+		\begin{figure}[htb]%
+			\begin{lstlisting}[language=python]%
 
+    @abstractmethod
+    def number1(self):
+        pass
+
+    @abstractmethod
+    def number0(self):
+        pass
+        
+    @abstractmethod
+    def float_to_number(self, 
+                        number: float):
+        pass
+		
+		\end{lstlisting}
+		\caption{Métodos de ArithmeticMath.\label{fig:code}}
+		\end{figure}
+	
+	Los métodos de la figura 3 tienen la función de definir el número 1 y el número 0 para cada aritmética, dado un \textbf{float} convertirlo al formato de la aritmética y  convertir un número de la aritmética a entero, respectivamente.
+	
+	\begin{figure}[htb]%
+			\begin{lstlisting}[language=python]%
+
+    def number_to_fraction(self, number):
+        s = str(number).split('.')
+
+        if len(s) == 1:
+            return int(s[0]), 1
+
+        return int(s[0] + s[1]),\
+               int(add_zeros_right('1',\
+               len(s[1])))
+
+		
+		\end{lstlisting}
+		\caption{Método NumberToFraction.\label{fig:code}}
+		\end{figure}
+		
+	Adicionalmente se encuentra predefinido el método de la figura 4, el cual se encarga de convertir un número de la aritmética en una fracción racional, retornando 2 entero el numerador y el denominador en ese orden.
+	
+%-----------------------------------------------------------------------------------
+\subsection{Funciones de ArihmeticMath}\label{sub:result}
+%-----------------------------------------------------------------------------------
+
+	
+	Como mencionamos anteriormente esta aritmética cuenta con métodos que permiten la implementación de las principales funciones matemáticas, a continuación, detallamos los recursos matemáticos utilizados en cada caso:
+	
+	\begin{enumerate}
+		\item Raíz n-ésima: Para esta operación se trata de buscar un valor cercano mediante una potencia entera ($x_0$ aproximación inicial) y luego se aproxima mediante la siguiente relación de recurrencia:
+			\begin{equation}
+				x_ {k + 1} = {\frac {1} {n}} \left [{(n-1) x_ {k} + {\frac {A} {x_ {k} ^ {n-1}}}} \right]
+			\end{equation}
+		
+		donde $x_i\approx \sqrt[n]{A}$.
+			
+		\item Potencia: Para esta operación se busca la fracción que genera el exponente y luego se calcula la raíz y la potencia correspondiente.
+  		
+  		\item Logaritmo en base $e$: Se aproxima mediante la serie de Taylor de la función $\text{ln}(1-x)$, con $|x| \leq 1$:
+  			\begin{equation}
+  				\text{ln}(1-x)=-\sum _{n=1}^{\infty }{\frac {x^{n}}{n}}
+			\end{equation}  			 
+			si $|x| > 1$ se utiliza la siguiente identidad $\text{ln}({1\over x})=-\text{ln}(x)$.
+			
+		\item Logaritmo: Se aproxima mediante la identidad $\text{log}_a b={\text{ln}(a)\over \text{ln}(b)}$, con el cálculo de los logaritmos en base $e$ correspondientes.
+		
+		\item Seno: Se aproxima mediante la serie de Taylor de la función $\text{sen }x$:
+  			\begin{equation}
+  				\text{sen } x=\sum _{n=0}^{\infty }{\frac {(-1)^{n}}{(2n+1)!}}
+  			\end{equation}
+  			
+  		\item Coseno: Se aproxima mediante la serie de Taylor de la función $\text{cos }x$:
+  			\begin{equation}
+  				\text{cos } x=\sum _{n=0}^{\infty }{\frac {(-1)^{n}}{(2n)!}}
+  			\end{equation}
+  			
+  		\item Tangente y Cotangente: Se calculan mediante las identidades fundamentales: $\text{sen x}\over \text{cos x}$ y $\text{cos x}\over \text{sen x}$, respectivamente.
+  			
+  		\item Arcoseno: Se aproxima mediante la serie de Taylor de la función $\text{arcsen }x$, para $\left|x\right|<1$:
+  			\begin{equation}
+  				\text{arcsen }x=\sum _{n=0}^{\infty }{\frac {(2n)!}{4^{n}(n!)^{2}(2n+1)}}\;x^{2n+1}\quad
+  			\end{equation}
+  			
+  		\item Arcocoseno: Se aproxima mediante la identidad $\text{arccos}x={\pi \over 2}-\text{arcsin }x$, con el cálculo del arcoseno correspondiente.
+  		
+  		\item Arcotangente: Se aproxima mediante la serie de Taylor de la función $\text{arctan }x$, con $|x| \leq 1$, si $|x| > 1$ se utiliza la siguiente identidad $\text{arctan }x={\pi \over 2}-\text{arctan}({1 \over x})$:
+  			\begin{equation}
+  				\text{arctan }x=\sum _{n=0}^{\infty }{\frac {(-1)^{n}}{2n+1}}\;x^{2n+1}
+  			\end{equation}
+  			
+  		\item Arcocotangente: Se aproxima mediante la identidad $\text{arccot }x={\pi \over 2}-\text{arctan }x$, con el cálculo de la arcotangente correspondiente.
+  		
+  		\item Número $\pi$: Se aproxima mediante la serie la función $\text{arcsen }x$ evaluada en 0.5 que tiene como resultado $\pi\over 6$.
+  		
+  		\item Número $e$: Se aproxima mediante la serie de Taylor de la función $e^x$, evaluada en 1:
+  			\begin{equation}
+  				e^{x}=\sum _{n=0}^{\infty }{\frac {x^{n}}{n!}}
+  			\end{equation}
+	\end{enumerate}
+	
+
+	
 	
 
 %-----------------------------------------------------------------------------------
