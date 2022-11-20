@@ -199,7 +199,8 @@ class ArithmeticMath(ABC):
 
         number10 = self.float_to_number(10)
         (aux, ind) = scalate_one(x, number10, self.number1())
-        aux *= number10 ** (y - ind % y)
+        if ind!=0:
+            aux *= number10 ** (y - ind % y)
 
         if parity and not x >= self.number0():
             raise Exception("Operacion Invalida (el resultado no es real)")
