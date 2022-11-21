@@ -150,7 +150,7 @@ Lic. Tutor Dos, \emph{Centro}}
 	El modelo por el cual se basan estas aritméticas es el estándar IEEE 754, este formato comprende:
 	\begin{enumerate}
   
-  		\item Representación de números finitos: cada número finito se caracteriza por una base $b$, un bit de signo $s$, una mantisa $c$ y un exponente $q$. Entonces un número $v$ se define como: $v=(-1)^s\cdot c\cdot b^q$. 
+  		\item Representación de números finitos: cada número finito se caracteriza por una base $b$, un bit de signo $s$, una mantisa $c$ y un exponente $q$. Entonces un número $v$ se define como: $v=(-1)^s c b^q$. 
   	
   		\item Los números infinitos: $\pm\infty$.
   	
@@ -247,19 +247,19 @@ Lic. Tutor Dos, \emph{Centro}}
 		\begin{equation}
 			\begin{split}
 				&a=a_1 10^{\lfloor {n\over 2}\rfloor} + a_2 \wedge b=b_1 10^{\lfloor {n\over 2}\rfloor} + b_2	\\	
-				&\Rightarrow ab=a_1 b_1\cdot 10^{2\cdot\lfloor {n\over 2}\rfloor}+(a_1 b_2+b_1 a_2 )10^{\lfloor {n\over 2}\rfloor}+a_2 b_2
+				&\Rightarrow ab=a_1 b_1 10^{2\cdot\lfloor {n\over 2}\rfloor}+(a_1 b_2+b_1 a_2 )10^{\lfloor {n\over 2}\rfloor}+a_2 b_2
 			\end{split}
 		\end{equation}			
 			
 	 Entonces tenemos que $a_1$ y $b_1$ poseen a lo sumo $\lceil {n\over 2}\rceil$ dígitos y $a_2$ y $b_2$ tienen $\lfloor {n\over 2}\rfloor$ dígitos, por lo que para realizar el computo de $ab$ necesitamos calcuar 4 multiplicaciones y una suma de a lo sumo $\lceil {n\over 2}\rceil$ dígitos.
 	 
-	 Este algoritmo es particularmente muy eficiente en multuplicaciones de enteros grandes, por ejemplo para $n=1024$, el costo del algoritmo sería $3^{10}=59049$ comparado con el clásico que sería de $2^20=1049756$ operaciones. 
+	 Este algoritmo es particularmente muy eficiente en multuplicaciones de enteros grandes, por ejemplo para $n=1024$, el costo del algoritmo sería $3^{10}=59049$ comparado con el clásico que sería de $2^{20}=1049756$ operaciones. 
 	
 	
 %-----------------------------------------------------------------------------------
 \subsubsection{División algortimo D}\label{sub:division}
 %-----------------------------------------------------------------------------------
-	Ahora nos enfrentaremos a un problema más complejo que es la división de dos números. El algoritmo básico para la división consiste en mecanismo de prueba y error mediante el sistema de numeración posicional y el mismo tiene una complejidad de $d\cdot m\cdot n$, donde $d$ es una contante en la aritmética que viene dada por la base y $m$ y $n$ son la cantidad de dígitos del numerador y el denominador. Por tanto como anteriormente planteamos la idea de aumentar el tamaño de la base para que las operaciones fueran más eficientes aquí nos hemos encontrado con un problema que se agrava con dicha propuesta.
+	Ahora nos enfrentaremos a un problema más complejo que es la división de dos números. El algoritmo básico para la división consiste en mecanismo de prueba y error mediante el sistema de numeración posicional y el mismo tiene una complejidad de $d m n$, donde $d$ es una contante en la aritmética que viene dada por la base y $m$ y $n$ son la cantidad de dígitos del numerador y el denominador. Por tanto como anteriormente planteamos la idea de aumentar el tamaño de la base para que las operaciones fueran más eficientes aquí nos hemos encontrado con un problema que se agrava con dicha propuesta.
 	
 	Para solucionar el problema descrito anteriormente plantearemos dos algoritmos como alternativa al algoritmo clásico el primero es el \emph{Algoritmo de Newtón-Raphlson} y el segundo es el \emph{Algoritmo D}.
 	
@@ -275,28 +275,28 @@ Lic. Tutor Dos, \emph{Centro}}
 	El Algoritmo D se basa en la estimación del cociente que resulta de dividir un número de $n+1$ dígitos entre otro de $n$ dígitos. Esta estimación se realiza mediante la división de el número formado por los dos primeros dígitos del dividendo entre el número formado por el primer dígito del divisor, a continuación mostraremos como acotar dicha estimación:
 	
 	Sea $a$ un número de $n+1$ dígitos y $b$ un número de $n$ dígitos y $d$ la base de nuestra aritmética tales que:
-		$$a=\overline{a_{n+1}a_n\ldots a_1} \wedge b=\overline{b_n\ldots b_1}$$	 
+		$$a=\overline{x_{n+1}x_n\ldots x_1} \wedge b=\overline{y_n\ldots y_1}$$	 
 	
-	Primero como $a-\overline{a_{n+1}a_n} d^{n-1}= a_{n-1}\ldots a_1\leq b_n d^{n-1}$ tenemos que:
+	Primero como $a-(\overline{x_{n+1}x_n}) d^{n-1}= \overline{x_{n-1}\ldots x_1}\leq b_n d^{n-1}$ tenemos que:
 	\begin{equation}
-		\Bigg\lfloor{a \over b_nd^{n-1}}\Bigg\rfloor = \Bigg\lfloor{\overline{a_{n+1}a_n} d^{n-1} \over b_n d^{n-1}}\Bigg\rfloor
+		\Bigg\lfloor{a \over y_nd^{n-1}}\Bigg\rfloor = \Bigg\lfloor{\overline{x_{n+1}x_n} d^{n-1} \over y_n d^{n-1}}\Bigg\rfloor
 	\end{equation}
 	
-	Ahora sea $q=\lfloor{a \over b}\rfloor$ y $q'=\lfloor{\overline{a_{n+1}a_n} \over b_n}\rfloor$, sabemos que $q\geq q'$ por lo demostrado anteriormente, por lo tanto trataremos de acotar el error que se comete en la estimación de $q'$:
+	Ahora sea $q=\lfloor{a \over b}\rfloor$ y $q'=\lfloor{\overline{x_{n+1}x_n} \over y_n}\rfloor$, sabemos que $q\geq q'$ por lo demostrado anteriormente, por lo tanto trataremos de acotar el error que se comete en la estimación de $q'$:
 	\begin{equation}
 		\begin{split}
-			&q-q'=\Bigg\lfloor{a \over b_n d^{n-1}}\Bigg\rfloor-\Bigg\lfloor{a \over b_n d^{n-1}+d^n-1}\Bigg\rfloor\\ 
-			&q-q'<{a \over b_n d^{n-1}}-{a \over b_n d^{n-1}+d^n-1}+1\\
-			&q-q'<{a(b_n d^{n-1}+d^{n-1}-1-b_n d^{n-1})\over b_n d^{n-1}(b_n d^{n-1}+d^{n-1}-1)}+1\\
-			&q-q'<{d^{n-1}-1\over b_n d^{n-1}}\cdot {a
-\over b_n d^{n-1}+d^{n-1}-1}+1\\
-			&q-q'<{1\over b_n}\cdot d+1={d\over b_n}+1
+			&q-q'=\Bigg\lfloor{a \over y_n d^{n-1}}\Bigg\rfloor-\Bigg\lfloor{a \over y_n d^{n-1}+d^n-1}\Bigg\rfloor\\ 
+			&q-q'<{a \over y_n d^{n-1}}-{a \over y_n d^{n-1}+d^n-1}+1\\
+			&q-q'<{a(y_n d^{n-1}+d^{n-1}-1-y_n d^{n-1})\over y_n d^{n-1}(y_n d^{n-1}+d^{n-1}-1)}+1\\
+			&q-q'<{d^{n-1}-1\over y_n d^{n-1}}\cdot {a
+\over y_n d^{n-1}+d^{n-1}-1}+1\\
+			&q-q'<{1\over y_n}\cdot d+1={d\over y_n}+1
 		\end{split}
 	\end{equation}
 	
 	Luego solo nos queda acotar ${d\over b_n}$, mostremos que simpre podemos hacer transformaciones para que ${d\over b_n}\leq 2$, para ello apoyémonos en el sistema decimal que es el que utilizamos en nuestra aritmética. 
 	
-	Por ejemplo si $b_n$ es 2 podemos multiplicar el numerador y el denominador por 3, al cual llamaremos factor de normalización, en el caso peor que el denominador sea $\overline{299\ldots} \cdot 3= \overline{6\ldots }$, de la misma manera podemos encontrar un factor de normalización. Para extender este ejemplo para la base $10^k$ simplemente multiplicamos por $10^x$ de tal manera que $b_n$ tenga exactamente $k$ dígitos y luego aplicamos el proceso descrito anteriormente.
+	Por ejemplo si $b_n$ es 2 podemos multiplicar el numerador y el denominador por 3, al cual llamaremos factor de normalización, en el caso peor que el denominador sea $\overline{299\ldots} \cdot 3= \overline{6\ldots }$, de la misma manera podemos encontrar un factor de normalización para los restantes dígitos. Para extender este ejemplo para la base $10^k$ simplemente multiplicamos por $10^x$ de tal manera que $b_n$ tenga exactamente $k$ dígitos y luego aplicamos el proceso descrito anteriormente.
 	
 	De esta manera comprobamos que al realizar la estimación de nuestro cociente cometemos a lo sumo un error de 3 unidades, por lo que tendremos que hacer a lo sumo 3 comprobaciones para asegurarnos de que el resultado es correcto. Luego nuestro algoritmo realizará $3mn$ iteraciones en el caso peor al realizar la división de un número de $m$ dígitos entre otro de $n$ dígitos. 
 	
@@ -391,7 +391,7 @@ Lic. Tutor Dos, \emph{Centro}}
   				\text{arcsen }x=\sum _{n=0}^{\infty }{\frac {(2n)!}{4^{n}(n!)^{2}(2n+1)}}\;x^{2n+1}\quad
   			\end{equation}
   			
-  		\item Arcocoseno: Se aproxima mediante la identidad $\text{arccos}x={\pi \over 2}-\text{arcsin }x$, con el cálculo del arcoseno correspondiente.
+  		\item Arcocoseno: Se aproxima mediante la identidad $\text{arccos }x={\pi \over 2}-\text{arcsin }x$, con el cálculo del arcoseno correspondiente.
   		
   		\item Arcotangente: Se aproxima mediante la serie de Taylor de la función $\text{arctan }x$, con $|x| \leq 1$, si $|x| > 1$ se utiliza la siguiente identidad $\text{arctan }x={\pi \over 2}-\text{arctan}({1 \over x})$:
   			\begin{equation}
@@ -406,12 +406,15 @@ Lic. Tutor Dos, \emph{Centro}}
   			\begin{equation}
   				e^{x}=\sum _{n=0}^{\infty }{\frac {x^{n}}{n!}}
   			\end{equation}
-	\end{enumerate}
+  	\end{enumerate}
+  			
+  	Todos estos métodos anteriormente descritos tienen presentes errores númericos de truncamiento, ya que la mayoría de ellos se basan en series numéricas o sucesiones recurrentes, los cuales son infinitos y solo se puede computar una parte de estos.
+	
 
 %-----------------------------------------------------------------------------------
 \section{Comparando las Aritméticas}\label{sub:comp_aritmetics}
 %-----------------------------------------------------------------------------------
-	En esta sección contaremos con 5 aritméticas, cada una basadas en \textbf{ArithmeticMath}:
+	En esta sección contaremos con 4 aritméticas, cada una basadas en \textbf{ArithmeticMath}:
 	\begin{enumerate}
 		\item BigNum: Nuestra biblioteca con las especificaciones mencionadas anteriormente.
 		
@@ -422,7 +425,7 @@ Lic. Tutor Dos, \emph{Centro}}
 		\item Extended754Num: Apoyada para realizar las operaciones básicas en \textbf{Extended174}, aritmética de base variable bajo el estándar IEEE-174, desarrollada en la
 		Facultad. 
 		
-		\item Aritmética estándar: Utilización del módulo \textbf{Math} y los números \textbf{float} de \textbf{Python}.
+		%\item Aritmética estándar: Utilización del módulo \textbf{Math} y los números \textbf{float} de \textbf{Python}.
 	\end{enumerate}
 
 
@@ -431,7 +434,7 @@ Lic. Tutor Dos, \emph{Centro}}
 %-----------------------------------------------------------------------------------
 	Como mencionamos anteriormente en la introducción el sistema de coma flotante que se implementa en los microprocesadores de nuestra computadora es en base 2, el número $0.25={2\over 10}+{5\over 100}={25\over 100}={1\over 4}$ de ahí que se 0.25 en binario se exprese como 0.01. 
 	
-	Un problema aparente que podemos observar a simple vista es que en muchas ocasiones la fracción decimal no se pueda expresar mediante un número finito de decimales, por ejemplo ${1\over 3}=0.333333\ldots$, ahora podemos observar que lo mismo ocurre en base 2, por ejemplo $0.4={4\over 10}={2\over 5}$ que en binario seria ${10\over 101}=0.0110011001100110\ldots$. Con el ejemplo analizado anteriormente se nos presenta el siguiente problema $0.4={4\over 10}$, sin embargo ${10\over 101}=0.0110011001100110\ldots$, es decir para la misma fracción racional nos encontramos con que 0.4 es perfectamente representable en base 10 con un número finito de decimales pero en base 2 obtenemos $0.0110011001100110\ldots$ que es un número infinito periódico. Esto supone un importante problema ya que en la vida cotidiana fuera del mundo de la computación se trabaja en base 10, sin embargo las computadoras y los sistemas computo están hechos en su mayoría para el procesamiento de datos de la vida real, lo cual trae consigo que verdaderamente se trabaje con una aproximación de estos datos y no con los números introducidos originalmente (Figura 5).
+	Un problema que podemos observar a simple vista es que en muchas ocasiones la fracción decimal no se pueda expresar mediante un número finito de decimales, por ejemplo ${1\over 3}=0.333333\ldots$, ahora, lo mismo ocurre en base 2, por ejemplo $0.4={4\over 10}={2\over 5}$ que en binario seria ${10\over 101}=0.0110011001100110\ldots$. Con el ejemplo analizado anteriormente se nos presenta el siguiente problema $0.4={4\over 10}$, sin embargo ${10\over 101}=0.0110011001100110\ldots$, es decir para la misma fracción racional nos encontramos con que 0.4 es perfectamente representable en base 10 con un número finito de decimales pero en base 2 obtenemos $0.0110011001100110\ldots$ que es un número infinito periódico. Esto supone un importante problema ya que en la vida cotidiana fuera del mundo de la computación se trabaja en base 10, sin embargo las computadoras y los sistemas computo están hechos en su mayoría para el procesamiento de datos de la vida real, lo cual trae consigo que verdaderamente se trabaje con una aproximación de estos datos y no con los números introducidos originalmente (Figura 5).
 	
 	\begin{figure}
 		\begin{center}
@@ -447,8 +450,60 @@ Lic. Tutor Dos, \emph{Centro}}
 		\end{center}
 	\end{figure}
 	
-	Otro problema que debemos de tener en cuenta a la hora de trabajar con estas aproximaciones es la comparación de los números obtenidos, por ejemplo ilustremos la comparación mostrada en la Figura 6 donde podemos apreciar que en el sistema de coma flotante $0.4\cdot 3$ es ligeramente superior a 1.2.
+	Otro problema que debemos de tener en cuenta a la hora de trabajar con estas aproximaciones es la comparación de los números obtenidos, por ejemplo ilustremos la comparación mostrada en la Figura 6 donde podemos apreciar que en el sistema de coma flotante $0.4\cdot 3$ es ligeramente superior a 1.2. Por este motivo a la hora de trabajar con los números flotantes en el diseño de nuestros algoritmos siempre debemos tener en cuenta este error y evitar hacer comparaciones del tipo $a==b$, donde $a$ y $b$ son números flotantes.
 
+
+%-----------------------------------------------------------------------------------
+\subsection{Análisis de la Comparación}\label{sub:comp}
+%-----------------------------------------------------------------------------------
+
+	En esta sección analizaremos los resultados de los cálculos obtenidos al probar las distintas aritméticas con las funciones implementadas en \textbf{ArihmeticMath}, dichos resultados se muestran en la sección \textbf{Tablas y Valores Obtenidos}.
+	
+%-----------------------------------------------------------------------------------
+\subsubsection{Principales Funciones Matemáticas}\label{sub:math_func}
+%-----------------------------------------------------------------------------------
+
+	
+	En la Figura 8 podemos observar las aproximaciones para sen($\pi$), por nuestros conocimientos matemáticos podemos percatarnos que el resultado es 0, sin embargo, observamos 
+que las 3 aproximaciones arrojan valores ligeramente mayores a 0, con más exactitud para \textbf{FractionNum} y una mayor velocidad para \textbf{DecimalNum}.
+
+	En la Figura 10 y 11 se comparan las aproximaciones para los números $\pi$ y $e$, respectivamente, con una mayor cantidad de cifras significativas para nuestra aritmética, aunque también con el tiempo más elevado, mientras \textbf{DecimalNum} sigue contando con el menor tiempo. 
+	
+	Pasamos a la Figura 13 donde comparamos el cálculo de ln($e$), podemos percatarnos de que \textbf{FractionNum} es la única que nos proporciona el resultado preciso, mientras nuestra aritmética cuenta con más exactitud que \textbf{DecimalNum}.
+	
+	Ahora procederemos a comparar potencias con índices decimales y raíces n-ésimas una tarea que puede ser computacionalmente más compleja, ya que como vimos annteriormente lleva el cálculo de potencias que pueden ser potencialmente más costosas que los factoriales utilizados en las series trigonométricas.
+	
+	En la Figura 18 se muestras el cálculo de $\sqrt{2}$, donde se aprecia una mayor exactitud en cuanto a decimales para nuestra aritmética pero para \textbf{FractionNum} ha sido imposible realizar el computo dentro de los límites de tiempo concebidos.
+	
+	En la Figura 20 se muestran los valores obtenidos para $\pi^{0.5}$, con mejor exactitud y velocidad para \textbf{DecimalNum}, al igual que en el análisis anterior ha sido imposible realizar los cálculos para \textbf{FractionNum}.
+	
+%-----------------------------------------------------------------------------------
+\subsubsection{Comparando números}\label{sub:number_comp}
+%-----------------------------------------------------------------------------------
+
+	En esta sección analizaremos algunos de los ejemplos planteados en la sección donde describimos las limitaciones y los problemas de la coma flotante.
+	
+	\begin{figure}[h!]%
+		\begin{center}
+			\begin{tabular}{|c|c|c|} \hline
+			 			 & $0.4\cdot 3==1.2$ 	    & $\sqrt{2}^3==2^{1.5}$ 	\\ \hline
+			BigNum       &  True  & True     \\ \hline
+			FractionNum  &  False &   -   \\ \hline
+			DecimalNum   &  False & True   \\ \hline
+						& $1.5\cdot 2==0.1+0.2$ 	    & $6/10==0.6$	\\ \hline
+			BigNum       &  True  & True     \\ \hline
+			FractionNum  &  False & False  \\ \hline
+			DecimalNum   &  False & False  \\ \hline
+
+\end{tabular}
+		\caption{Comparando números. \label{fig:ex}}
+		\end{center}
+	\end{figure}
+	
+	En la Figura 7 podemos observar algunos de los ejemplos planteados en secciones anteriores, donde se demuestra la exactitud de nuestra biblioteca antes estos escenarios y los problemas del sistema de coma flotante.
+  
+	
+	
 \onecolumn
 %-----------------------------------------------------------------------------------
 \subsection{Tablas y Valores Obtenidos}\label{sub:table}
