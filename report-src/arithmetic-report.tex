@@ -692,61 +692,63 @@ DecimalNum   &  1.514354028437096828855179423                             &  0.0
 	
 	
 \twocolumn
+
+%-----------------------------------------------------------------------------------
+\subsection{Sacando lo máximo de nuestra aritmética}\label{sub:big}
+%-----------------------------------------------------------------------------------
 	
+	En esta sección mostraremos los reultados obtenidos en el desempeño de nuestra aritmética para tareas computacionalmente complejas, como la aproximación de $\pi$ y $e$ con varias cifras decimales y el cálculo de números grandes como los factoriales.
+	
+	\begin{figure}[h!]%
+		\begin{center}
+			\begin{tabular}{|c|c|c|} \hline
+			 	Cifras Correctas & Tiempo 	\\ \hline
+			    100              &  1.357109 \\ \hline  
+			    200              &  5.720520  \\ \hline
+				500              &  30.96164  \\ \hline
+
+\end{tabular}
+		\caption{Aproximación de los decimales de $\pi$. \label{fig:ex}}
+		\end{center}
+	\end{figure}
+	
+	\begin{figure}[h!]%
+		\begin{center}
+			\begin{tabular}{|c|c|c|} \hline
+			 	Cifras Correctas & Tiempo 	\\ \hline
+			    100              &  0.047280 \\ \hline  
+			    200              &  0.127560  \\ \hline
+				500              &  0.887334  \\ \hline
+
+\end{tabular}
+		\caption{Aproximación de los decimales de $e$. \label{fig:ex}}
+		\end{center}
+	\end{figure}
+	
+	\begin{figure}[h!]%
+		\begin{center}
+			\begin{tabular}{|c|c|c|} \hline
+			 	Factorial & Tiempo 	\\ \hline
+			    100              &  0.027119 \\ \hline  
+			    1000             &  3.804981  \\ \hline
+				10000            &  457.1413  \\ \hline
+
+\end{tabular}
+		\caption{Cálculo de factoriales. \label{fig:ex}}
+		\end{center}
+	\end{figure}
 
 %-----------------------------------------------------------------------------------
-	\subsection{Listas y Descripciones}\label{sub:lists}
+\subsection{Finalizando Comparaciones}\label{sub:big}
 %-----------------------------------------------------------------------------------
-		Para producir listas enumeradas, utilice el siguiente estilo:
-		\begin{enumerate}
-			\item Primer Elemento
-			\item Segundo Elemento
-			%
-			\begin {enumerate}
-				\item {Segundo Elemento - Subítem Uno}
-				\item {Segundo Elemento - Subítem Dos}
-			\end {enumerate}
-			%
-		\end{enumerate}
+	En las diferentes secciones abordadas de este tema, nos percatamos de que los resultados favorecen en cuanto a precisión favorecen a \textbf{BigNum} aunque por un estrecho margen. Sin embargo en el caso de los cálculos de expresiones decimales no finitas todas las aritméticas ofrecen comportamientos similares, con algunas ventajas para \textbf{FractionNum} como vimos en un ejemplo aunque vale la pena señalar que se realizó una división en todos los casos del numerador entre el divisor para poder comparar los resultados con las demás artiméticas, por lo cual no se explota todo el potencial de esta.
+	
+	En cuanto a los tiempos de ejecución la aritmética más eficiente es \textbf{DecimalNum}, \textbf{FractionNum} en este sentido se vio incapacitada de realizar algunos cálculos, mientras que nuestra aritmética si bien fue la menos eficiente en la mayoría de los casos, no se obtuvieron tiempos dentro de lo razonable para la ejecución de un algoritmo.
+	
+	En la última sección analizada podemos observar la eficiencia de nuestra aritmética ante escenarios complejos desde el punto de vista computacional.
 
-%-----------------------------------------------------------------------------------
-		Para producir descripciones, use el siguiente estilo:
 
-%-----------------------------------------------------------------------------------
-		\begin{description}
-			\item [Primer Elemento] con su respectiva descripción.
-			\item [Segundo Elemento] también con su respectiva descripción.
-		\end{description}
-
-%-----------------------------------------------------------------------------------
-	\subsection{Figuras}\label{sub:figures}
-%-----------------------------------------------------------------------------------
-		Para producir cuerpos flotantes (figuras o tablas), asegúrese de numerar
-		y etiquetar correctamente cada figura. Las referencias a las figuras deben
-		estar correctamente etiquetadas. Por ejemplo, véase la Fig. \ref{fig:ex}\ldots
-		
-%-----------------------------------------------------------------------------------
-	\subsection{Código Fuente}\label{sub:listings}
-%-----------------------------------------------------------------------------------
-		Para producir código fuente, envuélvalo en una figura flotante y
-		etiquételo correctamente. Por ejemplo, en la Fig. \ref{fig:code}
-		se muestra un código bastante conocido\ldots
-
-		% Configuración de Listings
-		\lstset{keywordstyle=\color{blue}, basicstyle=\small}
-
-		\begin{figure}[htb]%
-			\begin{lstlisting}[language=c]%
-
-    int main(int argc, char** argv)
-    {
-        // Imprimiendo "Hola Mundo".
-        printf("Hello, World");
-    }
-
-			\end{lstlisting}
-		\caption{Código fuente de ejemplo.\label{fig:code}}
-		\end{figure}
+	
 
 %-----------------------------------------------------------------------------------
 	\subsection{Referencias}

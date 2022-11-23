@@ -40,7 +40,8 @@ class Numbers:
         if type(number) is not list:
             str_number: str = str(number)
             (part_int, part_decimal) = Numbers.__int_and_decimal(str_number)
-            (part_int, part_decimal) = (eliminate_zeros_left(part_int), eliminate_zeros_right(part_decimal))
+            (part_int, part_decimal) = (eliminate_zeros_left(
+                part_int), eliminate_zeros_right(part_decimal))
             self.__number_value = eliminate_zeros_left_value(self.__create_value_number(part_int, part_decimal),
                                                              precision)
         else:
@@ -50,7 +51,8 @@ class Numbers:
             positive = True
 
         self.__sign = '+' if positive else '-'
-        self.__abs = self if positive else Numbers(number, True, precision, self.__ind_base10, self.__base10)
+        self.__abs = self if positive else Numbers(
+            number, True, precision, self.__ind_base10, self.__base10)
 
     @property
     def sign(self):
@@ -113,19 +115,24 @@ class Numbers:
         """
         number_value: list = [0 for _ in range(self.__precision + 1)]
 
-        part_int = add_zeros_left(part_int, self.__ind_base10 - len(part_int) % self.__ind_base10)
-        part_decimal = add_zeros_right(part_decimal, self.__ind_base10 - len(part_decimal) % self.__ind_base10)
+        part_int = add_zeros_left(
+            part_int, self.__ind_base10 - len(part_int) % self.__ind_base10)
+        part_decimal = add_zeros_right(
+            part_decimal, self.__ind_base10 - len(part_decimal) % self.__ind_base10)
 
         for i in range(len(part_decimal) // self.__ind_base10):
-            number_value[-i - 2] = int(part_decimal[i * self.__ind_base10:self.__ind_base10 * (i + 1)])
+            number_value[-i - 2] = int(part_decimal[i *
+                                       self.__ind_base10:self.__ind_base10 * (i + 1)])
 
             if i + 1 == self.precision:
                 break
 
-        number_value[-1] = int(part_int[len(part_int) - self.__ind_base10:len(part_int)])
+        number_value[-1] = int(part_int[len(part_int) -
+                               self.__ind_base10:len(part_int)])
 
         for i in range(1, len(part_int) // self.__ind_base10):
-            number_value.append(int(part_int[(-1 - i) * self.__ind_base10:-i * self.__ind_base10]))
+            number_value.append(
+                int(part_int[(-1 - i) * self.__ind_base10:-i * self.__ind_base10]))
 
         return number_value
 
@@ -187,9 +194,9 @@ class Numbers:
         x: 'Numbers' = self
         y: 'Numbers' = o
 
-        if x == 0:
+        if x == self.real0:
             return y
-        if y == 0:
+        if y == self.real0:
             return x
 
         (lx, ly) = (x.__number_value, y.__number_value)
@@ -250,8 +257,6 @@ class Numbers:
         if y.abs == self.real1():
             return Numbers(x.__number_value, positive, self.__precision, self.__ind_base10, self.__base10)
 
-        # return Numbers(Numbers.newton_raphson(x, y).__number_value, positive, self.__precision, self.__ind_base10,
-        #                self.__base10)
         return Numbers(division_algorithm_d(x.__number_value, y.__number_value, self.__precision, self.__base10),
                        positive,
                        self.__precision, self.__ind_base10, self.__base10)

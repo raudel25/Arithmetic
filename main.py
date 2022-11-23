@@ -66,7 +66,8 @@ def calculate_sin(big_n, frac_n, dec_n, number):
     f = open(f'data/sin{number}.txt', 'w')
 
     l = [['BigNum', '&'] + calculate_two_param(big_n.sin, big_n(number)),
-         ['FractionNum', '&'] + calculate_two_param(frac_n.sin, frac_n(number)),
+         ['FractionNum', '&'] +
+         calculate_two_param(frac_n.sin, frac_n(number)),
          ['DecimalNum', '&'] + calculate_two_param(dec_n.sin, dec_n(number))]
 
     f.write(tabulate(l))
@@ -77,7 +78,8 @@ def calculate_cos(big_n, frac_n, dec_n, number):
     f = open(f'data/cos{number}.txt', 'w')
 
     l = [['BigNum', '&'] + calculate_two_param(big_n.cos, big_n(number)),
-         ['FractionNum', '&'] + calculate_two_param(frac_n.cos, frac_n(number)),
+         ['FractionNum', '&'] +
+         calculate_two_param(frac_n.cos, frac_n(number)),
          ['DecimalNum', '&'] + calculate_two_param(dec_n.cos, dec_n(number))]
 
     f.write(tabulate(l))
@@ -87,7 +89,7 @@ def calculate_cos(big_n, frac_n, dec_n, number):
 def calculate_ln(big_n, frac_n, dec_n, number):
     f = open(f'data/ln{number}.txt', 'w')
 
-    l = [['BigNum', '&'] + calculate_two_param(big_n.ln, big_n(number)),['FractionNum', '&']+ calculate_two_param(frac_n.ln, frac_n(number)),
+    l = [['BigNum', '&'] + calculate_two_param(big_n.ln, big_n(number)), ['FractionNum', '&'] + calculate_two_param(frac_n.ln, frac_n(number)),
          ['DecimalNum', '&'] + calculate_two_param(dec_n.ln, dec_n(number))]
 
     f.write(tabulate(l))
@@ -98,7 +100,8 @@ def calculate_sqrt(big_n, frac_n, dec_n, number1, number2):
     f = open(f'data/sqrt{number1}_{number2}.txt', 'w')
 
     l = [['BigNum', '&'] + calculate_three_param(big_n.sqrt, big_n(number1), number2),
-         ['FractionNum', '&'] + calculate_three_param(frac_n.sqrt, frac_n(number1), number2),
+         ['FractionNum', '&'] +
+         calculate_three_param(frac_n.sqrt, frac_n(number1), number2),
          ['DecimalNum', '&'] + calculate_three_param(dec_n.sqrt, dec_n(number1), number2)]
 
     f.write(tabulate(l))
@@ -109,36 +112,43 @@ def calculate_pow(big_n, frac_n, dec_n, number1, number2):
     f = open(f'data/pow{number1}_{number2}.txt', 'w')
 
     l = [['BigNum', '&'] + calculate_three_param(big_n.pow_value, big_n(number1), big_n(number2)),
-         ['FractionNum', '&'] + calculate_three_param(frac_n.pow_value, frac_n(number1), frac_n(number2)),
+         ['FractionNum', '&'] +
+         calculate_three_param(
+             frac_n.pow_value, frac_n(number1), frac_n(number2)),
          ['DecimalNum', '&'] + calculate_three_param(dec_n.pow_value, dec_n(number1), dec_n(number2))]
 
     f.write(tabulate(l))
     f.close()
 
+
 def calculate_asin(big_n, frac_n, dec_n, number1):
     f = open(f'data/asin{number1}.txt', 'w')
 
     l = [['BigNum', '&'] + calculate_two_param(big_n.asin, big_n(number1)),
-         ['FractionNum', '&'] + calculate_two_param(frac_n.asin, frac_n(number1)),
+         ['FractionNum', '&'] +
+         calculate_two_param(frac_n.asin, frac_n(number1)),
          ['DecimalNum', '&'] + calculate_two_param(dec_n.asin, dec_n(number1))]
 
     f.write(tabulate(l))
     f.close()
 
+
 def calculate_atan(big_n, frac_n, dec_n, number1):
     f = open(f'data/atan{number1}.txt', 'w')
 
     l = [['BigNum', '&'] + calculate_two_param(big_n.atan, big_n(number1)),
-         ['FractionNum', '&'] + calculate_two_param(frac_n.atan, frac_n(number1)),
+         ['FractionNum', '&'] +
+         calculate_two_param(frac_n.atan, frac_n(number1)),
          ['DecimalNum', '&'] + calculate_two_param(dec_n.atan, dec_n(number1))]
 
     f.write(tabulate(l))
     f.close()
 
+
 def calculate_pi_max_precision():
-    big_pi=BigNum(precision=12)
-    frac_pi=FractionNum()
-    dec_pi=DecimalNum()
+    big_pi = BigNum(precision=12)
+    frac_pi = FractionNum()
+    dec_pi = DecimalNum()
     getcontext().prec = 100
     f = open(f'data/pi100.txt', 'w')
 
@@ -149,7 +159,8 @@ def calculate_pi_max_precision():
     f.write(tabulate(l))
     f.close()
 
-big = BigNum()
+
+big = BigNum(precision=1)
 frac = FractionNum()
 dec = DecimalNum()
 extend = Extended754Num(2, 100, 53, repr_base=10)
@@ -169,5 +180,26 @@ extend = Extended754Num(2, 100, 53, repr_base=10)
 # calculate_pow(big,big,dec,math.pi,0.5)
 # calculate_asin(big,frac,dec,1)
 # calculate_atan(big,frac,dec,20)
-print(dec(6)/dec(10)==dec(3)/dec(5))
-print(frac(0.15)*frac(2)==frac(0.1)+frac(0.2))
+# print(dec(6)/dec(10)==dec(3)/dec(5))
+# print(frac(0.15)*frac(2)==frac(0.1)+frac(0.2))
+
+# fact=big(1)
+# ind=big(1)
+# one=big(1)
+# a=time.time()
+# for i in range(10000):
+#     fact*=ind
+#     ind+=one
+#     if i%1000==0:
+#         print(time.time()-a)
+# b=time.time()
+#
+# # print(fact)
+#
+# print(b-a)
+a = 1
+for i in range(100):
+    a *= (i+1)
+
+print(a)
+print(big.pi())
