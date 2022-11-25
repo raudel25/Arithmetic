@@ -6,8 +6,6 @@ from other_arithmetics.decimal import DecimalNum
 from big_num.numbers import BigNum
 import fractions
 from decimal import *
-from other_arithmetics.extended754_num import Extended754Num
-
 
 def calculate_one_param(function):
     time1 = time.time()
@@ -160,10 +158,9 @@ def calculate_pi_max_precision():
     f.close()
 
 
-big = BigNum(precision=1)
+big = BigNum()
 frac = FractionNum()
 dec = DecimalNum()
-extend = Extended754Num(2, 100, 53, repr_base=10)
 # getcontext().prec=100
 
 # calculate_pi(big, frac, dec)
@@ -174,32 +171,11 @@ extend = Extended754Num(2, 100, 53, repr_base=10)
 # calculate_cos(big, frac, dec, 0)
 # calculate_ln(big, frac, dec, math.e)
 # calculate_ln(big, frac, dec, 34)
-# calculate_sqrt(big,big,dec,2,2)
-# calculate_sqrt(big,big,dec,45,12)
-# calculate_pow(big,big,dec,3,4.5)
-# calculate_pow(big,big,dec,math.pi,0.5)
+calculate_sqrt(big,big,dec,2,2)
+calculate_sqrt(big,big,dec,45,12)
+calculate_pow(big,big,dec,3,4.5)
+calculate_pow(big,big,dec,math.pi,0.5)
 # calculate_asin(big,frac,dec,1)
 # calculate_atan(big,frac,dec,20)
 # print(dec(6)/dec(10)==dec(3)/dec(5))
 # print(frac(0.15)*frac(2)==frac(0.1)+frac(0.2))
-
-# fact=big(1)
-# ind=big(1)
-# one=big(1)
-# a=time.time()
-# for i in range(10000):
-#     fact*=ind
-#     ind+=one
-#     if i%1000==0:
-#         print(time.time()-a)
-# b=time.time()
-#
-# # print(fact)
-#
-# print(b-a)
-a = 1
-for i in range(100):
-    a *= (i+1)
-
-print(a)
-print(big.pi())

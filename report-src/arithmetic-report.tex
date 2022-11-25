@@ -48,7 +48,7 @@
 %-----------------------------------------------------------------------------------
 % Título
 %-----------------------------------------------------------------------------------
-\title{Documento de Ejemplo para la Jornada Científica Estudiantil}
+\title{Comparación de implementaciones Numéricas}
 
 %-----------------------------------------------------------------------------------
 % Autores
@@ -70,7 +70,7 @@ Lic. Tutor Dos, \emph{Centro}}
 \jcematcomheading{\the\year}{1-\pageref{end}}{Raudel Alejandro Gómez Molina}
 
 %-----------------------------------------------------------------------------------
-\ShortHeadings{Ejemplo JCE}{Autores}
+\ShortHeadings{Comparación de Implementaciones Numéricas}{Autores}
 %===================================================================================
 
 
@@ -117,16 +117,15 @@ Lic. Tutor Dos, \emph{Centro}}
 % Palabras clave
 %-----------------------------------------------------------------------------------
 \begin{keywords}
-	Separadas,
-	Por,
-	Comas.
+	Implementaciones Numéricas,
+	Aritméticas Computacionales.
 \end{keywords}
 
 %-----------------------------------------------------------------------------------
 % Temas
 %-----------------------------------------------------------------------------------
 \begin{topics}
-	Tema, Subtema.
+	Implementaciones Numéricas.
 \end{topics}
 
 
@@ -241,7 +240,7 @@ Lic. Tutor Dos, \emph{Centro}}
 	El algoritmo de Karatsuba consiste en reducir la multilicación de dos números de $n$ digítos a como máximo 
 	$3n^{\log_2 3}\approx 3n^{1.585}$ multiplicaciones de números de un solo dígito, lo cual mejora el algoritmo clásico de multiplicación que consta de $n^2$ operaciones de un solo dígito. Este algoritmo se simienta en las bases de los algoritmos de \emph{Divide y Vencerás} utilizando el caso particular de la partición binaria.
 	
-	A continuación presentamos una descripsión del algoritmo:
+	A continuación presentamos una descripción del algoritmo:
 	
 	Sean $a$ y $b$ dos numeros de $n$ dígitos tal que:
 		\begin{equation}
@@ -420,12 +419,7 @@ Lic. Tutor Dos, \emph{Centro}}
 		
 		\item DecimalNum: Apoyada en el módulo \textbf{Decimal} de \textbf{Python}, para realizar las operaciones básicas.
 		
-		\item FractionNum: Apoyada en el módulo \textbf{Fraction} de \textbf{Python}, para realizar las operaciones básicas.
-		
-		\item Extended754Num: Apoyada para realizar las operaciones básicas en \textbf{Extended174}, aritmética de base variable bajo el estándar IEEE-174, desarrollada en la
-		Facultad. 
-		
-		%\item Aritmética estándar: Utilización del módulo \textbf{Math} y los números \textbf{float} de \textbf{Python}.
+		\item FractionNum: Apoyada en el módulo \textbf{Fraction} de \textbf{Python}, para realizar las operaciones básicas. 
 	\end{enumerate}
 
 
@@ -457,25 +451,24 @@ Lic. Tutor Dos, \emph{Centro}}
 \subsection{Análisis de la Comparación}\label{sub:comp}
 %-----------------------------------------------------------------------------------
 
-	En esta sección analizaremos los resultados de los cálculos obtenidos al probar las distintas aritméticas con las funciones implementadas en \textbf{ArihmeticMath}, dichos resultados se muestran en la sección \textbf{Tablas y Valores Obtenidos}.
+	En esta sección analizaremos los resultados de los cálculos obtenidos al probar las distintas aritméticas con las funciones implementadas en \textbf{ArihmeticMath}, en cuanto a precisión numérica y tiempo de ejecución, dichos resultados se muestran en la sección \textbf{Tablas y Valores Obtenidos}.
 	
 %-----------------------------------------------------------------------------------
 \subsubsection{Principales Funciones Matemáticas}\label{sub:math_func}
 %-----------------------------------------------------------------------------------
 
 	
-	En la Figura 8 podemos observar las aproximaciones para sen($\pi$), por nuestros conocimientos matemáticos podemos percatarnos que el resultado es 0, sin embargo, observamos 
-que las 3 aproximaciones arrojan valores ligeramente mayores a 0, con más exactitud para \textbf{FractionNum} y una mayor velocidad para \textbf{DecimalNum}.
+	En la Figura 8 podemos observar las aproximaciones para sen($\pi$), por nuestros conocimientos matemáticos podemos percatarnos que el resultado es 0, sin embargo, observamos que las 3 aproximaciones arrojan valores ligeramente mayores a 0, con más exactitud para \textbf{FractionNum} y una mayor velocidad para \textbf{DecimalNum}.
 
-	En la Figura 10 y 11 se comparan las aproximaciones para los números $\pi$ y $e$, respectivamente, con una mayor cantidad de cifras significativas para nuestra aritmética, aunque también con el tiempo más elevado, mientras \textbf{DecimalNum} sigue contando con el menor tiempo. 
+	En la Figura 9 se comparan las aproximaciones para los números $\pi$ y $e$, respectivamente, con una mayor cantidad de cifras significativas para nuestra aritmética, aunque también con el tiempo más elevado, mientras \textbf{DecimalNum} sigue contando con el menor tiempo. 
 	
-	Pasamos a la Figura 13 donde comparamos el cálculo de ln($e$), podemos percatarnos de que \textbf{FractionNum} es la única que nos proporciona el resultado preciso, mientras nuestra aritmética cuenta con más exactitud que \textbf{DecimalNum}.
+	Pasamos a la Figura 10 donde comparamos el cálculo de ln($e$), podemos percatarnos de que \textbf{FractionNum} es la única que nos proporciona el resultado preciso, mientras nuestra aritmética cuenta con más exactitud que \textbf{DecimalNum}.
 	
 	Ahora procederemos a comparar potencias con índices decimales y raíces n-ésimas una tarea que puede ser computacionalmente más compleja, ya que como vimos annteriormente lleva el cálculo de potencias que pueden ser potencialmente más costosas que los factoriales utilizados en las series trigonométricas.
 	
-	En la Figura 18 se muestras el cálculo de $\sqrt{2}$, donde se aprecia una mayor exactitud en cuanto a decimales para nuestra aritmética pero para \textbf{FractionNum} ha sido imposible realizar el computo dentro de los límites de tiempo concebidos.
+	En la Figura 12 se muestras el cálculo de $\sqrt{2}$, donde se aprecia una mayor exactitud en cuanto a decimales para nuestra aritmética pero para \textbf{FractionNum} ha sido imposible realizar el computo dentro de los límites de tiempo concebidos.
 	
-	En la Figura 20 se muestran los valores obtenidos para $\pi^{0.5}$, con mejor exactitud y velocidad para \textbf{DecimalNum}, al igual que en el análisis anterior ha sido imposible realizar los cálculos para \textbf{FractionNum}.
+	En la Figura 13 se muestran los valores obtenidos para $\pi^{0.5}$, con mejor exactitud y velocidad para \textbf{DecimalNum}, al igual que en el análisis anterior ha sido imposible realizar los cálculos para \textbf{FractionNum}.
 	
 %-----------------------------------------------------------------------------------
 \subsubsection{Comparando números}\label{sub:number_comp}
@@ -511,185 +504,276 @@ que las 3 aproximaciones arrojan valores ligeramente mayores a 0, con más exact
 	
 	\begin{figure}[h!]%
 		\begin{center}
-			\begin{tabular}{|c|l|l|} \hline
-			 			& Valor 	    & Tiempo 	\\ \hline
-			BigNum       &  0.00000000000000023846264338327950288419718393539484659  &  0.0276847    \\ \hline
-FractionNum  &  1.2246467991473532e-16                                   &  0.00103831   \\ \hline
-DecimalNum   &  1.224646799150525701746457189E-16                        &  6.19888e-05  \\ \hline
+			\begin{tabular}{|c|c|l|l|} \hline
+			
+			&Calculo de:
+			& Valor 	    
+			& Tiempo	
+			\\ \hline
+					
+	BigNum	& sen($\pi$)	
+		    	& 0.00000000000000023846264338327950288419718393539484659  
+		    & 0.0276847    
+		    \\ \hline
+		    
+FractionNum 	& sen($\pi$)	
+			& 1.2246467991473532e-16                                   			& 0.00103831   
+			\\ \hline
+			
+DecimalNum  	& sen($\pi$)
+			& 1.224646799150525701746457189E-16                        			& 6.19888e-05  
+			\\ \hline
+
+ 	BigNum  	& sen(1)	  															   	& 0.841470984807896506652502321630298999622563060798371067
+ 			& 0.0127552    
+ 			\\ \hline
+ 			
+FractionNum 	& sen(1)
+			& 0.8414709848078965                                        			& 0.000446081  
+			\\ \hline
+			
+DecimalNum  	& sen(1)
+			& 0.8414709848078965066525023216                            			& 5.31673e-05  
+			\\ \hline
+			
+	BigNum  & cos(10)
+			&-0.839071529076449284094014962603313164795669011492621151  			& 0.0178885    
+			\\ \hline
+			
+FractionNum 	& cos(10) 
+			& -0.8390715290764493                                        			& 0.000496149  
+			\\ \hline
+			
+DecimalNum  	& cos(10) 
+			& -0.8390715290764492840940147683                            			& 5.45979e-05  
+			\\ \hline
+			
+	BigNum  	& cos($\pi\over 2$)  										
+			& 0.000000000000000019231321691639751442098584699687551724  
+			& 0.0247827   
+			\\ \hline
+			
+FractionNum 	& cos($\pi\over 2$)
+			& 6.123233995736766e-17                                     			& 0.00112844  
+			\\ \hline
+			
+DecimalNum  	& cos($\pi\over 2$)
+			& 6.123233995815319195807292141E-17                         			& 6.1512e-05  
+			\\ \hline
+			
 \end{tabular}
-		\caption{Cálculo de sen($\pi$). \label{fig:ex}}
+		\caption{Cálculo de funciones trigonométricas. \label{fig:ex}}
 		\end{center}
 	\end{figure}
 	
-	\begin{figure}[h!]%
-		\begin{center}
-			\begin{tabular}{|c|l|l|} \hline
-			 			& Valor 	    & Tiempo 	\\ \hline
-			BigNum       &  0.841470984807896506652502321630298999622563060798371067  &  0.0127552    \\ \hline
-FractionNum  &  0.8414709848078965                                        &  0.000446081  \\ \hline
-DecimalNum   &  0.8414709848078965066525023216                            &  5.31673e-05  \\ \hline
-
-\end{tabular}
-		\caption{Cálculo de sen(1). \label{fig:ex}}
-		\end{center}
-	\end{figure}
 	
 	\begin{figure}[h!]%
 		\begin{center}
-			\begin{tabular}{|c|l|l|} \hline
-			 			& Valor 	    & Tiempo 	\\ \hline
-			BigNum       &  3.141592653589793238462643383279502884197169399375105588  &  0.174473     \\ \hline
-FractionNum  &  3.141592653589793                                         &  0.00294471   \\ \hline
-DecimalNum   &  3.141592653589793238462643381                             &  0.000238657  \\ \hline
+			\begin{tabular}{|c|c|l|l|} \hline
+			
+			&Calculo de:
+			& Valor 	    
+			& Tiempo	
+			\\ \hline
+			
+	BigNum  	& $\pi$
+			& 3.141592653589793238462643383279502884197169399375105588  			& 0.174473     
+			\\ \hline
+			
+FractionNum 	& $\pi$
+			& 3.141592653589793                                         			& 0.00294471   
+			\\ \hline
+			
+DecimalNum  	& $\pi$ 
+			& 3.141592653589793238462643381                             			& 0.000238657  
+			\\ \hline
+			
+	BigNum  	& $e$
+			& 2.718281828459045235360287471352662497757247093698703317  			& 0.0109069    
+			\\ \hline
+			
+FractionNum 	& $e$
+			& 2.718281828459045                                         			& 0.000371218  
+			\\ \hline
+			
+DecimalNum  	& $e$
+			& 2.718281828459045235360287474                             			& 4.31538e-05  
+			\\ \hline
 
 \end{tabular}
-		\caption{Cálculo de $\pi$. \label{fig:ex}}
+		\caption{Cálculo de $\pi$ y $e$. \label{fig:ex}}
 		\end{center}
 	\end{figure}
 	
-	\begin{figure}[h!]%
-		\begin{center}
-			\begin{tabular}{|c|l|l|} \hline
-			 			& Valor 	    & Tiempo 	\\ \hline
-			BigNum       &  2.718281828459045235360287471352662497757247093698703317  &  0.0109069    \\ \hline
-FractionNum  &  2.718281828459045                                         &  0.000371218  \\ \hline
-DecimalNum   &  2.718281828459045235360287474                             &  4.31538e-05  \\ \hline
-
-\end{tabular}
-		\caption{Cálculo de $e$. \label{fig:ex}}
-		\end{center}
-	\end{figure}
 	
 	\begin{figure}[h!]%
 		\begin{center}
-			\begin{tabular}{|c|l|l|} \hline
-			 			& Valor 	    & Tiempo 	\\ \hline
-			BigNum       &  3.524193849218783867017024061131077780596772055958075561  &  0.0921957    \\ \hline
-FractionNum  &  3.5241938492187836                                        &  0.00212646   \\ \hline
-DecimalNum   &  3.524193849218783867017024054                             &  0.000117302  \\ \hline
+			\begin{tabular}{|c|c|l|l|} \hline
+			
+			&Calculo de:
+			& Valor 	    
+			& Tiempo	
+			\\ \hline
+			
+	BigNum  	& ln(34)  
+			& 3.524193849218783867017024061131077780596772055958075561  			& 0.0921957    
+			\\ \hline
+			
+FractionNum 	& ln(34)
+			& 3.5241938492187836                                        			& 0.00212646   
+			\\ \hline
+			
+DecimalNum  	& ln(34)
+			& 3.524193849218783867017024054                             			& 0.000117302  
+			\\ \hline
+			
+	BigNum  	& ln($e$)
+			& 0.999999999999999913415788971088737539870366147960492922  			& 0.0782981    
+			\\ \hline
+			
+FractionNum 	& ln($e$)
+			& 1.0                                                       			& 0.0125442    
+			\\ \hline
+			
+DecimalNum  	& ln($e$)
+			& 0.9999999999999999468176229340                            			& 0.000138283  
+			\\ \hline
+
 
 \end{tabular}
-		\caption{Cálculo de ln(34). \label{fig:ex}}
+		\caption{Cálculo de ln($x$). \label{fig:ex}}
 		\end{center}
 	\end{figure}
 	
-	\begin{figure}[h!]%
-		\begin{center}
-			\begin{tabular}{|c|l|l|} \hline
-			 			& Valor 	    & Tiempo 	\\ \hline
-			BigNum       &  0.999999999999999913415788971088737539870366147960492922  &  0.0782981    \\ \hline
-FractionNum  &  1.0                                                       &  0.0125442    \\ \hline
-DecimalNum   &  0.9999999999999999468176229340                            &  0.000138283  \\ \hline
-
-\end{tabular}
-		\caption{Cálculo de ln($e$). \label{fig:ex}}
-		\end{center}
-	\end{figure}
 	
 	\begin{figure}[h!]%
 		\begin{center}
-			\begin{tabular}{|c|l|l|} \hline
-			 			& Valor 	    & Tiempo 	\\ \hline
-			BigNum       &  0.000000000000000019231321691639751442098584699687551724  &  0.0247827   \\ \hline
-FractionNum  &  6.123233995736766e-17                                     &  0.00112844  \\ \hline
-DecimalNum   &  6.123233995815319195807292141E-17                         &  6.1512e-05  \\ \hline
+			\begin{tabular}{|c|c|l|l|} \hline
+			
+			&Calculo de:
+			& Valor 	    
+			& Tiempo	
+			\\ \hline
+			
+	BigNum  	& atan(20)
+			& 3.091634257867850477052637096244658002705892318951598412  			& 0.293755   
+			\\ \hline
+			
+FractionNum 	& atan(20)
+			& 3.0916342578678506                                        			& 0.155865   
+			\\ \hline
+			
+DecimalNum  	& atan(20)
+			& 3.091634257867850477052637094                             			& 0.0010519  
+			\\ \hline
+			
+	BigNum  	& asin(1)
+			& 1.514354028437096828855179419136122881185661180257748239  			& 0.130738     
+			\\ \hline
+			
+FractionNum 	& asin(1)
+			& 1.5143540284370969                                        			& 0.00287724   
+			\\ \hline
+			
+DecimalNum 	& asin(1)
+			& 1.514354028437096828855179423                             			& 0.000198841  
+			\\ \hline
+
 
 \end{tabular}
-		\caption{Cálculo de cos($\pi\over 2$). \label{fig:ex}}
-		\end{center}
-	\end{figure}
-	
-	\begin{figure}[h!]%
-		\begin{center}
-			\begin{tabular}{|c|l|l|} \hline
-			 			& Valor 	    & Tiempo 	\\ \hline
-			BigNum       &  -0.839071529076449284094014962603313164795669011492621151  &  0.0178885    \\ \hline
-FractionNum  &  -0.8390715290764493                                        &  0.000496149  \\ \hline
-DecimalNum   &  -0.8390715290764492840940147683                            &  5.45979e-05  \\ \hline
-
-\end{tabular}
-		\caption{Cálculo de cos($\pi\over 2$). \label{fig:ex}}
-		\end{center}
-	\end{figure}
-	
-	\begin{figure}[h!]%
-		\begin{center}
-			\begin{tabular}{|c|l|l|} \hline
-			 			& Valor 	    & Tiempo 	\\ \hline
-			BigNum       &  3.091634257867850477052637096244658002705892318951598412  &  0.293755   \\ \hline
-FractionNum  &  3.0916342578678506                                        &  0.155865   \\ \hline
-DecimalNum   &  3.091634257867850477052637094                             &  0.0010519  \\ \hline
-
-\end{tabular}
-		\caption{Cálculo de atan(20). \label{fig:ex}}
+		\caption{Cálculo de funciones trigonométricas inversas. \label{fig:ex}}
 		\end{center}
 	\end{figure}	
 	
 	\begin{figure}[h!]%
 		\begin{center}
-			\begin{tabular}{|c|l|l|} \hline
-			 			& Valor 	    & Tiempo 	\\ \hline
-			BigNum       &  0.137330723949833581285581892462466056727664713273587321  &  0.293775     \\ \hline
-FractionNum  &  -  &  -     \\ \hline
-DecimalNum   &  0.1373307239498335812855818925                            &  0.000308752  \\ \hline
+			\begin{tabular}{|c|c|l|l|} \hline
+			
+			& Calculo de:
+			& Valor 	    
+			& Tiempo	
+			\\ \hline
+		
+	BigNum 	& $\sqrt[12]{45}$
+			& 1.373307239498335812855818924624660567276647132735873217  
+			& 0.305376     
+			\\ \hline
+			
+FractionNum 	& $\sqrt[12]{45}$
+			&  -  
+			&  -     
+			\\ \hline
+			
+DecimalNum  	& $\sqrt[12]{45}$  
+			& 1.373307239498335812855818925                             
+			& 0.000169277  
+			\\ \hline
+			
+	BigNum  	& $\sqrt{2}$
+			& 1.414213562373095048801688724209698078569671875376948073  
+			& 0.0293512   
+			\\ \hline
+			
+FractionNum 	& $\sqrt{2}$  
+			& -   
+			& -
+			\\ \hline
+			
+DecimalNum 	& $\sqrt{2}$
+			& 1.414213562373095048801688724                             
+			& 0.00041008  
+			\\ \hline
 
+			
 \end{tabular}
-		\caption{Cálculo de $\sqrt[12]{45}$. \label{fig:ex}}
+		\caption{Cálculo de raíces n-ésimas. \label{fig:ex}}
 		\end{center}
 	\end{figure}	
 	
+	
 	\begin{figure}[h!]%
 		\begin{center}
-			\begin{tabular}{|c|l|l|} \hline
-			 			& Valor 	    & Tiempo 	\\ \hline
-			BigNum       &  0.141421356237309504880168872420969807856967187537694807  &  0.0277922    \\ \hline
-FractionNum  &  -  &  -    \\ \hline
-DecimalNum   &  0.1414213562373095048801688724                            &  8.86917e-05  \\ \hline
+			\begin{tabular}{|c|c|l|l|} \hline
+				
+			& Calculo de:
+			& Valor 	    
+			& Tiempo	
+			\\ \hline
+		
+	BigNum 	& $\pi^{0.5}$
+			& 1.772453850905515960029097752286351896216738465831096675  
+			& 0.0269032    
+			\\ \hline
+			
+FractionNum 	& $\pi^{0.5}$  
+			& -     
+			& -
+			\\ \hline
+			
+DecimalNum 	& $\pi^{0.5}$
+			& 1.772453850905515992751519103                             
+			& 8.70228e-05  
+			\\ \hline
+			
+	BigNum  	& $3^{4.5}$ 	
+			& 140.296115413079060775723153661975661722367225558640830762  
+			& 0.0319946    
+			\\ \hline
+			
+FractionNum	& $3^{4.5}$ 
+			& -  				
+			& -    
+			\\ \hline
+			
+DecimalNum  	& $3^{4.5}$
+			& 140.2961154130790607757231540                               				& 9.46522e-05  
+			\\ \hline
+
 
 \end{tabular}
-		\caption{Cálculo de $\sqrt{2}$. \label{fig:ex}}
+		\caption{Cálculo de potencias con índices no enteros. \label{fig:ex}}
 		\end{center}
 	\end{figure}
-	
-	\begin{figure}[h!]%
-		\begin{center}
-			\begin{tabular}{|c|l|l|} \hline
-			 			& Valor 	    & Tiempo 	\\ \hline
-			BigNum       &  0.000000140296115413079060775723153661975661722367225558  &  0.0339777    \\ \hline
-FractionNum  &  -  &  -    \\ \hline
-DecimalNum   &  1.402961154130790607757231540E-7                          &  0.000280619  \\ \hline
-
-\end{tabular}
-		\caption{Cálculo de $3^{4.5}$. \label{fig:ex}}
-		\end{center}
-	\end{figure}
-	
-	\begin{figure}[h!]%
-		\begin{center}
-			\begin{tabular}{|c|l|l|} \hline
-			 			& Valor 	    & Tiempo 	\\ \hline
-			BigNum       &  0.177245385090551596002909775228635189621673846583109667  &  0.0289474    \\ \hline
-FractionNum  &  -  &  -    \\ \hline
-DecimalNum   &  0.1772453850905515992751519103                            &  8.63075e-05  \\ \hline
-
-\end{tabular}
-		\caption{Cálculo de $\pi^{0.5}$. \label{fig:ex}}
-		\end{center}
-	\end{figure}	
-	
-	\begin{figure}[h!]%
-		\begin{center}
-			\begin{tabular}{|c|l|l|} \hline
-			 			& Valor 	    & Tiempo 	\\ \hline
-			BigNum       &  1.514354028437096828855179419136122881185661180257748239  &  0.130738     \\ \hline
-FractionNum  &  1.5143540284370969                                        &  0.00287724   \\ \hline
-DecimalNum   &  1.514354028437096828855179423                             &  0.000198841  \\ \hline
-
-\end{tabular}
-		\caption{Cálculo de asin(1). \label{fig:ex}}
-		\end{center}
-	\end{figure}	
-	
 	
 \twocolumn
 

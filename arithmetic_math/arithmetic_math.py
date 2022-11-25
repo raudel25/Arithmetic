@@ -207,7 +207,8 @@ class ArithmeticMath(ABC):
 
         result = algorithm_sqrt(aux, y, self.float_to_number(y), precision, self.float_to_number(10), self.number1())
 
-        result /= (number10 ** ((ind + y - ind % y) // y))
+        if ind!=0:
+            result /= (number10 ** ((ind + y - ind % y) // y))
 
         if not positive:
             result = -result
