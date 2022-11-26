@@ -6,6 +6,7 @@ from other_arithmetics.decimal import DecimalNum
 from big_num.numbers import BigNum
 import fractions
 from decimal import *
+from arithmetic_math.lineal_equation_algorithm import gauss_seidel,jacobi
 
 def calculate_one_param(function):
     time1 = time.time()
@@ -161,6 +162,7 @@ def calculate_pi_max_precision():
 big = BigNum()
 frac = FractionNum()
 dec = DecimalNum()
+
 # getcontext().prec=100
 
 # calculate_pi(big, frac, dec)
@@ -171,11 +173,23 @@ dec = DecimalNum()
 # calculate_cos(big, frac, dec, 0)
 # calculate_ln(big, frac, dec, math.e)
 # calculate_ln(big, frac, dec, 34)
-calculate_sqrt(big,big,dec,2,2)
-calculate_sqrt(big,big,dec,45,12)
-calculate_pow(big,big,dec,3,4.5)
-calculate_pow(big,big,dec,math.pi,0.5)
+# calculate_sqrt(big,big,dec,2,2)
+# calculate_sqrt(big,big,dec,45,12)
+# calculate_pow(big,big,dec,3,4.5)
+# calculate_pow(big,big,dec,math.pi,0.5)
 # calculate_asin(big,frac,dec,1)
 # calculate_atan(big,frac,dec,20)
 # print(dec(6)/dec(10)==dec(3)/dec(5))
 # print(frac(0.15)*frac(2)==frac(0.1)+frac(0.2))
+
+l=[[big(9), big(3), big(4)],
+    [big(3,False), big(7), big(3,False)],
+    [big(2), big(2), big(10,False)]]
+
+v=[big(1),big(1),big(1)]
+
+x=time.time()
+q=gauss_seidel(big, l, v)
+y=time.time()
+print(q[0],q[1],q[2])
+print(y-x)

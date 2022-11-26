@@ -684,6 +684,8 @@ DecimalNum 	& asin(1)
 		\caption{Cálculo de funciones trigonométricas inversas. \label{fig:ex}}
 		\end{center}
 	\end{figure}	
+
+\newpage
 	
 	\begin{figure}[h!]%
 		\begin{center}
@@ -775,6 +777,8 @@ DecimalNum  	& $3^{4.5}$
 		\end{center}
 	\end{figure}
 	
+	
+	
 \twocolumn
 
 %-----------------------------------------------------------------------------------
@@ -816,12 +820,48 @@ DecimalNum  	& $3^{4.5}$
 			    100              &  0.027119 \\ \hline  
 			    1000             &  3.804981  \\ \hline
 				10000            &  457.1413  \\ \hline
-
+		
 \end{tabular}
 		\caption{Cálculo de factoriales. \label{fig:ex}}
 		\end{center}
 	\end{figure}
-
+	
+	Además mostremos la utilización de nuestra aritmética en algoritmos iterativos para la resolución de equaciones lineales, para ello resolvamos el siguiente sistema de equaciones por el \textbf{Metódo de Jacobi} y el \textbf{Metódo de Gauss-Seidel}.
+	
+	\begin{equation}	
+		\left(	
+		\begin{matrix}
+			9  &  3  &  4\\
+            	-3 &  7  & -3\\
+            	2  &  2  &-10 
+		\end{matrix}
+		\quad\Bigg|\quad
+		\begin{matrix}
+			1\\
+			1\\
+			1\\
+		\end{matrix}
+		\right)
+	\end{equation}
+	
+	Obteniendo como resultado el siguiente vector para el \textbf{Metódo de Jacobi}:
+	$$	
+		\left(	
+		\begin{matrix}
+			0.08246073298429319371727748691099476439790\\ 								0.15575916230366492146596858638743455497382\\ 								-0.05235602094240837696335078534031413612565\\
+		\end{matrix}
+		\right)
+	$$ con un tiempo de ejecución de 1.8970699310302734 segundos.
+	
+	Obteniendo como resultado el siguiente vector para el \textbf{Metódo de Gauss-Seidel}:
+	$$	
+		\left(	
+		\begin{matrix}
+			0.08246073298429319371727748691099476439790\\ 								0.15575916230366492146596858638743455497382\\ 								-0.05235602094240837696335078534031413612565\\
+		\end{matrix}
+		\right)
+	$$ con un tiempo de ejecución de 1.7851269245147705 segundos.
+	
 %-----------------------------------------------------------------------------------
 \subsection{Finalizando Comparaciones}\label{sub:big}
 %-----------------------------------------------------------------------------------
@@ -853,8 +893,11 @@ DecimalNum  	& $3^{4.5}$
 %-----------------------------------------------------------------------------------
 \section{Conclusiones}\label{sec:conc}
 
-  En esta sección puede incluir las conclusiones de su investigación y las ideas
-  sobre la continuidad del trabajo, en el caso que aplique.
+  En nuestro análisis del desempeño de la aritmética propuesta en este trabajo se vio reflejada la exactitud que esta posee a la hora de trabajar con datos de números en base 10. No obstante simepre tuvimos la desventaja de que la aritmética de punto flotante analizada fuera más rápida y eficiente y en par de ejemplos superando la exactitud de la nuestra. Por otro lado, observamos el comportamiento de la aritmética de fracciones racionales, si bien incapacitada de todo su potencial a la hora de compararse con las anteriores por los problemas antes explicados, siendo más precisa que las 2 anteriores en algunos casos, aunque incapacitada para realizar algunas tareas también especificadas anteriormente.
+  
+  Cabe recalcar que la mayoría de estas comparaciones realizadas anteriormente en cuanto a la exactitud también se debe en gran medida a los métodos numéricos en los cuales se basa su cálculo, por lo que otro método numérico, fuera de los aquí abordados, pudiera ser más efectivo en uno u otro caso. 
+  
+  Por tanto, por todo lo anteriormente descrito podemos concluir que las aritméticas de punto flotante, si bien pueden tener su desventaja a la hora de la precisión y exactitud, actualmente es el método más efectivo para la realización de los cálculos computacionales.
 
 %===================================================================================
 
