@@ -16,35 +16,37 @@ si estas en linux o ejecutar el archivo `main.py` con su intérprete de **python
 
 ## Descripción de `BigNum`
 
-El funcionamiento de esta biblioteca se basa en la aritmética de punto fijo manteniendo 
+El funcionamiento de esta biblioteca se basa en la aritmética de punto fijo manteniendo
 una precisión exacta de los lugares decimales que podemos modificar dinámicamente, mientras
 tanto en la representación de la parte entera si no contamos con ningún límite, por lo que
 dentro de nuestros límites computacionales podemos representar cualquier número.
 
 Esta aritmética modela la representación de los números en potencias de base 10, con lo cual
 nos acercaremos más a la precisión de los números con los que habitualmente trabajamos, un ejemplo
-clásico de estas aproximaciones consiste en: $0.4\cdot 3$ el cual comparamos con $1.2$ en la aritmética 
+clásico de estas aproximaciones consiste en: $0.4\cdot 3$ el cual comparamos con $1.2$ en la aritmética
 común de los lenguajes de programación y obtendremos un resultado negativo, debido a la representación
 periódica en base 2 de uno de estos números.
 
-Para la optimización de las operaciones en `big_num` y aprovechándonos de que la aritmética de los enteros 
+Para la optimización de las operaciones en `BigNum` y aprovechándonos de que la aritmética de los enteros
 en la computadora es exacta, variamos la base de la aritmética a potencias de 10, siempre y cuando no
 no excedan la aritmética entera que suele ser en la mayoría de los casos de 64 bits.
 
 Los algoritmos utilizados para las operaciones básicas son:
+
 - La suma y la substracción usual.
 - Multiplicación: Está implementada la multiplicación mediante
   el <a href="https://es.wikipedia.org/wiki/Algoritmo_de_Karatsuba#:~:text=El%20paso%20b%C3%A1sico%20del%20algoritmo,sumas%20y%20desplazamientos%20de%20d%C3%ADgitos.">
   algoritmo de Karatsuba</a>, apoyado en la suma antes definida.
-- División: Está implementada mediante el **algoritm_d** el cual se basa en la optimización de la división 
+- División: Está implementada mediante el **algoritm_d** el cual se basa en la optimización de la división
   de un número de $n+1$ dígitos por otro de $n$ dígitos.
 
 ## Aritméticas utilizadas
 
 Compararemos las siguientes aritméticas:
+
 - Decimal: Está implementada en el módulo **decimal** de **python** contiene implementaciones de aritmética de coma flotante y punto fijo, además de la posibilidad
   representar una cantidad de lugares decimales variable.
-- Fracciones Racionales: Está implementada en el módulo **fraction** de **python**, los números de esta aritmética cuentan con dos 
+- Fracciones Racionales: Está implementada en el módulo **fraction** de **python**, los números de esta aritmética cuentan con dos
   números enteros, el numerador y el denominador.
 - BigNum: Aritmética propuesta y descrita anteriormente.
 
@@ -88,5 +90,3 @@ Para la comparación de las aritméticas definiremos la clase `ArithmeticMath` c
 
 - Arcocotangente: Se aproxima mediante la identidad $arccot(x)={\pi \over 2}-arctan(x)$, con el cálculo de la
   arcotangente correspondiente.
-
-
