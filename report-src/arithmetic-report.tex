@@ -8,7 +8,7 @@
 % correspondientes.
 %
 % NOTA: Necesitará el archivo 'jcematcom.sty' en la misma carpeta donde esté este
-%       archivo para poder utilizar esta plantila.
+%       archivo para poder utilizar esta plantilla.
 %===================================================================================
 
 
@@ -61,8 +61,7 @@
 % Tutores
 %-----------------------------------------------------------------------------------
 \tutors{\\
-Dr. Tutor Uno, \emph{Centro} \\
-Lic. Tutor Dos, \emph{Centro}}
+Msc. Fernando Raul Rodríguez Flores, \emph{Facultad de Matemática y Computación, Universidad de La Habana}}
 
 %-----------------------------------------------------------------------------------
 % Headings
@@ -120,14 +119,6 @@ Lic. Tutor Dos, \emph{Centro}}
 	Implementaciones Numéricas,
 	Aritméticas Computacionales.
 \end{keywords}
-
-%-----------------------------------------------------------------------------------
-% Temas
-%-----------------------------------------------------------------------------------
-\begin{topics}
-	Implementaciones Numéricas.
-\end{topics}
-
 
 %-----------------------------------------------------------------------------------
 % NO BORRAR ESTAS LINEAS!
@@ -237,12 +228,12 @@ Lic. Tutor Dos, \emph{Centro}}
 %-----------------------------------------------------------------------------------
 \subsubsection{Multiplicación algortimo de Karatsuba}\label{sub:multiplication}
 %-----------------------------------------------------------------------------------
-	El algoritmo de Karatsuba consiste en reducir la multilicación de dos números de $n$ digítos a como máximo 
-	$3n^{\log_2 3}\approx 3n^{1.585}$ multiplicaciones de números de un solo dígito, lo cual mejora el algoritmo clásico de multiplicación que consta de $n^2$ operaciones de un solo dígito. Este algoritmo se simienta en las bases de los algoritmos de \emph{Divide y Vencerás} utilizando el caso particular de la partición binaria.
+	El algoritmo de Karatsuba consiste en reducir la multiplicación de dos números de $n$ dígitos a como máximo 
+	$3n^{\log_2 3}\approx 3n^{1.585}$ multiplicaciones de números de un solo dígito, lo cual mejora el algoritmo clásico de multiplicación que consta de $n^2$ operaciones de un solo dígito. Este algoritmo pertenece a la clase de los algoritmos de \emph{Divide y Vencerás} utilizando el caso particular de la partición binaria.
 	
-	A continuación presentamos una descripción del algoritmo:
+	A continuación, presentamos una descripción del algoritmo:
 	
-	Sean $a$ y $b$ dos numeros de $n$ dígitos tal que:
+	Sean $a$ y $b$ dos números de $n$ dígitos tal que:
 		\begin{equation}
 			\begin{split}
 				&a=a_1 10^{\lfloor {n\over 2}\rfloor} + a_2 \wedge b=b_1 10^{\lfloor {n\over 2}\rfloor} + b_2	\\	
@@ -252,7 +243,7 @@ Lic. Tutor Dos, \emph{Centro}}
 			
 	 Entonces tenemos que $a_1$ y $b_1$ poseen a lo sumo $\lceil {n\over 2}\rceil$ dígitos y $a_2$ y $b_2$ tienen $\lfloor {n\over 2}\rfloor$ dígitos, por lo que para realizar el computo de $ab$ necesitamos calcuar 4 multiplicaciones y una suma de a lo sumo $\lceil {n\over 2}\rceil$ dígitos.
 	 
-	 Este algoritmo es particularmente muy eficiente en multuplicaciones de enteros grandes, por ejemplo para $n=1024$, el costo del algoritmo sería $3^{10}=59049$ comparado con el clásico que sería de $2^{20}=1049756$ operaciones. 
+	 Este algoritmo es particularmente muy eficiente en multiplicaciones de enteros grandes, por ejemplo para $n=1024$, el costo del algoritmo sería $3^{10}=59049$ comparado con el clásico que sería de $2^{20}=1049756$ operaciones. 
 	
 	
 %-----------------------------------------------------------------------------------
@@ -269,14 +260,14 @@ Lic. Tutor Dos, \emph{Centro}}
 		x_{i+1}=x_i-{f(x_i)\over f'(x_i)}=x_i+{{1\over x_i}-d\over{1\over x^2_i}} =x_i(2-dx_i)
 	\end{equation}
 	
-	Como nuestro objetivo es brindar una aritmética lo más exacta posible no consideraremos este algoritmo para su implementación, pero a continuación abordamos un algoritmo menos eficiente pero en el que no cometemos errores de aproximación fuera de los errores de truncamiento y redondeo.
+	Como nuestro objetivo es brindar una aritmética lo más exacta posible no consideraremos este algoritmo para su implementación, pero a continuación abordamos un algoritmo menos eficiente, pero en el que no cometemos errores de aproximación fuera de los errores de truncamiento y redondeo.
 	
-	El Algoritmo D se basa en la estimación del cociente que resulta de dividir un número de $n+1$ dígitos entre otro de $n$ dígitos. Esta estimación se realiza mediante la división de el número formado por los dos primeros dígitos del dividendo entre el número formado por el primer dígito del divisor, a continuación mostraremos como acotar dicha estimación:
+	El Algoritmo D se basa en la estimación del cociente que resulta de dividir un número de $n+1$ dígitos entre otro de $n$ dígitos. Esta estimación se realiza mediante la división del número formado por los dos primeros dígitos del dividendo entre el número formado por el primer dígito del divisor, a continuación mostraremos como acotar dicha estimación:
 	
 	Sea $a$ un número de $n+1$ dígitos y $b$ un número de $n$ dígitos y $d$ la base de nuestra aritmética tales que:
 		$$a=\overline{x_{n+1}x_n\ldots x_1} \wedge b=\overline{y_n\ldots y_1}$$	 
 	
-	Primero como $a-(\overline{x_{n+1}x_n}) d^{n-1}= \overline{x_{n-1}\ldots x_1}\leq b_n d^{n-1}$ tenemos que:
+	Primero como $a-(\overline{x_{n+1}x_n}) d^{n-1}= \overline{x_{n-1}\ldots x_1}\leq y_n d^{n-1}$ tenemos que:
 	\begin{equation}
 		\Bigg\lfloor{a \over y_nd^{n-1}}\Bigg\rfloor = \Bigg\lfloor{\overline{x_{n+1}x_n} d^{n-1} \over y_n d^{n-1}}\Bigg\rfloor
 	\end{equation}
@@ -293,9 +284,9 @@ Lic. Tutor Dos, \emph{Centro}}
 		\end{split}
 	\end{equation}
 	
-	Luego solo nos queda acotar ${d\over b_n}$, mostremos que simpre podemos hacer transformaciones para que ${d\over b_n}\leq 2$, para ello apoyémonos en el sistema decimal que es el que utilizamos en nuestra aritmética. 
+	Luego solo nos queda acotar ${d\over y_n}$, mostremos que simpre podemos hacer transformaciones para que ${d\over y_n}\leq 2$, para ello apoyémonos en el sistema decimal que es el que utilizamos en nuestra aritmética. 
 	
-	Por ejemplo si $b_n$ es 2 podemos multiplicar el numerador y el denominador por 3, al cual llamaremos factor de normalización, en el caso peor que el denominador sea $\overline{299\ldots} \cdot 3= \overline{6\ldots }$, de la misma manera podemos encontrar un factor de normalización para los restantes dígitos. Para extender este ejemplo para la base $10^k$ simplemente multiplicamos por $10^x$ de tal manera que $b_n$ tenga exactamente $k$ dígitos y luego aplicamos el proceso descrito anteriormente.
+	Por ejemplo si $y_n$ es 2 podemos multiplicar el numerador y el denominador por 3, al cual llamaremos factor de normalización, en el caso peor que el denominador sea $\overline{299\ldots} \cdot 3= \overline{6\ldots }$, de la misma manera podemos encontrar un factor de normalización para los restantes dígitos. Para extender este ejemplo para la base $10^k$ simplemente multiplicamos por $10^x$ de tal manera que $y_n$ tenga exactamente $k$ dígitos y luego aplicamos el proceso descrito anteriormente.
 	
 	De esta manera comprobamos que al realizar la estimación de nuestro cociente cometemos a lo sumo un error de 3 unidades, por lo que tendremos que hacer a lo sumo 3 comprobaciones para asegurarnos de que el resultado es correcto. Luego nuestro algoritmo realizará $3mn$ iteraciones en el caso peor al realizar la división de un número de $m$ dígitos entre otro de $n$ dígitos. 
 	
@@ -326,7 +317,7 @@ Lic. Tutor Dos, \emph{Centro}}
 		\caption{Métodos de ArithmeticMath.\label{fig:code}}
 		\end{figure}
 	
-	Los métodos de la figura 3 tienen la función de definir el número 1 y el número 0 para cada aritmética, dado un \textbf{float} convertirlo al formato de la aritmética y  convertir un número de la aritmética a entero, respectivamente.
+	Los métodos de la figura 3 tienen la función de definir el número 1 y el número 0 para cada aritmética, dado un \textbf{float} convertirlo al formato de la aritmética y convertir un número de la aritmética a entero, respectivamente.
 	
 	\begin{figure}[htb]%
 			\begin{lstlisting}[language=python]%
@@ -346,7 +337,7 @@ Lic. Tutor Dos, \emph{Centro}}
 		\caption{Método NumberToFraction.\label{fig:code}}
 		\end{figure}
 		
-	Adicionalmente se encuentra predefinido el método de la figura 4, el cual se encarga de convertir un número de la aritmética en una fracción racional, retornando 2 entero el numerador y el denominador en ese orden.
+	Adicionalmente se encuentra predefinido el método de la Figura 4, el cual se encarga de convertir un número de la aritmética en una fracción racional, retornando 2 entero el numerador y el denominador en ese orden.
 	
 %-----------------------------------------------------------------------------------
 \subsection{Funciones de ArihmeticMath}\label{sub:functions}
@@ -407,13 +398,13 @@ Lic. Tutor Dos, \emph{Centro}}
   			\end{equation}
   	\end{enumerate}
   			
-  	Todos estos métodos anteriormente descritos tienen presentes errores númericos de truncamiento, ya que la mayoría de ellos se basan en series numéricas o sucesiones recurrentes, los cuales son infinitos y solo se puede computar una parte de estos.
+  	Todos estos métodos anteriormente descritos tienen presentes errores numéricos de truncamiento, ya que la mayoría de ellos se basan en series numéricas o sucesiones recurrentes, los cuales son infinitos y solo se puede computar una parte de estos.
 	
 
 %-----------------------------------------------------------------------------------
 \section{Comparando las Aritméticas}\label{sub:comp_aritmetics}
 %-----------------------------------------------------------------------------------
-	En esta sección contaremos con 4 aritméticas, cada una basadas en \textbf{ArithmeticMath}:
+	En esta sección contaremos con 3 aritméticas, cada una basadas en \textbf{ArithmeticMath}:
 	\begin{enumerate}
 		\item BigNum: Nuestra biblioteca con las especificaciones mencionadas anteriormente.
 		
@@ -428,7 +419,7 @@ Lic. Tutor Dos, \emph{Centro}}
 %-----------------------------------------------------------------------------------
 	Como mencionamos anteriormente en la introducción el sistema de coma flotante que se implementa en los microprocesadores de nuestra computadora es en base 2, el número $0.25={2\over 10}+{5\over 100}={25\over 100}={1\over 4}$ de ahí que se 0.25 en binario se exprese como 0.01. 
 	
-	Un problema que podemos observar a simple vista es que en muchas ocasiones la fracción decimal no se pueda expresar mediante un número finito de decimales, por ejemplo ${1\over 3}=0.333333\ldots$, ahora, lo mismo ocurre en base 2, por ejemplo $0.4={4\over 10}={2\over 5}$ que en binario seria ${10\over 101}=0.0110011001100110\ldots$. Con el ejemplo analizado anteriormente se nos presenta el siguiente problema $0.4={4\over 10}$, sin embargo ${10\over 101}=0.0110011001100110\ldots$, es decir para la misma fracción racional nos encontramos con que 0.4 es perfectamente representable en base 10 con un número finito de decimales pero en base 2 obtenemos $0.0110011001100110\ldots$ que es un número infinito periódico. Esto supone un importante problema ya que en la vida cotidiana fuera del mundo de la computación se trabaja en base 10, sin embargo las computadoras y los sistemas computo están hechos en su mayoría para el procesamiento de datos de la vida real, lo cual trae consigo que verdaderamente se trabaje con una aproximación de estos datos y no con los números introducidos originalmente (Figura 5).
+	Un problema que podemos observar a simple vista es que en muchas ocasiones la fracción decimal no se pueda expresar mediante un número finito de decimales, por ejemplo ${1\over 3}=0.333333\ldots$, ahora, lo mismo ocurre en base 2, por ejemplo $0.4={4\over 10}={2\over 5}$ que en binario seria ${10\over 101}=0.0110011001100110\ldots$. Con el ejemplo analizado anteriormente se nos presenta el siguiente problema $0.4={4\over 10}$, sin embargo ${10\over 101}=0.0110011001100110\ldots$, es decir para la misma fracción racional nos encontramos con que 0.4 es perfectamente representable en base 10 con un número finito de decimales pero en base 2 obtenemos $0.0110011001100110\ldots$ que es un número infinito periódico. Esto supone un importante problema ya que en la vida cotidiana fuera del mundo de la computación se trabaja en base 10, sin embargo, las computadoras y los sistemas computo están hechos en su mayoría para el procesamiento de datos de la vida real, lo cual trae consigo que verdaderamente se trabaje con una aproximación de estos datos y no con los números introducidos originalmente (Figura 5).
 	
 	\begin{figure}
 		\begin{center}
@@ -444,7 +435,7 @@ Lic. Tutor Dos, \emph{Centro}}
 		\end{center}
 	\end{figure}
 	
-	Otro problema que debemos de tener en cuenta a la hora de trabajar con estas aproximaciones es la comparación de los números obtenidos, por ejemplo ilustremos la comparación mostrada en la Figura 6 donde podemos apreciar que en el sistema de coma flotante $0.4\cdot 3$ es ligeramente superior a 1.2. Por este motivo a la hora de trabajar con los números flotantes en el diseño de nuestros algoritmos siempre debemos tener en cuenta este error y evitar hacer comparaciones del tipo $a==b$, donde $a$ y $b$ son números flotantes.
+	Otro problema que debemos de tener en cuenta a la hora de trabajar con estas aproximaciones es la comparación de los números obtenidos, por ejemplo, ilustremos la comparación mostrada en la Figura 6 donde podemos apreciar que en el sistema de coma flotante $0.4\cdot 3$ es ligeramente superior a 1.2. Por este motivo a la hora de trabajar con los números flotantes en el diseño de nuestros algoritmos siempre debemos tener en cuenta este error y evitar hacer comparaciones del tipo $a==b$, donde $a$ y $b$ son números flotantes.
 
 
 %-----------------------------------------------------------------------------------
@@ -464,7 +455,7 @@ Lic. Tutor Dos, \emph{Centro}}
 	
 	Pasamos a la Figura 10 donde comparamos el cálculo de ln($e$), podemos percatarnos de que \textbf{FractionNum} es la única que nos proporciona el resultado preciso, mientras nuestra aritmética cuenta con más exactitud que \textbf{DecimalNum}.
 	
-	Ahora procederemos a comparar potencias con índices decimales y raíces n-ésimas una tarea que puede ser computacionalmente más compleja, ya que como vimos annteriormente lleva el cálculo de potencias que pueden ser potencialmente más costosas que los factoriales utilizados en las series trigonométricas.
+	Ahora procederemos a comparar potencias con índices decimales y raíces n-ésimas una tarea que puede ser computacionalmente más compleja, ya que como vimos anteriormente lleva el cálculo de potencias que pueden ser potencialmente más costosas que los factoriales utilizados en las series trigonométricas.
 	
 	En la Figura 12 se muestras el cálculo de $\sqrt{2}$, donde se aprecia una mayor exactitud en cuanto a decimales para nuestra aritmética pero para \textbf{FractionNum} ha sido imposible realizar el computo dentro de los límites de tiempo concebidos.
 	
@@ -498,15 +489,15 @@ Lic. Tutor Dos, \emph{Centro}}
 	
 	
 \onecolumn
+
 %-----------------------------------------------------------------------------------
 \subsection{Tablas y Valores Obtenidos}\label{sub:table}
 %-----------------------------------------------------------------------------------
-	
-	\begin{figure}[h!]%
+	\begin{figure}[!htbp]%
 		\begin{center}
 			\begin{tabular}{|c|c|l|l|} \hline
 			
-			&Calculo de:
+			&Cálculo de:
 			& Valor 	    
 			& Tiempo	
 			\\ \hline
@@ -571,7 +562,7 @@ DecimalNum  	& cos($\pi\over 2$)
 		\begin{center}
 			\begin{tabular}{|c|c|l|l|} \hline
 			
-			&Calculo de:
+			&Cálculo de:
 			& Valor 	    
 			& Tiempo	
 			\\ \hline
@@ -610,7 +601,7 @@ DecimalNum  	& $e$
 		\begin{center}
 			\begin{tabular}{|c|c|l|l|} \hline
 			
-			&Calculo de:
+			&Cálculo de:
 			& Valor 	    
 			& Tiempo	
 			\\ \hline
@@ -650,7 +641,7 @@ DecimalNum  	& ln($e$)
 		\begin{center}
 			\begin{tabular}{|c|c|l|l|} \hline
 			
-			&Calculo de:
+			&Cálculo de:
 			& Valor 	    
 			& Tiempo	
 			\\ \hline
@@ -691,7 +682,7 @@ DecimalNum 	& asin(1)
 		\begin{center}
 			\begin{tabular}{|c|c|l|l|} \hline
 			
-			& Calculo de:
+			& Cálculo de:
 			& Valor 	    
 			& Tiempo	
 			\\ \hline
@@ -737,7 +728,7 @@ DecimalNum 	& $\sqrt{2}$
 		\begin{center}
 			\begin{tabular}{|c|c|l|l|} \hline
 				
-			& Calculo de:
+			& Cálculo de:
 			& Valor 	    
 			& Tiempo	
 			\\ \hline
@@ -778,14 +769,13 @@ DecimalNum  	& $3^{4.5}$
 	\end{figure}
 	
 	
-	
 \twocolumn
 
 %-----------------------------------------------------------------------------------
 \subsection{Sacando lo máximo de nuestra aritmética}\label{sub:big}
 %-----------------------------------------------------------------------------------
 	
-	En esta sección mostraremos los reultados obtenidos en el desempeño de nuestra aritmética para tareas computacionalmente complejas, como la aproximación de $\pi$ y $e$ con varias cifras decimales y el cálculo de números grandes como los factoriales.
+	En esta sección mostraremos los resultados obtenidos en el desempeño de nuestra aritmética para tareas computacionalmente complejas, como la aproximación de $\pi$ y $e$ con varias cifras decimales y el cálculo de números grandes como los factoriales.
 	
 	\begin{figure}[h!]%
 		\begin{center}
@@ -826,7 +816,7 @@ DecimalNum  	& $3^{4.5}$
 		\end{center}
 	\end{figure}
 	
-	Además mostremos la utilización de nuestra aritmética en algoritmos iterativos para la resolución de equaciones lineales, para ello resolvamos el siguiente sistema de equaciones por el \textbf{Metódo de Jacobi} y el \textbf{Metódo de Gauss-Seidel}.
+	Además mostremos la utilización de nuestra aritmética en algoritmos iterativos para la resolución de ecuaciones lineales, para ello resolvamos el siguiente sistema de ecuaciones por el \textbf{Método de Jacobi} y el \textbf{Método de Gauss-Seidel}.
 	
 	\begin{equation}	
 		\left(	
@@ -844,7 +834,7 @@ DecimalNum  	& $3^{4.5}$
 		\right)
 	\end{equation}
 	
-	Obteniendo como resultado el siguiente vector para el \textbf{Metódo de Jacobi}:
+	Obteniendo como resultado el siguiente vector para el \textbf{Método de Jacobi}:
 	$$	
 		\left(	
 		\begin{matrix}
@@ -853,7 +843,7 @@ DecimalNum  	& $3^{4.5}$
 		\right)
 	$$ con un tiempo de ejecución de 1.8970699310302734 segundos.
 	
-	Obteniendo como resultado el siguiente vector para el \textbf{Metódo de Gauss-Seidel}:
+	Obteniendo como resultado el siguiente vector para el \textbf{Método de Gauss-Seidel}:
 	$$	
 		\left(	
 		\begin{matrix}
@@ -865,26 +855,11 @@ DecimalNum  	& $3^{4.5}$
 %-----------------------------------------------------------------------------------
 \subsection{Finalizando Comparaciones}\label{sub:big}
 %-----------------------------------------------------------------------------------
-	En las diferentes secciones abordadas de este tema, nos percatamos de que los resultados favorecen en cuanto a precisión favorecen a \textbf{BigNum} aunque por un estrecho margen. Sin embargo en el caso de los cálculos de expresiones decimales no finitas todas las aritméticas ofrecen comportamientos similares, con algunas ventajas para \textbf{FractionNum} como vimos en un ejemplo aunque vale la pena señalar que se realizó una división en todos los casos del numerador entre el divisor para poder comparar los resultados con las demás artiméticas, por lo cual no se explota todo el potencial de esta.
+	En las diferentes secciones abordadas de este tema, nos percatamos de que los resultados favorecen en cuanto a precisión favorecen a \textbf{BigNum} aunque por un estrecho margen. Sin embargo en el caso de los cálculos de expresiones decimales no finitas todas las aritméticas ofrecen comportamientos similares, con algunas ventajas para \textbf{FractionNum} como vimos en un ejemplo aunque vale la pena señalar que se realizó una división en todos los casos del numerador entre el divisor para poder comparar los resultados con las demás aritméticas, por lo cual no se explota todo el potencial de esta.
 	
-	En cuanto a los tiempos de ejecución la aritmética más eficiente es \textbf{DecimalNum}, \textbf{FractionNum} en este sentido se vio incapacitada de realizar algunos cálculos, mientras que nuestra aritmética si bien fue la menos eficiente en la mayoría de los casos, no se obtuvieron tiempos dentro de lo razonable para la ejecución de un algoritmo.
+	En cuanto a los tiempos de ejecución la aritmética más eficiente es \textbf{DecimalNum}, \textbf{FractionNum} en este sentido se vio incapacitada de realizar algunos cálculos, mientras que nuestra aritmética si bien fue la menos eficiente en la mayoría de los casos, se obtuvieron tiempos dentro de lo razonable para la ejecución de un algoritmo.
 	
 	En la última sección analizada podemos observar la eficiencia de nuestra aritmética ante escenarios complejos desde el punto de vista computacional.
-
-
-	
-
-%-----------------------------------------------------------------------------------
-	\subsection{Referencias}
-%-----------------------------------------------------------------------------------
-  	Las referencias deben estar agrupadas en una sección al final del artículo,
-  	y las citas numeradas correctamente, por ejemplo \cite{knuth} o \cite{goedel}.
-  	Incluya toda la información importante de cada referencia, incluídos autor,
-  	título, y notas de la edición. En caso de citar sitios web, además
-  	de la URL, incluya la fecha en que fue consultado, como en \cite{wiki}. Numere 
-  	las referencias según el orden en que se les cita.
-
-%===================================================================================
 
 
 
@@ -893,11 +868,11 @@ DecimalNum  	& $3^{4.5}$
 %-----------------------------------------------------------------------------------
 \section{Conclusiones}\label{sec:conc}
 
-  En nuestro análisis del desempeño de la aritmética propuesta en este trabajo se vio reflejada la exactitud que esta posee a la hora de trabajar con datos de números en base 10. No obstante simepre tuvimos la desventaja de que la aritmética de punto flotante analizada fuera más rápida y eficiente y en par de ejemplos superando la exactitud de la nuestra. Por otro lado, observamos el comportamiento de la aritmética de fracciones racionales, si bien incapacitada de todo su potencial a la hora de compararse con las anteriores por los problemas antes explicados, siendo más precisa que las 2 anteriores en algunos casos, aunque incapacitada para realizar algunas tareas también especificadas anteriormente.
+  En nuestro análisis del desempeño de la aritmética propuesta en este trabajo se vio reflejada la exactitud que esta posee a la hora de trabajar con datos de números en base 10. No obstante siempre tuvimos la desventaja de que la aritmética de punto flotante analizada fuera más rápida y eficiente y en par de ejemplos superando la exactitud de la nuestra. Por otro lado, observamos el comportamiento de la aritmética de fracciones racionales, si bien incapacitada de todo su potencial a la hora de compararse con las anteriores por los problemas antes explicados, siendo más precisa que las 2 anteriores en algunos casos, aunque incapacitada para realizar algunas tareas también especificadas anteriormente.
   
   Cabe recalcar que la mayoría de estas comparaciones realizadas anteriormente en cuanto a la exactitud también se debe en gran medida a los métodos numéricos en los cuales se basa su cálculo, por lo que otro método numérico, fuera de los aquí abordados, pudiera ser más efectivo en uno u otro caso. 
   
-  Por tanto, por todo lo anteriormente descrito podemos concluir que las aritméticas de punto flotante, si bien pueden tener su desventaja a la hora de la precisión y exactitud, actualmente es el método más efectivo para la realización de los cálculos computacionales.
+  Por tanto, por todo lo anteriormente descrito podemos concluir que aunque la aritmética propuesta resuelve algunos de los problemas de precisión para los números en base 10, las aritméticas binarias de punto flotante actualmente son el método más efectivo para la realización de estas tareas computacionales.
 
 %===================================================================================
 
@@ -908,9 +883,9 @@ DecimalNum  	& $3^{4.5}$
 %-----------------------------------------------------------------------------------
 \section{Recomendaciones}\label{sec:rec}
 
-  En esta sección puede incluir recomendaciones sobre posibles formas de continuar
-  la investigación u otros temas relacionados.
-
+  Las comparaciones realizadas se basan en cálculos de números fuera de un contexto real, por tanto podemos sugerir una futura evaluación del desempeño de la aritmética propuesta en un marco práctico de la vida real.
+  
+  Además también podemos mencionar que en la revisión bibliográfica encontramos propuestas y desarrollo de nuevos métodos para representar los números (que están siendo usados en el marco de la  \textbf{Inteligencia Artificial} y el \textbf{Maching Learning}) lo cual serviría de objetivo para una futura investigación. 
 %===================================================================================
 
 
@@ -919,22 +894,16 @@ DecimalNum  	& $3^{4.5}$
 % Bibliografía
 %-----------------------------------------------------------------------------------
 \begin{thebibliography}{99}
-%-----------------------------------------------------------------------------------
-	\bibitem{wiki} Algorithm D. URL: \href{https://ridiculousfish.com/blog/posts/labor-of-division-episode-iv.html}
-	  {https://ridiculousfish.com/blog/posts/labor-of-division-episode-iv.html}.
-		Consultado en 19 de noviembre de 2022.
-		
+%---------------------------------------------------------------------------------	
 	\bibitem{wiki} Algoritmo para calcular la raíz n. URL: \href{https://es.frwiki.wiki/wiki/Algorithme_de_calcul_de_la_racine_n-i\%C3\%A8me}
 	  {https://es.frwiki.wiki/wiki/Algorithme\_de\_calcul\_de\_la\_racine\_n-i\%C3\%A8me}.
 		Consultado en 19 de noviembre de 2022.
 	
-	\bibitem{wiki} IEEE-174-1985. Wikipedia. URL: \href{https://en.wikipedia.org/wiki/IEEE_754-1985}
-	  {https://en.wikipedia.org/wiki/IEEE\_754-1985}.
+	\bibitem{wiki} Floating Point Arithmetic: Issues and Limitations URL: \href{https://docs.python.org/3.9/tutorial/floatingpoint.html}
+	  {https://docs.python.org/3.9/tutorial/floatingpoint.html}.
 		Consultado en 19 de noviembre de 2022.
 		
-	\bibitem{wiki} Karatsuba algorithm. Wikipedia. URL: \href{https://en.wikipedia.org/wiki/Karatsuba_algorithm}
-	  {https://en.wikipedia.org/wiki/Karatsuba\_algorithm}.
-		Consultado en 19 de noviembre de 2022.	
+	\bibitem{Donald E. Knuth.} Donald E. Knuth.(1997) The Art of Computer Programming. Chapter 4 – Arithmetic, (1997).	
 		
 	\bibitem{wiki} Taylor Series. Wikipedia. URL: \href{https://en.wikipedia.org/wiki/Taylor_series}
 	  {https://en.wikipedia.org/wiki/Taylor\_series}.
@@ -955,3 +924,5 @@ DecimalNum  	& $3^{4.5}$
 \end{document}
 
 %===================================================================================
+
+

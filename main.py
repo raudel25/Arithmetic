@@ -1,4 +1,3 @@
-import math
 import time
 from tabulate import tabulate
 from other_arithmetics.fraction import FractionNum
@@ -6,7 +5,6 @@ from other_arithmetics.decimal import DecimalNum
 from big_num.numbers import BigNum
 import fractions
 from decimal import *
-from arithmetic_math.lineal_equation_algorithm import gauss_seidel,jacobi
 
 def calculate_one_param(function):
     time1 = time.time()
@@ -163,8 +161,6 @@ big = BigNum()
 frac = FractionNum()
 dec = DecimalNum()
 
-# getcontext().prec=100
-
 # calculate_pi(big, frac, dec)
 # calculate_e(big, frac, dec)
 # calculate_sin(big, frac, dec, 1)
@@ -181,15 +177,3 @@ dec = DecimalNum()
 # calculate_atan(big,frac,dec,20)
 # print(dec(6)/dec(10)==dec(3)/dec(5))
 # print(frac(0.15)*frac(2)==frac(0.1)+frac(0.2))
-
-l=[[big(9), big(3), big(4)],
-    [big(3,False), big(7), big(3,False)],
-    [big(2), big(2), big(10,False)]]
-
-v=[big(1),big(1),big(1)]
-
-x=time.time()
-q=gauss_seidel(big, l, v)
-y=time.time()
-print(q[0],q[1],q[2])
-print(y-x)

@@ -2,7 +2,7 @@
 
 Este proyecto tiene como objetivo evaluar el desempeño de distintas aritméticas
 de coma flotante, punto fijo y fracciones racionales, en una comparación con nuestra
-aritmética: `big_num`.
+aritmética: `BigNum`.
 
 ## Dependencias
 
@@ -14,7 +14,7 @@ make
 
 si estas en linux o ejecutar el archivo `main.py` con su intérprete de **python**.
 
-## Descripción de `big_num`
+## Descripción de `BigNum`
 
 El funcionamiento de esta biblioteca se basa en la aritmética de punto fijo manteniendo 
 una precisión exacta de los lugares decimales que podemos modificar dinámicamente, mientras
@@ -46,13 +46,11 @@ Compararemos las siguientes aritméticas:
   representar una cantidad de lugares decimales variable.
 - Fracciones Racionales: Está implementada en el módulo **fraction** de **python**, los números de esta aritmética cuentan con dos 
   números enteros, el numerador y el denominador.
-- Extended754: tomada del siguiente repositorio de <a href="https://github.com/0xJuanPa/extended754">github</a>, en la cual está implementada una aritmética de base 
-  variable bajo el estándar IEEE 754.
-- Float: los números del tipo float que trae por defecto **python**.
+- BigNum: Aritmética propuesta y descrita anteriormente.
 
-## Descripción de `arithmetic_math`
+## Descripción de `ArithmeticMath`
 
-Para la comparación de las aritméticas definiremos la clase `arithmetic_math` con las siguientes operaciones:
+Para la comparación de las aritméticas definiremos la clase `ArithmeticMath` con las siguientes operaciones:
 
 - Raíz n-ésima: Para esta operación se trata de aproximar mediante una potencia entera y luego se aproxima mediante el
   siguiente <a href="https://es.frwiki.wiki/wiki/Algorithme_de_calcul_de_la_racine_n-i%C3%A8me">algoritmo</a>.
