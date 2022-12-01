@@ -51,7 +51,9 @@ def eliminate_zeros_left_value(number_value: list, precision: int) -> list:
     act: bool = False
 
     for i in range(len(number_value) - 1, -1, -1):
-        if number_value[i] != 0 or i == precision:
+        if number_value[i] != 0:
+            act = True
+        if precision != -1 and i == precision:
             act = True
 
         if act:

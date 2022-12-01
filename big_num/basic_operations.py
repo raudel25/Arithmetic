@@ -118,6 +118,10 @@ def division_algorithm_d(x: list, y: list, precision: int, base10: int) -> list:
 
 def normalize(x: list, y: list, base10: int) -> tuple:
     if y[-1] < base10 // 2:
+        y_aux = eliminate_zeros_left_value(y, -1)
+        y = add_zeros_right_value(y_aux, len(y) - len(y_aux))
+        x = add_zeros_right_value(x, len(y) - len(y_aux))
+
         mult: int = 1
         aux = y[-1] // (base10 // 10)
 
