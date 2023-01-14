@@ -99,7 +99,8 @@ def division_algorithm_d(x: list, y: list, precision: int, base10: int) -> list:
     :param precision: precision de los decimales
     :return: cociente
     """
-    (x, y) = equal_zeros_left_value(x, y)
+    if len(x) < len(y):
+        (x, y) = equal_zeros_left_value(x, y)
     (x, y) = normalize(x, y, base10)
 
     result = []
