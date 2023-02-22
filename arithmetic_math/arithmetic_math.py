@@ -169,7 +169,7 @@ class ArithmeticMath(ABC):
         if y == self.number0():
             return self.number1()
 
-        (numerator, denominator) = self.number_to_fraction(y)
+        (numerator, denominator) = self.number_to_fraction(y if y >= self.number0() else -y)
 
         gcd: int = math.gcd(numerator, denominator)
 
@@ -199,7 +199,7 @@ class ArithmeticMath(ABC):
 
         number10 = self.float_to_number(10)
         (aux, ind) = scalate_one(x, number10, self.number1())
-        if ind!=0:
+        if ind != 0:
             aux *= number10 ** (y - ind % y)
 
         if parity and not x >= self.number0():
@@ -207,7 +207,7 @@ class ArithmeticMath(ABC):
 
         result = algorithm_sqrt(aux, y, self.float_to_number(y), precision, self.float_to_number(10), self.number1())
 
-        if ind!=0:
+        if ind != 0:
             result /= (number10 ** ((ind + y - ind % y) // y))
 
         if not positive:

@@ -41,4 +41,4 @@ def log_method(x, y, precision: int, number1, number0):
 
         index += number1
 
-    return ln_method(x, precision, number1, number0) / ln_method(y, precision, number1, number0)
+    return ln_method(y, precision, number1, number0) / ln_method(x, precision, number1, number0)
